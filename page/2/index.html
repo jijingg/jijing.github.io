@@ -23,7 +23,7 @@
 
 
 
-<link rel="icon" href="/images/favicon.svg">
+<link rel="icon" href="/favicon.ico">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
@@ -138,8 +138,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/scala/20190308_scala_package.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/library1.jpg" alt="Scala 初探.二(package组织方式)">
+        <a href="/scala/20190308_scala_sbt2.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 初探.四(sbt组织scala代码2)">
         </a>
     </div>
     
@@ -157,7 +157,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 414 个字)
+                    几秒 读完 (大约 100 个字)
                 </span>
                 
                 
@@ -166,18 +166,20 @@
         
         <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/scala/20190308_scala_package.html">Scala 初探.二(package组织方式)</a>
+                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt2.html">Scala 初探.四(sbt组织scala代码2)</a>
             
         </h1>
         <div class="content">
-            <h3 id="多个文件的package组织方式"><a href="#多个文件的package组织方式" class="headerlink" title="多个文件的package组织方式"></a>多个文件的package组织方式</h3><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//a.scala </span></span><br><span class="line"><span class="hljs-keyword">package</span> com.east </span><br><span class="line"><span class="hljs-keyword">import</span> com.west._</span><br><span class="line">object objectMain extends App&#123;</span><br><span class="line">  println(<span class="hljs-string">"add Function from west used in east, 1+2=%d"</span>.format(Add.add(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h3 id="package-and-import"><a href="#package-and-import" class="headerlink" title="package and import"></a>package and import</h3><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── Interleave.scala</span><br><span class="line">            ├── utils.scala</span><br><span class="line">            └── config.scala</span><br></pre></td></tr></table></figure>
+<p>对于同一目录下的两个文件，可以不用import，默认在一个package内  </p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//Interleave.scala</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> a = <span class="hljs-keyword">new</span> <span class="hljs-type">ClassInUtils</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/scala/20190308_scala_package.html#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt2.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -311,6 +313,66 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/chisel/20181205_chisel_learning.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg" alt="Chisel 实例问题汇总">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 319 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/20181205_chisel_learning.html">Chisel 实例问题汇总</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题"><a href="#chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题" class="headerlink" title="chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题"></a>chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题</h4><p>同样的一份代码<br><a href="../assets/code/scala/GCD.scala">src/main/scala/GCD.scala</a><br><a href="../assets/code/scala/GCDTester.scla">src/test/scala/GCDTester.scala</a>    </p>
+<p>其中生成vcd波形的代码<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">GCDTester</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">App</span> </span>&#123;</span><br><span class="line">  iotesters.<span class="hljs-type">Driver</span>.execute(<span class="hljs-type">Array</span>(<span class="hljs-string">"--target-dir"</span>, <span class="hljs-string">"generated"</span>, <span class="hljs-string">"--fint-write-vcd"</span>), () =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCD</span>)&#123;</span><br><span class="line">    c =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCDTests</span>(c)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/chisel/20181205_chisel_learning.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/chisel/20190320_verilog_case_ifelse.html" class="image is-7by1">
             <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/electric1.jpg" alt="Chisel-Verilog查找表优先级问题讨论">
         </a>
@@ -421,66 +483,6 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/eda/how_to_send_param2tb.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/20181205_chisel_learning.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg" alt="Chisel 实例问题汇总">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 319 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20181205_chisel_learning.html">Chisel 实例问题汇总</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题"><a href="#chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题" class="headerlink" title="chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题"></a>chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题</h4><p>同样的一份代码<br><a href="../assets/code/scala/GCD.scala">src/main/scala/GCD.scala</a><br><a href="../assets/code/scala/GCDTester.scla">src/test/scala/GCDTester.scala</a>    </p>
-<p>其中生成vcd波形的代码<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">GCDTester</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">App</span> </span>&#123;</span><br><span class="line">  iotesters.<span class="hljs-type">Driver</span>.execute(<span class="hljs-type">Array</span>(<span class="hljs-string">"--target-dir"</span>, <span class="hljs-string">"generated"</span>, <span class="hljs-string">"--fint-write-vcd"</span>), () =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCD</span>)&#123;</span><br><span class="line">    c =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCDTests</span>(c)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20181205_chisel_learning.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -759,8 +761,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/sicp/ipc_msg_communication.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/electric1.jpg" alt="IPC进程通信、消息队列">
+        <a href="/riscv/20181120_riscv_c_dev_setp.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/ai1.jpg" alt="RISCV C开发调试笔记">
         </a>
     </div>
     
@@ -771,14 +773,14 @@
                 <time class="level-item has-text-grey" datetime="2018-11-19T16:00:00.000Z">2018-11-20</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 464 个字)
+                    8 分钟 读完 (大约 1200 个字)
                 </span>
                 
                 
@@ -787,28 +789,21 @@
         
         <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/sicp/ipc_msg_communication.html">IPC进程通信、消息队列</a>
+                <a class="has-link-black-ter" href="/riscv/20181120_riscv_c_dev_setp.html">RISCV C开发调试笔记</a>
             
         </h1>
         <div class="content">
-            <h3 id="计算机进程通信原理、IPC、消息队列，"><a href="#计算机进程通信原理、IPC、消息队列，" class="headerlink" title="计算机进程通信原理、IPC、消息队列，"></a>计算机进程通信原理、IPC、消息队列，</h3><p>常见的方法</p>
-<ul>
-<li>共享内存模式</li>
-<li>消息传递模式</li>
-<li>共享文件模式</li>
-</ul>
-<p>主要使用的是前两种方法</p>
-<h3 id="多处理器之间通信"><a href="#多处理器之间通信" class="headerlink" title="多处理器之间通信"></a>多处理器之间通信</h3><p>处理器之间不能通过消息传递模式通信，只能共享内存<br>处理器本身是异步执行的，消息队列没办法实现（接受消息和消耗消息有可能会冲突）<br>而共享内存的方法也有可能会导致冲突，可以为不同处理器划分不同地址空间来避免冲突</p>
-<p><img src="http://ppw74l91w.bkt.clouddn.com/ipc_msg/share_mem.png" alt="01"></p>
-<h3 id="单处理器进程通信"><a href="#单处理器进程通信" class="headerlink" title="单处理器进程通信"></a>单处理器进程通信</h3><p>进程之间的通信最常见最安全的方法就是消息队列。<br>每个进程会维护一个消息队列（常见的是FIFO队列，也有带优先级的队列本文不做讨论）  </p>
-<p><img src="http://ppw74l91w.bkt.clouddn.com/ipc_msg/msg.svg" alt="02">  </p>
-<p>进程A给进程B发消息，首先获取进程B消息队列（链表）的地址，将消息插入到链表后面。<br>当进程B执行是会去取消息队列最前面的消息然后执行。<br>由于进程A进程B是在同一处理器上占不同的时间片（跟操作系统进程的调度算法有关），<br>同一时刻消息队列不可能即recive 又 consume，所以不存在队列读写冲突的问题。  </p>
-<p>消息可以是简单的数据编码标志，也可以携带数据（数据起始地址以及长度），或者其他数据结构体格式  </p>
-<p><img src="http://ppw74l91w.bkt.clouddn.com/ipc_msg/msg_info.png" alt="03"></p>
-<p>scala 的Actor的消息传递也是用此方式实现。</p>
-
+            <h3 id="hello-c"><a href="#hello-c" class="headerlink" title="hello.c"></a>hello.c</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">long</span> a = <span class="hljs-number">0x876543210</span> ;</span><br><span class="line">    <span class="hljs-keyword">float</span> pi = <span class="hljs-number">3.1415926</span> ;</span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello %s!\n"</span>,<span class="hljs-string">"World"</span>);</span><br><span class="line">    a = a*pi;</span><br><span class="line">    <span class="hljs-keyword">return</span> a ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181120_riscv_c_dev_setp.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
