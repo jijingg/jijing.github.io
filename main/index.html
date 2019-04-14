@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="Scala 笔记 2019-03-08: SCALA 程序初探.一(main函数) 2019-03-08: SCALA 程序初探.二(package组织方式) 2019-03-08: SCALA 程序初探.三(sbt组织scala代码1) 2019-03-08: SCALA 程序初探.四(sbt组织scala代码2)  RISCV 开发调试 2018-11-28: IDEA scala chise">
+<meta property="og:type" content="website">
+<meta property="og:title" content="马車同学">
+<meta property="og:url" content="https://jijingg.github.io/main/index.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="Scala 笔记 2019-03-08: SCALA 程序初探.一(main函数) 2019-03-08: SCALA 程序初探.二(package组织方式) 2019-03-08: SCALA 程序初探.三(sbt组织scala代码1) 2019-03-08: SCALA 程序初探.四(sbt组织scala代码2)  RISCV 开发调试 2018-11-28: IDEA scala chise">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://jijingg.github.io/images/og_image.png">
+<meta property="og:updated_time" content="2019-04-13T17:16:50.566Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="马車同学">
+<meta name="twitter:description" content="Scala 笔记 2019-03-08: SCALA 程序初探.一(main函数) 2019-03-08: SCALA 程序初探.二(package组织方式) 2019-03-08: SCALA 程序初探.三(sbt组织scala代码1) 2019-03-08: SCALA 程序初探.四(sbt组织scala代码2)  RISCV 开发调试 2018-11-28: IDEA scala chise">
+<meta name="twitter:image" content="https://jijingg.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item is-active" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-13T17:16:50.580Z">2019-04-14</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 387 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                
+            
+        </h1>
+        <div class="content">
+            <h4 id="Scala-笔记"><a href="#Scala-笔记" class="headerlink" title="Scala 笔记"></a>Scala 笔记</h4><ul>
+<li>2019-03-08: <a href="/scala/20190308_scala_main.html">SCALA 程序初探.一(main函数)</a></li>
+<li>2019-03-08: <a href="/scala/20190308_scala_package.html">SCALA 程序初探.二(package组织方式)</a></li>
+<li>2019-03-08: <a href="/scala/20190308_scala_sbt1.html">SCALA 程序初探.三(sbt组织scala代码1)</a></li>
+<li>2019-03-08: <a href="/scala/20190308_scala_sbt2.html">SCALA 程序初探.四(sbt组织scala代码2)</a></li>
+</ul>
+<h4 id="RISCV-开发调试"><a href="#RISCV-开发调试" class="headerlink" title="RISCV 开发调试"></a>RISCV 开发调试</h4><ul>
+<li>2018-11-28: <a href="/riscv/20181130_idea_scala_config.html">IDEA scala chisel环境配置</a></li>
+<li>2018-11-28: <a href="/riscv/20181128_makefile_acc.html">Makefile使用笔记</a></li>
+<li>2018-11-27: <a href="/riscv/20181127_riscv_link.html">RISC-V 编译链接脚本</a></li>
+<li>2018-11-16: <a href="/riscv/20181116_RISCV_inst_test.html">RISC-V 汇编指令调试、立即数浅尝</a></li>
+<li>2018-11-25: <a href="/riscv/20181125_gdb_debug.html">RISC-V GDB 调试</a></li>
+<li>2018-11-20: <a href="/riscv/20181120_riscv_c_dev_setp.html">RISC-V C代码编译调试笔记</a></li>
+<li>2018-11-16: <a href="/riscv/20181116_RISCV_inst_test.html">RISC-V 汇编指令调试、立即数浅尝</a></li>
+<li>2018-11-15: <a href="/riscv/20181221_riscv_verctor.html">RISCV-Vector介绍</a></li>
+</ul>
+<h4 id="Chisel-笔记"><a href="#Chisel-笔记" class="headerlink" title="Chisel 笔记"></a>Chisel 笔记</h4><ul>
+<li>2018-12-05: <a href="/chisel/20181205_chisel_learning.html">Chisel 示例问题汇总</a></li>
+<li>2019-03-21: <a href="/chisel/20190321_chisel_comb_reg.html">chisel 组合逻辑，时序逻辑写法</a></li>
+<li>2019-04-01: <a href="/chisel/20190401_chisel_keep_name.html">chisel Keep变量名</a></li>
+<li>2019-04-11: <a href="/chisel/20190411_chisel_version.html">chisel 版本问题</a></li>
+<li>2019-03-20: <a href="/chisel/20190320_verilog_case_ifelse.html">Chisel-Verilog 查找表优先级问题讨论</a></li>
+</ul>
+<h4 id="EDA工具"><a href="#EDA工具" class="headerlink" title="EDA工具"></a>EDA工具</h4><ul>
+<li><a href="/eda/how_to_send_param2tb.html">如何从shell中传递变量给verilog文件</a></li>
+<li><a href="/eda/eda_option.html">EDA仿真环境Makefile配置(vcs,verdi)</a></li>
+<li><a href="/eda/timing_analysis.html">时序分析回顾</a></li>
+<li><a href="/chisel/20190322_chisel_module_confilict.html">Moudle名冲突解决办法</a></li>
+<li><a href="/eda/verilog_simu_0delay.html">仿真不打拍</a></li>
+</ul>
+<h4 id="收藏"><a href="#收藏" class="headerlink" title="收藏"></a>收藏</h4><ul>
+<li><a href="/sicp/python-fp.html">Python lambda Y组合子(Y算子)实现</a></li>
+</ul>
+<h4 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h4><ul>
+<li><a href="/tech_acc/rv_verctor">AGC调整</a></li>
+</ul>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
+<li><a href="/others/terminal_FAQ.html">Terminal Shell 常见配置问题</a></li>
+<li><a href="/others/crystals-pll-vco.html">晶振,PLL,VCO初识</a></li>
+<li><a href="/others/lsb_hsb.html">计算机大小端详解</a></li>
+<li><a href="/sicp/ipc_msg_communication.html">进程通信，消息队列</a>         </li>
+</ul>
+
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+</div>
+                
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <figure class="image is-128x128 has-mb-4">
+                            <img class="image is-rounded " src="http://ppw74l91w.bkt.clouddn.com/avatar/avatar.jpg" alt="Empty">
+                        </figure>
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        马車同学
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Jijing
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>NanJing</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        6
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        11
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="http://github.com/jijingg" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="http://github.com/jijingg">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/jijingg/activities">
+                
+                <i class="fab fa-zhihu"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://facebook.com">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="StackOverFlow" href="https://stackoverflow.com/users/8022691/jijing">
+                
+                <i class="fab fa-google"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+            
+        
+    
+        
+            
+            
+        
+    
+        
+            
+            
+        
+    
+        
+            
+            
+        
+    
+        
+            
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

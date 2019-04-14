@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Chisel-Verilog查找表优先级问题讨论 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="Chisel 查找表电路优先级问题verilog ROM的两种写法及区别1234567891011121314151617181920212223方法1always @(posedge clk )begin    case(addr0)          6&apos;d0 :  data0 &amp;lt;= 8&apos;d214;        6&apos;d1 :  data0 &amp;lt;= 8&apos;d213;        6&apos;">
+<meta name="keywords" content="Chisel,verilog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chisel-Verilog查找表优先级问题讨论">
+<meta property="og:url" content="https://jijingg.github.io/chisel/20190320_verilog_case_ifelse.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="Chisel 查找表电路优先级问题verilog ROM的两种写法及区别1234567891011121314151617181920212223方法1always @(posedge clk )begin    case(addr0)          6&apos;d0 :  data0 &amp;lt;= 8&apos;d214;        6&apos;d1 :  data0 &amp;lt;= 8&apos;d213;        6&apos;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/electric1.jpg">
+<meta property="og:updated_time" content="2019-04-13T11:18:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chisel-Verilog查找表优先级问题讨论">
+<meta name="twitter:description" content="Chisel 查找表电路优先级问题verilog ROM的两种写法及区别1234567891011121314151617181920212223方法1always @(posedge clk )begin    case(addr0)          6&apos;d0 :  data0 &amp;lt;= 8&apos;d214;        6&apos;d1 :  data0 &amp;lt;= 8&apos;d213;        6&apos;">
+<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/electric1.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Chisel-Verilog查找表优先级问题讨论" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/electric1.jpg" alt="Chisel-Verilog查找表优先级问题讨论">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1627 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                Chisel-Verilog查找表优先级问题讨论
+            
+        </h1>
+        <div class="content">
+            <h3 id="Chisel-查找表电路优先级问题"><a href="#Chisel-查找表电路优先级问题" class="headerlink" title="Chisel 查找表电路优先级问题"></a>Chisel 查找表电路优先级问题</h3><h4 id="verilog-ROM的两种写法及区别"><a href="#verilog-ROM的两种写法及区别" class="headerlink" title="verilog ROM的两种写法及区别"></a>verilog ROM的两种写法及区别</h4><figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">    <span class="hljs-keyword">case</span>(addr0)  </span><br><span class="line">        <span class="hljs-number">6'd0</span> :  data0 &lt;= <span class="hljs-number">8'd214</span>;</span><br><span class="line">        <span class="hljs-number">6'd1</span> :  data0 &lt;= <span class="hljs-number">8'd213</span>;</span><br><span class="line">        <span class="hljs-number">6'd2</span> :  data0 &lt;= <span class="hljs-number">8'd212</span>;</span><br><span class="line">        <span class="hljs-number">6'd3</span> :  data0 &lt;= <span class="hljs-number">8'd211</span>;</span><br><span class="line">        <span class="hljs-number">6'd4</span> :  data0 &lt;= <span class="hljs-number">8'd210</span>;</span><br><span class="line">        <span class="hljs-number">6'd5</span> :  data0 &lt;= <span class="hljs-number">8'd209</span>;</span><br><span class="line">        <span class="hljs-number">6'd6</span> :  data0 &lt;= <span class="hljs-number">8'd208</span>;</span><br><span class="line">        <span class="hljs-number">6'd7</span> :  data0 &lt;= <span class="hljs-number">8'd207</span>;   </span><br><span class="line">方法<span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd2</span> )  data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd5</span> )  data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br></pre></td></tr></table></figure>
+<p>方法2是不是带优先级？ 实际上是不带优先级<br>逻辑上if取的条件都是addr1的值，一定是互斥的，综合工具也能自动识别出这种if else<br>它有别于以下这种情况，这种情况下是真实带有优先级的电路，其中<code>another_cond_A,another_cond_B</code><br>是独立的两个输入条件，和addr1的取值可能同时发生，所以不能被综合器当做查找表来对待。<br><a id="more"></a></p>
+<figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(another_cond_A ) data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(another_cond_B ) data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="chisel中查找表的写法以及对应电路"><a href="#chisel中查找表的写法以及对应电路" class="headerlink" title="chisel中查找表的写法以及对应电路"></a>chisel中查找表的写法以及对应电路</h4><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">方法一</span><br><span class="line">switch (addr) &#123;</span><br><span class="line">    is(  <span class="hljs-number">0.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d150</span> &#125;</span><br><span class="line">    is(  <span class="hljs-number">1.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d149</span> &#125;</span><br><span class="line">    is(  <span class="hljs-number">2.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d148</span> &#125;</span><br><span class="line">    is(  <span class="hljs-number">3.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d147</span> &#125;</span><br><span class="line">    is(  <span class="hljs-number">4.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d146</span> &#125;</span><br><span class="line">    is(  <span class="hljs-number">5.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d145</span> &#125;</span><br><span class="line">    is(  <span class="hljs-number">6.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d144</span> &#125;</span><br><span class="line">    is(  <span class="hljs-number">7.</span><span class="hljs-type">U</span> ) &#123; rdata:= <span class="hljs-number">8</span><span class="hljs-symbol">'d143</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line">方法二</span><br><span class="line"><span class="hljs-keyword">val</span> <span class="hljs-type">ROM</span> = <span class="hljs-type">Vec</span>(<span class="hljs-type">Array</span>(<span class="hljs-number">150.</span><span class="hljs-type">U</span>,<span class="hljs-number">149.</span><span class="hljs-type">U</span>,<span class="hljs-number">148.</span><span class="hljs-type">U</span>,    <span class="hljs-number">143.</span><span class="hljs-type">U</span>))</span><br><span class="line"><span class="hljs-keyword">val</span> rdata = <span class="hljs-type">ROM</span>(addr)</span><br></pre></td></tr></table></figure>
+<p>两种方法都会生成以下类似电路，等效CASE语句写法。所以不用担心优先级的问题。</p>
+<figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd2</span> )  data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd5</span> )  data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br></pre></td></tr></table></figure>
+<p>综合工具对上面电路的处理也是没有优先级的。</p>
+<h4 id="综合对比"><a href="#综合对比" class="headerlink" title="综合对比"></a>综合对比</h4><p>Verilog DEMO<br><figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">module</span>  caseifelse_top ( </span><br><span class="line">clk,</span><br><span class="line">in_en0,in_addr0,out_data0,</span><br><span class="line">in_en1,in_addr1,out_data1</span><br><span class="line">);</span><br><span class="line"><span class="hljs-keyword">input</span>           clk       ;</span><br><span class="line"><span class="hljs-keyword">input</span>           in_en0    ;</span><br><span class="line"><span class="hljs-keyword">input</span>           in_en1    ;</span><br><span class="line"><span class="hljs-keyword">input</span>   [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>]   in_addr0  ;</span><br><span class="line"><span class="hljs-keyword">input</span>   [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>]   in_addr1  ;</span><br><span class="line"><span class="hljs-keyword">output</span>  [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   out_data0 ;</span><br><span class="line"><span class="hljs-keyword">output</span>  [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   out_data1 ;</span><br><span class="line"><span class="hljs-keyword">reg</span>     [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   out_data0 ;</span><br><span class="line"><span class="hljs-keyword">reg</span>     [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   out_data1 ;</span><br><span class="line"><span class="hljs-keyword">reg</span>     [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>]   addr0     ;</span><br><span class="line"><span class="hljs-keyword">reg</span>     [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>]   addr1     ;</span><br><span class="line"><span class="hljs-keyword">reg</span>             en0       ;</span><br><span class="line"><span class="hljs-keyword">reg</span>             en1       ;</span><br><span class="line"><span class="hljs-keyword">wire</span>    [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   data0     ;</span><br><span class="line"><span class="hljs-keyword">wire</span>    [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   data1     ;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">     en0        &lt;=  in_en0    ;</span><br><span class="line">     en1        &lt;=  in_en1    ;</span><br><span class="line">     addr0      &lt;=  in_addr0  ;</span><br><span class="line">     addr1      &lt;=  in_addr1  ;</span><br><span class="line">     out_data0  &lt;=  data0     ;</span><br><span class="line">     out_data1  &lt;=  data1     ;</span><br><span class="line"><span class="hljs-keyword">end</span> </span><br><span class="line"></span><br><span class="line">rom    u_rom_table(</span><br><span class="line"><span class="hljs-variable">.clk</span>   (clk   ),</span><br><span class="line"><span class="hljs-variable">.en0</span>   (en0   ),</span><br><span class="line"><span class="hljs-variable">.addr0</span> (addr0 ),</span><br><span class="line"><span class="hljs-variable">.data0</span> (data0 ) </span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">ifelse u_ifelse_table(</span><br><span class="line"><span class="hljs-variable">.clk</span>   (clk   ),</span><br><span class="line"><span class="hljs-variable">.en1</span>   (en1   ),</span><br><span class="line"><span class="hljs-variable">.addr1</span> (addr1 ),</span><br><span class="line"><span class="hljs-variable">.data1</span> (data1 ) </span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">endmodule</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">module</span> rom(clk,</span><br><span class="line">rstn,en0,addr0,data0</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">input</span>           clk    ;</span><br><span class="line"><span class="hljs-keyword">input</span>           rstn   ;</span><br><span class="line"><span class="hljs-keyword">input</span>           en0    ;</span><br><span class="line"><span class="hljs-keyword">input</span>   [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>]   addr0  ;</span><br><span class="line"><span class="hljs-keyword">output</span>  [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   data0  ;</span><br><span class="line"><span class="hljs-keyword">reg</span>     [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   data0  ;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">    <span class="hljs-keyword">case</span>(addr0)  </span><br><span class="line">        <span class="hljs-number">6'd0</span> :  data0 &lt;= <span class="hljs-number">8'd214</span>;</span><br><span class="line">        <span class="hljs-number">6'd1</span> :  data0 &lt;= <span class="hljs-number">8'd213</span>;</span><br><span class="line">        <span class="hljs-number">6'd2</span> :  data0 &lt;= <span class="hljs-number">8'd212</span>;</span><br><span class="line">        <span class="hljs-number">6'd3</span> :  data0 &lt;= <span class="hljs-number">8'd211</span>;</span><br><span class="line">        <span class="hljs-number">6'd4</span> :  data0 &lt;= <span class="hljs-number">8'd210</span>;</span><br><span class="line">        <span class="hljs-number">6'd5</span> :  data0 &lt;= <span class="hljs-number">8'd209</span>;</span><br><span class="line">        <span class="hljs-number">6'd6</span> :  data0 &lt;= <span class="hljs-number">8'd208</span>;</span><br><span class="line">        <span class="hljs-number">6'd7</span> :  data0 &lt;= <span class="hljs-number">8'd207</span>;</span><br><span class="line">。。。</span><br><span class="line">        <span class="hljs-number">6'd63</span>:  data0 &lt;= <span class="hljs-number">8'd151</span>;</span><br><span class="line">        <span class="hljs-keyword">default</span> : data0 &lt;= <span class="hljs-number">8'd0</span>;</span><br><span class="line">    <span class="hljs-keyword">endcase</span> </span><br><span class="line"><span class="hljs-keyword">end</span> </span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">endmodule</span> </span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">module</span> ifelse(clk,</span><br><span class="line">en1,addr1,data1</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">input</span>           clk    ;</span><br><span class="line"><span class="hljs-keyword">input</span>           en1    ;</span><br><span class="line"><span class="hljs-keyword">input</span>   [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>]   addr1  ;</span><br><span class="line"><span class="hljs-keyword">output</span>  [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   data1  ;</span><br><span class="line"><span class="hljs-keyword">reg</span>     [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]   data1  ;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd2</span> )  data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd5</span> )  data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br><span class="line">。。。</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd63</span>)  data1 &lt;= <span class="hljs-number">8'd87</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span>                     data1 &lt;= <span class="hljs-number">8'd1</span> ;</span><br><span class="line"><span class="hljs-keyword">end</span> </span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">endmodule</span></span><br></pre></td></tr></table></figure></p>
+<p>综合后的网表 看到两种方法都是基本相同，没有优先级区别</p>
+<figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-keyword">module</span> caseifelse_top_ifelse_1 ( clk, en1, addr1, data1 );</span><br><span class="line">  <span class="hljs-keyword">input</span> [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>] addr1;</span><br><span class="line">  <span class="hljs-keyword">output</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] data1;</span><br><span class="line">  <span class="hljs-keyword">input</span> clk, en1;</span><br><span class="line">  <span class="hljs-keyword">wire</span>   N67, N69, n8, n9, n10, n17, n18, n19, n1, n2, n3, n4, n5;</span><br><span class="line"></span><br><span class="line">  SDFKCNQD1BWP7T40P140UHVT data1_reg_7_ ( <span class="hljs-variable">.D</span>(n8), <span class="hljs-variable">.CN</span>(n10), <span class="hljs-variable">.SI</span>(n9), <span class="hljs-variable">.SE</span>(n9), </span><br><span class="line">        <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.Q</span>(data1[<span class="hljs-number">7</span>]) );</span><br><span class="line">  SDFKSNQD1BWP7T40P140UHVT data1_reg_6_ ( <span class="hljs-variable">.SN</span>(n10), <span class="hljs-variable">.D</span>(addr1[<span class="hljs-number">5</span>]), <span class="hljs-variable">.SI</span>(n9), </span><br><span class="line">        <span class="hljs-variable">.SE</span>(n9), <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.Q</span>(data1[<span class="hljs-number">6</span>]) );</span><br><span class="line">  MB2SRLSDFQD1BWP7T40P140LVT data1_reg_1_0_ ( <span class="hljs-variable">.D1</span>(n19), <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.SE</span>(n9), </span><br><span class="line">        <span class="hljs-variable">.SI</span>(n9), <span class="hljs-variable">.Q1</span>(data1[<span class="hljs-number">1</span>]), <span class="hljs-variable">.D2</span>(addr1[<span class="hljs-number">0</span>]), <span class="hljs-variable">.Q2</span>(data1[<span class="hljs-number">0</span>]) );</span><br><span class="line">  MB2SRLSDFQD1BWP7T40P140UHVT data1_reg_5_4_ ( <span class="hljs-variable">.D1</span>(N69), <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.SE</span>(n9), </span><br><span class="line">        <span class="hljs-variable">.SI</span>(n9), <span class="hljs-variable">.Q1</span>(data1[<span class="hljs-number">5</span>]), <span class="hljs-variable">.D2</span>(n17), <span class="hljs-variable">.Q2</span>(data1[<span class="hljs-number">4</span>]) );</span><br><span class="line">  OA21D1BWP7T35P140UHVT U3 ( <span class="hljs-variable">.A1</span>(n4), <span class="hljs-variable">.A2</span>(n2), <span class="hljs-variable">.B</span>(n1), <span class="hljs-variable">.Z</span>(N67) );</span><br><span class="line">  ND2D1BWP7T30P140UHVT U4 ( <span class="hljs-variable">.A1</span>(addr1[<span class="hljs-number">4</span>]), <span class="hljs-variable">.A2</span>(n1), <span class="hljs-variable">.ZN</span>(n10) );</span><br><span class="line">  ND2D1BWP7T30P140UHVT U5 ( <span class="hljs-variable">.A1</span>(n2), <span class="hljs-variable">.A2</span>(n4), <span class="hljs-variable">.ZN</span>(n1) );</span><br><span class="line">  ND3D1BWP7T30P140UHVT U6 ( <span class="hljs-variable">.A1</span>(addr1[<span class="hljs-number">0</span>]), <span class="hljs-variable">.A2</span>(addr1[<span class="hljs-number">1</span>]), <span class="hljs-variable">.A3</span>(addr1[<span class="hljs-number">2</span>]), <span class="hljs-variable">.ZN</span>(</span><br><span class="line">        n4) );</span><br><span class="line">  ND2D1BWP7T35P140UHVT U7 ( <span class="hljs-variable">.A1</span>(addr1[<span class="hljs-number">0</span>]), <span class="hljs-variable">.A2</span>(addr1[<span class="hljs-number">1</span>]), <span class="hljs-variable">.ZN</span>(n3) );</span><br><span class="line">  INVD1BWP7T35P140UHVT U8 ( <span class="hljs-variable">.I</span>(addr1[<span class="hljs-number">3</span>]), <span class="hljs-variable">.ZN</span>(n2) );</span><br><span class="line">  INVD1BWP7T35P140UHVT U9 ( <span class="hljs-variable">.I</span>(addr1[<span class="hljs-number">5</span>]), <span class="hljs-variable">.ZN</span>(n8) );</span><br><span class="line">  OAI21D1BWP7T35P140UHVT U10 ( <span class="hljs-variable">.A1</span>(addr1[<span class="hljs-number">0</span>]), <span class="hljs-variable">.A2</span>(addr1[<span class="hljs-number">1</span>]), <span class="hljs-variable">.B</span>(n3), <span class="hljs-variable">.ZN</span>(n19)</span><br><span class="line">         );</span><br><span class="line">  OAI21D1BWP7T35P140UHVT U11 ( <span class="hljs-variable">.A1</span>(n5), <span class="hljs-variable">.A2</span>(addr1[<span class="hljs-number">2</span>]), <span class="hljs-variable">.B</span>(n4), <span class="hljs-variable">.ZN</span>(n18) );</span><br><span class="line">  MAOI22D1BWP7T40P140UHVT U14 ( <span class="hljs-variable">.A1</span>(n10), <span class="hljs-variable">.A2</span>(n8), <span class="hljs-variable">.B1</span>(n8), <span class="hljs-variable">.B2</span>(n10), <span class="hljs-variable">.ZN</span>(N69)</span><br><span class="line">         );</span><br><span class="line">  MB2SRLSDFQD1BWP7T40P140UHVT data1_reg_3_2_ ( <span class="hljs-variable">.D1</span>(N67), <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.SE</span>(n9), </span><br><span class="line">        <span class="hljs-variable">.SI</span>(n9), <span class="hljs-variable">.Q1</span>(data1[<span class="hljs-number">3</span>]), <span class="hljs-variable">.D2</span>(n18), <span class="hljs-variable">.Q2</span>(data1[<span class="hljs-number">2</span>]) );</span><br><span class="line">  TIELBWP7T40P140LVT U12 ( <span class="hljs-variable">.ZN</span>(n9) );</span><br><span class="line">  INVD1BWP7T40P140UHVT U13 ( <span class="hljs-variable">.I</span>(n3), <span class="hljs-variable">.ZN</span>(n5) );</span><br><span class="line">  OAI21D1BWP7T40P140UHVT U15 ( <span class="hljs-variable">.A1</span>(addr1[<span class="hljs-number">4</span>]), <span class="hljs-variable">.A2</span>(n1), <span class="hljs-variable">.B</span>(n10), <span class="hljs-variable">.ZN</span>(n17) );</span><br><span class="line"><span class="hljs-keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">module</span> caseifelse_top_rom_1 ( clk, rstn, en0, addr0, data0 );</span><br><span class="line">  <span class="hljs-keyword">input</span> [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>] addr0;</span><br><span class="line">  <span class="hljs-keyword">output</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] data0;</span><br><span class="line">  <span class="hljs-keyword">input</span> clk, rstn, en0;</span><br><span class="line">  <span class="hljs-keyword">wire</span>   N235, N237, N238, n7, n14, n15, n16, n1, n2, n3, n4, n5, n6;</span><br><span class="line"></span><br><span class="line">  SDFQOPPSAD1BWP7T40P140UHVT data0_reg_0_ ( <span class="hljs-variable">.D</span>(addr0[<span class="hljs-number">0</span>]), <span class="hljs-variable">.SI</span>(n7), <span class="hljs-variable">.SE</span>(n7), </span><br><span class="line">        <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.Q</span>(data0[<span class="hljs-number">0</span>]) );</span><br><span class="line">  MB2SRLSDFQD1BWP7T40P140LVT data0_reg_2_1_ ( <span class="hljs-variable">.D1</span>(n15), <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.SE</span>(n7), </span><br><span class="line">        <span class="hljs-variable">.SI</span>(n7), <span class="hljs-variable">.Q1</span>(data0[<span class="hljs-number">2</span>]), <span class="hljs-variable">.D2</span>(n16), <span class="hljs-variable">.Q2</span>(data0[<span class="hljs-number">1</span>]) );</span><br><span class="line">  MB2SRLSDFQD1BWP7T40P140LVT data0_reg_4_3_ ( <span class="hljs-variable">.D1</span>(n14), <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.SE</span>(n7), </span><br><span class="line">        <span class="hljs-variable">.SI</span>(n7), <span class="hljs-variable">.Q1</span>(data0[<span class="hljs-number">4</span>]), <span class="hljs-variable">.D2</span>(N235), <span class="hljs-variable">.Q2</span>(data0[<span class="hljs-number">3</span>]) );</span><br><span class="line">  MB2SRLSDFQD1BWP7T40P140LVT data0_reg_6_5_ ( <span class="hljs-variable">.D1</span>(N238), <span class="hljs-variable">.CP</span>(clk), <span class="hljs-variable">.SE</span>(n7), </span><br><span class="line">        <span class="hljs-variable">.SI</span>(n7), <span class="hljs-variable">.Q1</span>(data0[<span class="hljs-number">6</span>]), <span class="hljs-variable">.D2</span>(N237), <span class="hljs-variable">.Q2</span>(data0[<span class="hljs-number">5</span>]) );</span><br><span class="line">  AO21D1BWP7T35P140UHVT U3 ( <span class="hljs-variable">.A1</span>(n6), <span class="hljs-variable">.A2</span>(n5), <span class="hljs-variable">.B</span>(n4), <span class="hljs-variable">.Z</span>(n14) );</span><br><span class="line">  AO21D1BWP7T35P140UHVT U4 ( <span class="hljs-variable">.A1</span>(n3), <span class="hljs-variable">.A2</span>(n2), <span class="hljs-variable">.B</span>(n1), <span class="hljs-variable">.Z</span>(n15) );</span><br><span class="line">  INVD1BWP7T35P140UHVT U5 ( <span class="hljs-variable">.I</span>(addr0[<span class="hljs-number">2</span>]), <span class="hljs-variable">.ZN</span>(n2) );</span><br><span class="line">  ND2D1BWP7T35P140UHVT U6 ( <span class="hljs-variable">.A1</span>(addr0[<span class="hljs-number">0</span>]), <span class="hljs-variable">.A2</span>(addr0[<span class="hljs-number">1</span>]), <span class="hljs-variable">.ZN</span>(n3) );</span><br><span class="line">  NR2D1BWP7T35P140UHVT U7 ( <span class="hljs-variable">.A1</span>(n2), <span class="hljs-variable">.A2</span>(n3), <span class="hljs-variable">.ZN</span>(n1) );</span><br><span class="line">  INVD1BWP7T35P140UHVT U8 ( <span class="hljs-variable">.I</span>(addr0[<span class="hljs-number">4</span>]), <span class="hljs-variable">.ZN</span>(n5) );</span><br><span class="line">  NR2D1BWP7T35P140UHVT U9 ( <span class="hljs-variable">.A1</span>(addr0[<span class="hljs-number">3</span>]), <span class="hljs-variable">.A2</span>(n1), <span class="hljs-variable">.ZN</span>(n6) );</span><br><span class="line">  NR2D1BWP7T35P140UHVT U10 ( <span class="hljs-variable">.A1</span>(n5), <span class="hljs-variable">.A2</span>(n6), <span class="hljs-variable">.ZN</span>(n4) );</span><br><span class="line">  OAI21D1BWP7T35P140UHVT U11 ( <span class="hljs-variable">.A1</span>(addr0[<span class="hljs-number">0</span>]), <span class="hljs-variable">.A2</span>(addr0[<span class="hljs-number">1</span>]), <span class="hljs-variable">.B</span>(n3), <span class="hljs-variable">.ZN</span>(n16)</span><br><span class="line">         );</span><br><span class="line">  AOI21D1BWP7T35P140UHVT U12 ( <span class="hljs-variable">.A1</span>(n1), <span class="hljs-variable">.A2</span>(addr0[<span class="hljs-number">3</span>]), <span class="hljs-variable">.B</span>(n6), <span class="hljs-variable">.ZN</span>(N235) );</span><br><span class="line">  AOI21D1BWP7T35P140UHVT U13 ( <span class="hljs-variable">.A1</span>(addr0[<span class="hljs-number">5</span>]), <span class="hljs-variable">.A2</span>(n4), <span class="hljs-variable">.B</span>(N238), <span class="hljs-variable">.ZN</span>(N237) );</span><br><span class="line">  NR2D1BWP7T35P140UHVT U14 ( <span class="hljs-variable">.A1</span>(n4), <span class="hljs-variable">.A2</span>(addr0[<span class="hljs-number">5</span>]), <span class="hljs-variable">.ZN</span>(N238) );</span><br><span class="line">  TIELBWP7T40P140LVT U15 ( <span class="hljs-variable">.ZN</span>(n7) );</span><br><span class="line"><span class="hljs-keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>代码目录：/nutstore/2017pc/lab/turbo/scala/work</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>chisel 虽然生成的电路没有CASE语句，也完全没有问题，<br>if else的写法也能满足查找表的实现，并不会有优先级的问题  </p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>同样一下两种chisel和verilog的写法对于综合器来说其实都是没有优先级的，<br>综合器可以根据时序情况将其打平，并不影响电路的功能（本质上每个条件都不<br>重叠，所以没有真实的优先级物理意义）<br>因此可以大胆的采用这种写法而不用考虑优先级进位链太长而产生的时序问题。   </p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  when      (io.swif.K&lt;40.U  )&#123;tiRomStartAddr :=  baseRAny &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;159.U )&#123;tiRomStartAddr :=  baseR5   &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;200.U )&#123;tiRomStartAddr :=  baseR10  &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;481.U )&#123;tiRomStartAddr :=  baseRAny &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;530.U )&#123;tiRomStartAddr :=  baseR10  &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;2881.U)&#123;tiRomStartAddr :=  baseRAny &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;2480.U)&#123;tiRomStartAddr :=  baseR20  &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;3160.U)&#123;tiRomStartAddr :=  baseRAny &#125;</span><br><span class="line">  .elsewhen (io.swif.K&lt;3210.U)&#123;tiRomStartAddr :=  baseR20  &#125;</span><br><span class="line">  .otherwise                  &#123;tiRomStartAddr :=  baseRAny &#125;   </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">```verilog</span><br><span class="line">  if      (K&lt;40  )&#123;addr :=  5&apos;d0 &#125;</span><br><span class="line">  else if (K&lt;159 )&#123;addr :=  5&apos;d1 &#125;</span><br><span class="line">  else if (K&lt;200 )&#123;addr :=  5&apos;d2 &#125;</span><br><span class="line">  else if (K&lt;481 )&#123;addr :=  5&apos;d4 &#125;</span><br><span class="line">  else if (K&lt;530 )&#123;addr :=  5&apos;d6 &#125;</span><br><span class="line">  else if (K&lt;2881)&#123;addr :=  5&apos;d0 &#125;</span><br><span class="line">  else if (K&lt;2480)&#123;addr :=  5&apos;d9 &#125;</span><br><span class="line">  else if (K&lt;3160)&#123;addr :=  5&apos;d0 &#125;</span><br><span class="line">  else if (K&lt;3210)&#123;addr :=  5&apos;d8 &#125;</span><br><span class="line">  else            &#123;addr :=  5&apos;d0 &#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Chisel/">Chisel</a>, <a class="has-link-grey -link" href="/tags/verilog/">verilog</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/riscv/20181221_riscv_verctor.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">RISCV 矢量处理器</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/eda/how_to_send_param2tb.html">
+                <span class="level-item">从Shell传递变量给verilog的两种方法</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: '14ca3c3de9578acbf9c2a705189a102d',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Chisel-查找表电路优先级问题">
+        <span class="has-mr-6">1</span>
+        <span>Chisel 查找表电路优先级问题</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#verilog-ROM的两种写法及区别">
+        <span class="has-mr-6">1.1</span>
+        <span>verilog ROM的两种写法及区别</span>
+        </a></li><li>
+        <a class="is-flex" href="#chisel中查找表的写法以及对应电路">
+        <span class="has-mr-6">1.2</span>
+        <span>chisel中查找表的写法以及对应电路</span>
+        </a></li><li>
+        <a class="is-flex" href="#综合对比">
+        <span class="has-mr-6">1.3</span>
+        <span>综合对比</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#结论">
+        <span class="has-mr-6">2</span>
+        <span>结论</span>
+        </a></li><li>
+        <a class="is-flex" href="#扩展">
+        <span class="has-mr-6">3</span>
+        <span>扩展</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/others/hexo_utlis.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hexo 技巧收录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time></div>
+                    <a href="/others/hexo_utlis.html" class="has-link-black-ter is-size-6">Hexo 技巧收录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/top-index.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="索引置顶">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time></div>
+                    <a href="/top-index.html" class="has-link-black-ter is-size-6">索引置顶</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/python-fp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time></div>
+                    <a href="/sicp/python-fp.html" class="has-link-black-ter is-size-6">Python lambda实现Y组合子</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190411_chisel_version.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time></div>
+                    <a href="/chisel/20190411_chisel_version.html" class="has-link-black-ter is-size-6">Chisel版本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190401_chisel_keep_name.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time></div>
+                    <a href="/chisel/20190401_chisel_keep_name.html" class="has-link-black-ter is-size-6">Chiel Keep变量名</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">10</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Chisel-Verilog查找表优先级问题讨论" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

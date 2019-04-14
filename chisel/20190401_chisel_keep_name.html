@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Chiel Keep变量名 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="how to keep chisel variable name when generate verilogThere are several reasons why a name may be disappearing. Constant PropagationFor many reasons, including interoperability with existing CAD tools">
+<meta name="keywords" content="Chisel,verilog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chiel Keep变量名">
+<meta property="og:url" content="https://jijingg.github.io/chisel/20190401_chisel_keep_name.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="how to keep chisel variable name when generate verilogThere are several reasons why a name may be disappearing. Constant PropagationFor many reasons, including interoperability with existing CAD tools">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg">
+<meta property="og:updated_time" content="2019-04-13T09:42:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chiel Keep变量名">
+<meta name="twitter:description" content="how to keep chisel variable name when generate verilogThere are several reasons why a name may be disappearing. Constant PropagationFor many reasons, including interoperability with existing CAD tools">
+<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Chiel Keep变量名" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 608 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                Chiel Keep变量名
+            
+        </h1>
+        <div class="content">
+            <h3 id="how-to-keep-chisel-variable-name-when-generate-verilog"><a href="#how-to-keep-chisel-variable-name-when-generate-verilog" class="headerlink" title="how to keep chisel variable name when generate verilog"></a>how to keep chisel variable name when generate verilog</h3><p>There are several reasons why a name may be disappearing.</p>
+<p>Constant Propagation<br>For many reasons, including interoperability with existing CAD tools, performance, and Verilog debug-ability, Chisel (actually the FIRRTL compiler underneath Chisel) will propagate constants and direct wire connections. For example:</p>
+<a id="more"></a>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyModule</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Module</span> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-type">IO</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> in = <span class="hljs-type">Input</span>(<span class="hljs-type">UInt</span>(<span class="hljs-number">8.</span><span class="hljs-type">W</span>))</span><br><span class="line">    <span class="hljs-keyword">val</span> out = <span class="hljs-type">Output</span>(<span class="hljs-type">UInt</span>(<span class="hljs-number">8.</span><span class="hljs-type">W</span>))</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="hljs-keyword">val</span> wire = <span class="hljs-type">Wire</span>(<span class="hljs-type">UInt</span>(<span class="hljs-number">8.</span><span class="hljs-type">W</span>))</span><br><span class="line">  wire := io.in</span><br><span class="line">  io.out := wire</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In the above code, wire will be removed because it is simply connected to io.in, the Verilog will just show:</p>
+<p>assign io_out = io_in;<br>Inability to name<br>Chisel Modules are implemented as Scala Classes. Due to implementation reasons, by default Chisel can only name “top-level” vals in the body of the Module, for example:</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class MyModule extends Module &#123;</span><br><span class="line">  val io = IO(new Bundle &#123;</span><br><span class="line">    val in = Input(UInt(8.W))</span><br><span class="line">    val in2 = Input(UInt(8.W))</span><br><span class="line">    val out = Output(UInt(8.W))</span><br><span class="line">  &#125;)</span><br><span class="line">  val sum = io.in + io.in2 // this is a top-level val, will be named</span><br><span class="line"></span><br><span class="line">  // A method, we can call to help generate code:</span><br><span class="line">  def inc(x: UInt): UInt = &#123;</span><br><span class="line">    val incremented = x + 1.U // We cannot name this, it&apos;s inside a method</span><br><span class="line">    incremented</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  io.out := inc(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>suggestName<br>You can manually name any signal by calling .suggestName(“name”) on it, eg.</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def inc(x: UInt): UInt = &#123;</span><br><span class="line">  val incremented = x + 1.U // We cannot name this, it&apos;s inside a method</span><br><span class="line">  incremented.suggestName(&quot;incremented&quot;) // Now it is named!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Enter @chiselName<br>We can fix the above issue with an experimental feature called @chiselName like so:</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import chisel3.experimental.chiselName</span><br><span class="line"></span><br><span class="line">@chiselName</span><br><span class="line">class MyModule extends Module &#123;</span><br><span class="line">  val io = IO(new Bundle &#123;</span><br><span class="line">    val in = Input(UInt(8.W))</span><br><span class="line">    val in2 = Input(UInt(8.W))</span><br><span class="line">    val out = Output(UInt(8.W))</span><br><span class="line">  &#125;)</span><br><span class="line">  val sum = io.in + io.in2 // this is a top-level val, will be named</span><br><span class="line"></span><br><span class="line">  // A method, we can call to help generate code:</span><br><span class="line">  def inc(x: UInt): UInt = &#123;</span><br><span class="line">    val incremented = x + 1.U // We cannot name this, it&apos;s inside a method</span><br><span class="line">    incremented</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  io.out := inc(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@chiselName is an annotation that can be used on any class or object definition and will ensure vals like incremented can get named. @chiselName effectively rewrites your code to put .suggestName all over the place.</p>
+<p>I hope this helps!</p>
+<p>EDIT more info:<br>Disabling Optimizations<br>I don’t think it’s in a release yet (most recent being 3.1.7, this will be in 3.2.0), but we do have an option to disable all optimizations. You can change the “compiler” used from verilog to mverilog (for “minimum” Verilog, ie. no optimizations). This can be done with the command-line argument -X mverilog either in Chisel or FIRRTL.</p>
+<p>Don’t Touch<br>You can also use chisel3.experimental.dontTouch to mark a signal as something that shouldn’t be deleted. This will prevent optimizations from removing the signal. For example:</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import chisel3.experimental.dontTouch</span><br><span class="line">class MyModule extends Module &#123;</span><br><span class="line">  val io = IO(new Bundle &#123;</span><br><span class="line">    val in = Input(UInt(8.W))</span><br><span class="line">    val out = Output(UInt(8.W))</span><br><span class="line">  &#125;)</span><br><span class="line">  val wire = dontTouch(Wire(UInt(8.W)))</span><br><span class="line">  wire := io.in</span><br><span class="line">  io.out := wire</span><br></pre></td></tr></table></figure>
+<p>I’ve edited my response to talk about how to disable optimizations (not in the current release, you can wait for 3.2 which should be out in a couple of weeks or build Chisel manually from master and use that). I should caution that running formal equivalence tools tend to struggle comparing large designs with and without optimizations, but you can try it. For specific signals, dontTouch can help with what you want. o</p>
+<p><a href="https://stackoverflow.com/questions/55401525/how-to-keep-all-variable-name-in-chisel-when-generate-verilog-code/55403155#55403155" target="_blank" rel="noopener">原文链接</a></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Chisel/">Chisel</a>, <a class="has-link-grey -link" href="/tags/verilog/">verilog</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/chisel/20190411_chisel_version.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Chisel版本</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/chisel/20190322_chisel_module_confilict.html">
+                <span class="level-item">Verilog 模块重名问题</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: 'fdece6092fd9992a911d354a23f83610',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#how-to-keep-chisel-variable-name-when-generate-verilog">
+        <span class="has-mr-6">1</span>
+        <span>how to keep chisel variable name when generate verilog</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/others/hexo_utlis.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hexo 技巧收录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time></div>
+                    <a href="/others/hexo_utlis.html" class="has-link-black-ter is-size-6">Hexo 技巧收录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/top-index.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="索引置顶">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time></div>
+                    <a href="/top-index.html" class="has-link-black-ter is-size-6">索引置顶</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/python-fp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time></div>
+                    <a href="/sicp/python-fp.html" class="has-link-black-ter is-size-6">Python lambda实现Y组合子</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190411_chisel_version.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time></div>
+                    <a href="/chisel/20190411_chisel_version.html" class="has-link-black-ter is-size-6">Chisel版本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190401_chisel_keep_name.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time></div>
+                    <a href="/chisel/20190401_chisel_keep_name.html" class="has-link-black-ter is-size-6">Chiel Keep变量名</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">10</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Chiel Keep变量名" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

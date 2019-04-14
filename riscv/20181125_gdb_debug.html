@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>RISCV GDB debug调试 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="RISCV-GDB启动步骤 hello.c12345678#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    long a = 0x876543210 ;    float pi = 3.1415926 ;    printf(&quot;Hello %s!\n&quot;,&quot;World&quot;);    a = a*pi;    return a ;&amp;#125; 如何生成汇编代码ris">
+<meta name="keywords" content="riscv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RISCV GDB debug调试">
+<meta property="og:url" content="https://jijingg.github.io/riscv/20181125_gdb_debug.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="RISCV-GDB启动步骤 hello.c12345678#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    long a = 0x876543210 ;    float pi = 3.1415926 ;    printf(&quot;Hello %s!\n&quot;,&quot;World&quot;);    a = a*pi;    return a ;&amp;#125; 如何生成汇编代码ris">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack5.jpg">
+<meta property="og:updated_time" content="2019-04-13T17:06:28.984Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RISCV GDB debug调试">
+<meta name="twitter:description" content="RISCV-GDB启动步骤 hello.c12345678#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    long a = 0x876543210 ;    float pi = 3.1415926 ;    printf(&quot;Hello %s!\n&quot;,&quot;World&quot;);    a = a*pi;    return a ;&amp;#125; 如何生成汇编代码ris">
+<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack5.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="RISCV GDB debug调试" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack5.jpg" alt="RISCV GDB debug调试">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-24T16:00:00.000Z">2018-11-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 526 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                RISCV GDB debug调试
+            
+        </h1>
+        <div class="content">
+            <p><a href="https://riscv.org/software-tools/risc-v-isa-simulator/" target="_blank" rel="noopener">RISCV-GDB启动步骤</a></p>
+<h3 id="hello-c"><a href="#hello-c" class="headerlink" title="hello.c"></a>hello.c</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">long</span> a = <span class="hljs-number">0x876543210</span> ;</span><br><span class="line">    <span class="hljs-keyword">float</span> pi = <span class="hljs-number">3.1415926</span> ;</span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello %s!\n"</span>,<span class="hljs-string">"World"</span>);</span><br><span class="line">    a = a*pi;</span><br><span class="line">    <span class="hljs-keyword">return</span> a ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="如何生成汇编代码"><a href="#如何生成汇编代码" class="headerlink" title="如何生成汇编代码"></a>如何生成汇编代码</h3><p><code>riscv64-unknown-elf-gcc -S hello.c</code> 只会生成汇编代码hello.s  不会生成.out文件</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">    .file   &quot;hello.c&quot;</span><br><span class="line">    .option nopic</span><br><span class="line">    .text</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC2:</span><br><span class="line">    .string &quot;World&quot;</span><br><span class="line">    .align  3</span><br><span class="line">.LC3:</span><br><span class="line">    .string &quot;Hello %s!\n&quot;</span><br><span class="line">    .text</span><br><span class="line">    .align  1</span><br><span class="line">    .globl  main</span><br><span class="line">    .type   main, @function</span><br><span class="line">main:</span><br><span class="line">    addi    sp,sp,-32</span><br><span class="line">    sd  ra,24(sp)</span><br><span class="line">    sd  s0,16(sp)</span><br><span class="line">    addi    s0,sp,32</span><br><span class="line">    lui a5,%hi(.LC0)</span><br><span class="line">    ld  a5,%lo(.LC0)(a5)</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    lui a5,%hi(.LC1)</span><br><span class="line">    flw fa5,%lo(.LC1)(a5)</span><br><span class="line">    fsw fa5,-28(s0)</span><br><span class="line">    lui a5,%hi(.LC2)</span><br><span class="line">    addi    a1,a5,%lo(.LC2)</span><br><span class="line">    lui a5,%hi(.LC3)</span><br><span class="line">    addi    a0,a5,%lo(.LC3)</span><br><span class="line">    call    printf</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    fcvt.s.l    fa4,a5</span><br><span class="line">    flw fa5,-28(s0)</span><br><span class="line">    fmul.s  fa5,fa4,fa5</span><br><span class="line">    fcvt.l.s a5,fa5,rtz</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    sext.w  a5,a5</span><br><span class="line">    mv  a0,a5</span><br><span class="line">    ld  ra,24(sp)</span><br><span class="line">    ld  s0,16(sp)</span><br><span class="line">    addi    sp,sp,32</span><br><span class="line">    jr  ra</span><br><span class="line">    .size   main, .-main</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC0:</span><br><span class="line">    .dword  36344967696</span><br><span class="line">    .align  2</span><br><span class="line">.LC1:</span><br><span class="line">    .word   1078530010</span><br><span class="line">    .ident  &quot;GCC: (GNU) 8.1.0&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="如何反汇编-out文件"><a href="#如何反汇编-out文件" class="headerlink" title="如何反汇编.out文件"></a>如何反汇编.out文件</h3><p>首先生成.out文件<code>riscv64-unknown-elf-gcc -o hello.out hello.c</code></p>
+<p>然后反汇编 <code>riscv64-unknown-elf-objdump -d hello.out &gt; hello_disassemble.s</code></p>
+<p>即可查看反汇编代码,搜索main函数如下，当然也包括其他内置函数<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">hello.out:     file format elf64-littleriscv</span><br><span class="line">Disassembly of section .text:</span><br><span class="line">00000000000100b0 &lt;_start&gt;:</span><br><span class="line">   100b0:   0000d197            auipc   gp,0xd</span><br><span class="line">   100b4:   fd818193            addi    gp,gp,-40 # 1d088 &lt;__global_pointer$&gt;</span><br><span class="line">   100b8:   84818513            addi    a0,gp,-1976 # 1c8d0 &lt;_edata&gt;</span><br><span class="line">   100bc:   8d818613            addi    a2,gp,-1832 # 1c960 &lt;_end&gt;           </span><br><span class="line">   .....</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">000000000001038c &lt;printf&gt;:</span><br><span class="line">   1038c:   711d                    addi    sp,sp,-96</span><br><span class="line">   1038e:   f832                    sd  a2,48(sp)</span><br><span class="line">   10390:   fc36                    sd  a3,56(sp)        </span><br><span class="line">   ....</span><br><span class="line">   ..</span><br><span class="line"></span><br><span class="line">0000000000010198 &lt;main&gt;:</span><br><span class="line">   10198:   1101         addi    sp,sp,-32</span><br><span class="line">   1019a:   ec06         sd  ra,24(sp)</span><br><span class="line">   1019c:   e822         sd  s0,16(sp)</span><br><span class="line">   1019e:   1000         addi    s0,sp,32</span><br><span class="line">   101a0:   67e9         lui a5,0x1a</span><br><span class="line">   101a2:   a687b783     ld  a5,-1432(a5) # 19a68 &lt;__clzdi2+0x54&gt;</span><br><span class="line">   101a6:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101aa:   67e9         lui a5,0x1a</span><br><span class="line">   101ac:   a707a787     flw fa5,-1424(a5) # 19a70 &lt;__clzdi2+0x5c&gt;</span><br><span class="line">   101b0:   fef42227     fsw fa5,-28(s0)</span><br><span class="line">   101b4:   67e9         lui a5,0x1a</span><br><span class="line">   101b6:   a5078593     addi    a1,a5,-1456 # 19a50 &lt;__clzdi2+0x3c&gt;</span><br><span class="line">   101ba:   67e9         lui a5,0x1a</span><br><span class="line">   101bc:   a5878513     addi    a0,a5,-1448 # 19a58 &lt;__clzdi2+0x44&gt;</span><br><span class="line">   101c0:   1cc000ef     jal ra,1038c &lt;printf&gt;</span><br><span class="line">   101c4:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101c8:   d027f753     fcvt.s.l    fa4,a5</span><br><span class="line">   101cc:   fe442787     flw fa5,-28(s0)</span><br><span class="line">   101d0:   10f777d3     fmul.s  fa5,fa4,fa5</span><br><span class="line">   101d4:   c02797d3     fcvt.l.s    a5,fa5,rtz</span><br><span class="line">   101d8:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101dc:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101e0:   2781         sext.w  a5,a5</span><br><span class="line">   101e2:   853e         mv  a0,a5</span><br><span class="line">   101e4:   60e2         ld  ra,24(sp)</span><br><span class="line">   101e6:   6442         ld  s0,16(sp)</span><br><span class="line">   101e8:   6105         addi    sp,sp,32</span><br><span class="line">   101ea:   8082         ret         </span><br><span class="line">   ....</span><br><span class="line">   ...</span><br></pre></td></tr></table></figure></p>
+<h3 id="gdb-查看CPU寄存器"><a href="#gdb-查看CPU寄存器" class="headerlink" title="gdb 查看CPU寄存器"></a>gdb 查看CPU寄存器</h3><p>-print $x0<br>-p $x0<br>-p $pc<br>-info reg<br>-display $x0     ;每跑一步都会显示寄存器<br>-ni              ;next inst</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/riscv/">riscv</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/riscv/20181127_riscv_link.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">RISCV 编译 Link探究</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/sicp/ipc_msg_communication.html">
+                <span class="level-item">IPC进程通信、消息队列</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: 'cea41f1f83c81314d5c6b700b00650a4',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#hello-c">
+        <span class="has-mr-6">1</span>
+        <span>hello.c</span>
+        </a></li><li>
+        <a class="is-flex" href="#如何生成汇编代码">
+        <span class="has-mr-6">2</span>
+        <span>如何生成汇编代码</span>
+        </a></li><li>
+        <a class="is-flex" href="#如何反汇编-out文件">
+        <span class="has-mr-6">3</span>
+        <span>如何反汇编.out文件</span>
+        </a></li><li>
+        <a class="is-flex" href="#gdb-查看CPU寄存器">
+        <span class="has-mr-6">4</span>
+        <span>gdb 查看CPU寄存器</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/others/hexo_utlis.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hexo 技巧收录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time></div>
+                    <a href="/others/hexo_utlis.html" class="has-link-black-ter is-size-6">Hexo 技巧收录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/top-index.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="索引置顶">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time></div>
+                    <a href="/top-index.html" class="has-link-black-ter is-size-6">索引置顶</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/python-fp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time></div>
+                    <a href="/sicp/python-fp.html" class="has-link-black-ter is-size-6">Python lambda实现Y组合子</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190411_chisel_version.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time></div>
+                    <a href="/chisel/20190411_chisel_version.html" class="has-link-black-ter is-size-6">Chisel版本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190401_chisel_keep_name.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time></div>
+                    <a href="/chisel/20190401_chisel_keep_name.html" class="has-link-black-ter is-size-6">Chiel Keep变量名</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">10</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="RISCV GDB debug调试" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

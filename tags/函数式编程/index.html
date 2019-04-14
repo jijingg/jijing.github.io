@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>标签: 函数式编程 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="马車同学">
+<meta property="og:url" content="https://jijingg.github.io/tags/函数式编程/index.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://jijingg.github.io/images/og_image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="马車同学">
+<meta name="twitter:image" content="https://jijingg.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="马車同学" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">标签</a></li>
+            <li class="is-active"><a href="#" aria-current="page">函数式编程</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/python-fp.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 209 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/python-fp.html">Python lambda实现Y组合子</a>
+            
+        </h1>
+        <div class="content">
+            <p>也许你我都难以理解，为什么有人对她痴迷疯狂，铭记在心中不说，还要刻在身上：</p>
+<p>她让人绞尽脑汁，也琢磨不定！她让人心力憔悴，又百般回味！</p>
+<p>她，看似平淡，却深藏玄机！她，貌不惊人，却天下无敌！</p>
+<p>她是谁？</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/sicp/python-fp.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20190308_scala_sbt1.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/macbook2.jpg" alt="Scala 初探.三(sbt组织scala代码1)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 308 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt1.html">Scala 初探.三(sbt组织scala代码1)</a>
+            
+        </h1>
+        <div class="content">
+            <p>上一节我们用Makefile来组织scala代码，这里有更好的选择sbt来管理项目<br>sbt推荐将scala代码放在src路径，如下为标准的组织方式(代码还是原封使用第二节的样例代码)<br>总共3个文件      </p>
+<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── a.scala</span><br><span class="line">            ├── b.scala</span><br><span class="line">            └── c.scala</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt1.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20190308_scala_sbt2.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 初探.四(sbt组织scala代码2)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 100 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt2.html">Scala 初探.四(sbt组织scala代码2)</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="package-and-import"><a href="#package-and-import" class="headerlink" title="package and import"></a>package and import</h3><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── Interleave.scala</span><br><span class="line">            ├── utils.scala</span><br><span class="line">            └── config.scala</span><br></pre></td></tr></table></figure>
+<p>对于同一目录下的两个文件，可以不用import，默认在一个package内  </p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//Interleave.scala</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> a = <span class="hljs-keyword">new</span> <span class="hljs-type">ClassInUtils</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt2.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20190308_scala_main.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/led2.jpg" alt="Scala 初探.一(main函数)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 749 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_main.html">Scala 初探.一(main函数)</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="SCALA-程序的几种运行方式"><a href="#SCALA-程序的几种运行方式" class="headerlink" title="SCALA 程序的几种运行方式"></a>SCALA 程序的几种运行方式</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>脚本式的使用，<code>scala a.scala</code> 可正常打印<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function">def <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>= &#123;</span><br><span class="line">  println(<span class="hljs-string">"Hello, Scala way1"</span>)</span><br><span class="line">&#125;</span><br><span class="line">main()</span><br></pre></td></tr></table></figure></p>
+<p>但这种写法不能被 <code>scalac a.scala</code>正确编译，可能JVM对象必须要有个main入口函数</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_main.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20190308_scala_package.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/library1.jpg" alt="Scala 初探.二(package组织方式)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 414 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_package.html">Scala 初探.二(package组织方式)</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="多个文件的package组织方式"><a href="#多个文件的package组织方式" class="headerlink" title="多个文件的package组织方式"></a>多个文件的package组织方式</h3><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//a.scala </span></span><br><span class="line"><span class="hljs-keyword">package</span> com.east </span><br><span class="line"><span class="hljs-keyword">import</span> com.west._</span><br><span class="line">object objectMain extends App&#123;</span><br><span class="line">  println(<span class="hljs-string">"add Function from west used in east, 1+2=%d"</span>.format(Add.add(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_package.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/others/hexo_utlis.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hexo 技巧收录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time></div>
+                    <a href="/others/hexo_utlis.html" class="has-link-black-ter is-size-6">Hexo 技巧收录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/top-index.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="索引置顶">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time></div>
+                    <a href="/top-index.html" class="has-link-black-ter is-size-6">索引置顶</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/python-fp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time></div>
+                    <a href="/sicp/python-fp.html" class="has-link-black-ter is-size-6">Python lambda实现Y组合子</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190411_chisel_version.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time></div>
+                    <a href="/chisel/20190411_chisel_version.html" class="has-link-black-ter is-size-6">Chisel版本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190401_chisel_keep_name.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time></div>
+                    <a href="/chisel/20190401_chisel_keep_name.html" class="has-link-black-ter is-size-6">Chiel Keep变量名</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">10</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="马車同学" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>晶振，PLL, VCO介绍 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="晶振，vco区别晶振分有源晶振和无源晶振，一般会产生1～200Mhz时钟频率vco亚控振荡器，可以产生比较高的频率比如2Ghz，但是不稳定 为什么既要晶振还要vco？就是为了能够产生稳定的高频时钟信号，就需要用到PLL, PLL内部会有一个VCO 产生高频时钟，通过分频器假设得到10分频的时钟2，再拿这个时钟2和晶振产生的100mhz基用鉴相器做比较，输出一个比较的波形后经过低通滤波，用输出电压控">
+<meta property="og:type" content="article">
+<meta property="og:title" content="晶振，PLL, VCO介绍">
+<meta property="og:url" content="https://jijingg.github.io/others/crystals-pll-vco.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="晶振，vco区别晶振分有源晶振和无源晶振，一般会产生1～200Mhz时钟频率vco亚控振荡器，可以产生比较高的频率比如2Ghz，但是不稳定 为什么既要晶振还要vco？就是为了能够产生稳定的高频时钟信号，就需要用到PLL, PLL内部会有一个VCO 产生高频时钟，通过分频器假设得到10分频的时钟2，再拿这个时钟2和晶振产生的100mhz基用鉴相器做比较，输出一个比较的波形后经过低通滤波，用输出电压控">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg">
+<meta property="og:updated_time" content="2019-04-13T17:01:33.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="晶振，PLL, VCO介绍">
+<meta name="twitter:description" content="晶振，vco区别晶振分有源晶振和无源晶振，一般会产生1～200Mhz时钟频率vco亚控振荡器，可以产生比较高的频率比如2Ghz，但是不稳定 为什么既要晶振还要vco？就是为了能够产生稳定的高频时钟信号，就需要用到PLL, PLL内部会有一个VCO 产生高频时钟，通过分频器假设得到10分频的时钟2，再拿这个时钟2和晶振产生的100mhz基用鉴相器做比较，输出一个比较的波形后经过低通滤波，用输出电压控">
+<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="晶振，PLL, VCO介绍" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg" alt="晶振，PLL, VCO介绍">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-07-04T16:00:00.000Z">2018-07-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1591 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                晶振，PLL, VCO介绍
+            
+        </h1>
+        <div class="content">
+            <h3 id="晶振，vco区别"><a href="#晶振，vco区别" class="headerlink" title="晶振，vco区别"></a>晶振，vco区别</h3><p>晶振分有源晶振和无源晶振，一般会产生1～200Mhz时钟频率<br>vco亚控振荡器，可以产生比较高的频率比如2Ghz，但是不稳定</p>
+<h3 id="为什么既要晶振还要vco？"><a href="#为什么既要晶振还要vco？" class="headerlink" title="为什么既要晶振还要vco？"></a>为什么既要晶振还要vco？</h3><p>就是为了能够产生稳定的高频时钟信号，就需要用到PLL, PLL内部会有<br>一个VCO 产生高频时钟，通过分频器假设得到10分频的时钟2，再拿这个时钟2<br>和晶振产生的100mhz基用鉴相器做比较，输出一个比较的波形后经过低通滤波，<br>用输出电压控制VCO的输出, 那么就能是vco输出的高频时钟得到稳定的频率，达到了<br>倍频的效果。</p>
+<p>20Mhz一下的晶振基本上都是基频的器件，稳定度好，20mhz以上的晶振大多是谐波(如3次，5次谐波)<br>稳定度差，因此强烈建议使用低频的器件，毕竟倍频器用的pll电路需要的周边配置主要是电容，<br>电阻，电感，其稳定度和价格方面要远远浩宇晶体晶振器件。  </p>
+<p>如果只需要一个20mhz以内的时钟频率，完全可以不用pll，直接接晶振就够了</p>
+<h3 id="晶振一般有哪些参数"><a href="#晶振一般有哪些参数" class="headerlink" title="晶振一般有哪些参数"></a>晶振一般有哪些参数</h3><p>晶振有几个重要参数：</p>
+<p>1，晶体元件规格书中所指定的频率，也是工程师在电路设计和元件选购时首要关注的参数。晶振常用标称频率在1～200MHz之间，比如32768Hz、8MHz、12MHz、24MHz、125MHz等，更高的输出频率也常用PLL（锁相环）将低频进行倍频至1GHz以上。我们称之为标称频率。</p>
+<p>2，输出信号的频率不可避免会有一定的偏差，我们用频率误差（Frequency Tolerance）或频率稳定度（Frequency Stability），用单位ppm来表示，即百万分之一（parts per million）（1/106），是相对标称频率的变化量，此值越小表示精度越高。比如，12MHz晶振偏差为±20ppm，表示它的频率偏差为12×20Hz=±240Hz，即频率范围是（11999760～12000240Hz）</p>
+<p>3，还有一个温度频差（Frequency Stability vs Temp）表示在特定温度范围内，工作频率相对于基准温度时工作频率的允许偏离，它的单位也是ppm。</p>
+<p>4，另外，负载电容CL（Load capacitance），它是电路中跨接晶体两端的总的有效电容（不是晶振外接的匹配电容），主要影响负载谐振频率和等效负载谐振电阻，与晶体一起决定振荡器电路的工作频率，通过调整负载电容，就可以将振荡器的工作频率微调到标称值。更准确而言，无源晶体的负载电容是一项非常重要的参数，因为无源晶体属于被动元器件，所谓的被动元器件即是自身不能工作，需要外部元器件协助工作，无源晶体即是！</p>
+<p>其中：</p>
+<p>CS为晶体两个管脚之间的寄生电容（又名晶振静态电容或Shunt Capacitance），在晶体的规格书上可以找到具体值，一般0.2pF~8pF不等。如图二是某32.768KHz的电气参数，其寄生电容典型值是0.85pF（在表格中采用的是Co）。</p>
+<p>CG指的是晶体振荡电路输入管脚到GND的总电容，其容值为以下三个部分的和。</p>
+<ul>
+<li>需加外晶振主芯片管脚芯到GND的寄生电容 Ci</li>
+<li>晶体震荡电路PCB走线到到GND的寄生电容CPCB</li>
+<li>电路上外增加的并联到GND的外匹配电容 CL1<br>CD指的是晶体振荡电路输入管脚到GND的总电容。容值为以下三个部分的和。</li>
+<li>需加外晶振主芯片管脚芯到GND的寄生电容, Co</li>
+<li>晶体震荡电路PCB走线到到gnd的寄生电容，CPCB</li>
+<li>电路上外增加的并联到GND的外匹配电容, CL2</li>
+</ul>
+<p>既然晶振的负载电容是一个非常重要的参数，如果此项参数与外部电容匹配不正确会导致什么样的现象？晶振两端的等效电容与晶振标称的负载电容匹配不正确，晶振输出的谐振频率将与标称工作的工作频率会产生一定偏差（又称之为频偏），负载电容（load capacitance）主要影响负载谐振频率和等效负载谐振电阻，它与石英谐振器一起决定振荡器的工作频率，通过调整负载电容，一般可以将振荡器的工作频率调到标称值。应用时我们一般外接电容，便是为了使晶振两端的等效电容等于或接近负载电容，对于要求高的场合还要考虑ic输入端的对地电容，这样便可以使得晶振工作的频率达到标称频率。所以合理匹配合适的外加电容使晶振两端的等效电容等于或接近负载电容显得十分重要。</p>
+<p>负载电容常用的标准值有12.5 pF，16 pF，20 pF，30pF,负载电容和谐振频率之间的关系不是线性的，负载电容变小时，频率偏差量变大；负载电容提高时，频率偏差减小。图3是一个晶体的负载电容和频率的误差的关系图。</p>
+<p>例外情况：</p>
+<p>现在有很多芯片内部已经增加了补偿电容（internal capacitance），所以在设计的时候，只需要选按照芯片datasheet推荐的负载电容值的选择晶体即可，不需要额外再加电容。但是因为实际设计的寄生电路的不确定性，最好还是预留CL1/CL2的位置。</p>
+
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/eda/eda_option.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">VCS仿真option</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/eda/verilog_simu_0delay.html">
+                <span class="level-item">Verilog仿真不打拍分析</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: '452d3b8f487aa2ea3dc69d71765b44f6',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#晶振，vco区别">
+        <span class="has-mr-6">1</span>
+        <span>晶振，vco区别</span>
+        </a></li><li>
+        <a class="is-flex" href="#为什么既要晶振还要vco？">
+        <span class="has-mr-6">2</span>
+        <span>为什么既要晶振还要vco？</span>
+        </a></li><li>
+        <a class="is-flex" href="#晶振一般有哪些参数">
+        <span class="has-mr-6">3</span>
+        <span>晶振一般有哪些参数</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/others/hexo_utlis.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hexo 技巧收录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time></div>
+                    <a href="/others/hexo_utlis.html" class="has-link-black-ter is-size-6">Hexo 技巧收录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/top-index.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="索引置顶">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time></div>
+                    <a href="/top-index.html" class="has-link-black-ter is-size-6">索引置顶</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/python-fp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time></div>
+                    <a href="/sicp/python-fp.html" class="has-link-black-ter is-size-6">Python lambda实现Y组合子</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190411_chisel_version.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time></div>
+                    <a href="/chisel/20190411_chisel_version.html" class="has-link-black-ter is-size-6">Chisel版本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190401_chisel_keep_name.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time></div>
+                    <a href="/chisel/20190401_chisel_keep_name.html" class="has-link-black-ter is-size-6">Chiel Keep变量名</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">10</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="晶振，PLL, VCO介绍" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

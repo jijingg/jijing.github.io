@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>标签: riscv - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="马車同学">
+<meta property="og:url" content="https://jijingg.github.io/tags/riscv/index.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://jijingg.github.io/images/og_image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="马車同学">
+<meta name="twitter:image" content="https://jijingg.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="马車同学" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">标签</a></li>
+            <li class="is-active"><a href="#" aria-current="page">riscv</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181221_riscv_verctor.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/riscv4.jpg" alt="RISCV 矢量处理器">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-20T16:00:00.000Z">2018-12-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 330 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181221_riscv_verctor.html">RISCV 矢量处理器</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="RISC-V向量的工作过程"><a href="#RISC-V向量的工作过程" class="headerlink" title="RISC-V向量的工作过程"></a>RISC-V向量的工作过程</h3><ul>
+<li><p>setp1 : 首先要确定向量的类型</p>
+<p>  比如你要做一个向量运算 Y = a*X + Y ,如果X, Y 都是双精度的浮点的向量，那么就需要申请两个F64类型的向量v0和v1,<br>  如果是 Z = a*X + Y ,同样X,Y是双精度的浮点的向量，那么就需要至少申请3个F64类型的向量v0和v1,v2分别给X,Y,Z使用<br>  RV32V 向量寄存器类型的编码如下</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Floating</th>
+<th style="text-align:left">Poing</th>
+<th style="text-align:left">Signed Interger</th>
+<th style="text-align:left">Unsigned Interger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Width</td>
+<td style="text-align:left">Name</td>
+<td style="text-align:left">vetype</td>
+<td style="text-align:left">Name   vetype</td>
+<td style="text-align:left">Name   vetype</td>
+</tr>
+<tr>
+<td style="text-align:left">8bit</td>
+<td style="text-align:left">—</td>
+<td style="text-align:left">—</td>
+<td style="text-align:left">X8       10100</td>
+<td style="text-align:left">X8U       11100</td>
+</tr>
+<tr>
+<td style="text-align:left">16bit</td>
+<td style="text-align:left">F16</td>
+<td style="text-align:left">01101</td>
+<td style="text-align:left">X16      10101</td>
+<td style="text-align:left">X16U      11101</td>
+</tr>
+<tr>
+<td style="text-align:left">32bits</td>
+<td style="text-align:left">F32</td>
+<td style="text-align:left">01110</td>
+<td style="text-align:left">X32      10110</td>
+<td style="text-align:left">X32U      11110</td>
+</tr>
+<tr>
+<td style="text-align:left">64bits</td>
+<td style="text-align:left">F64</td>
+<td style="text-align:left">01111</td>
+<td style="text-align:left">X64      10111</td>
+<td style="text-align:left">X64U      11111</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>setp2 : 然后申请向量的个数<br>  假如向量寄存器总共有1024Byte ，如果只给2个向量使用,那么对半分，每个向量可以分得512Byte的空间，F64=8Byte，所以<br>  每个向量可以有512/8=64个F64类型的元素，也就是mvl(max_vecotr_length)=64， 一次可以计算的个数是64个元素。<br>  如果我们的X,Y的长度假设是100，那么完成  Y = a*X + Y 需要2次向量操作，<br>  第一次vl选64， 计算64个F64向量的运算<br>  第二次vl选100-64= 36, 计算剩余的36个F64向量的运算</li>
+</ul>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181221_riscv_verctor.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181128_makefile_acc.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack5.jpg" alt="Makefile 笔记">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-27T16:00:00.000Z">2018-11-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1067 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181128_makefile_acc.html">Makefile 笔记</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><h3 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h3><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量定义的3种方式</p>
+<ul>
+<li><p>1  foo = bar (递归展开式变量)<br> 会在引用$(foo)地方原地替换，直到不能再替换，这种方式称之为递归展开式变量  </p>
+ <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo = $(bar)</span><br><span class="line">bar = $(ugh)</span><br><span class="line">ugh = Huh?</span><br><span class="line">all @echo $(foo)</span><br></pre></td></tr></table></figure>
+<p> 以上例子会在@echo $(foo) 地方递归展开<br> 缺点一 ： 是当嵌套定义 <code>foo = $(foo) bar</code> 时讲进入死循环，导致Make失败<br> 其他例子<br> <code>x = $(y)</code><br> <code>y = $(x) $(z)</code><br> 同样会陷入死循环，所以这种定义方法只推荐在不引用变量的时候应用<br> 缺点二 这种定义中如果使用函数，只会在变量被引用时展开，而不是在定义时展开<br> 会使得Make的效率降低，另外有可能会在变量函数的引用会出现非预期结果，特别当变量<br> 定义引用到shell wildcard 函数的情况下，出现不可控的结果  </p>
+ <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = foo</span><br><span class="line">y = $(x) bar  //$(x) 不会被立即替换，只有在$(y)被用到的地方才用x的值替换</span><br><span class="line">x = later     //将会覆盖 原来的 x , </span><br><span class="line">等价于</span><br><span class="line">y = later bar</span><br><span class="line">x = later</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181128_makefile_acc.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181127_riscv_link.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/riscv2.jpg" alt="RISCV 编译 Link探究">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-26T16:00:00.000Z">2018-11-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 分钟 读完 (大约 2131 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181127_riscv_link.html">RISCV 编译 Link探究</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="问题：-如何将代码编译到指定的mem地址？"><a href="#问题：-如何将代码编译到指定的mem地址？" class="headerlink" title="问题： 如何将代码编译到指定的mem地址？"></a>问题： 如何将代码编译到指定的mem地址？</h2><p>在用<code>$RISCV/bin/riscv64-unknown-elf-gcc hello.c</code>时生成的目标文件默认的都是从0x0000_1000地址开始，<br>如何自定义指定到从0x8000_0000地址开始？<br>那么就得熟悉连接器的原理</p>
+<h2 id="默认链接脚本"><a href="#默认链接脚本" class="headerlink" title="默认链接脚本"></a>默认链接脚本</h2><p>gcc在编译和链接的时候，如果不指定链接脚本，会指向默认的链接脚本<br>默认的链接脚本可以用 <code>$RISCV/bin/riscv64-unknown-elf-ld -verbose</code> 来查看</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181127_riscv_link.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181125_gdb_debug.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack5.jpg" alt="RISCV GDB debug调试">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-24T16:00:00.000Z">2018-11-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 526 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181125_gdb_debug.html">RISCV GDB debug调试</a>
+            
+        </h1>
+        <div class="content">
+            <p><a href="https://riscv.org/software-tools/risc-v-isa-simulator/" target="_blank" rel="noopener">RISCV-GDB启动步骤</a></p>
+<h3 id="hello-c"><a href="#hello-c" class="headerlink" title="hello.c"></a>hello.c</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">long</span> a = <span class="hljs-number">0x876543210</span> ;</span><br><span class="line">    <span class="hljs-keyword">float</span> pi = <span class="hljs-number">3.1415926</span> ;</span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello %s!\n"</span>,<span class="hljs-string">"World"</span>);</span><br><span class="line">    a = a*pi;</span><br><span class="line">    <span class="hljs-keyword">return</span> a ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="如何生成汇编代码"><a href="#如何生成汇编代码" class="headerlink" title="如何生成汇编代码"></a>如何生成汇编代码</h3><p><code>riscv64-unknown-elf-gcc -S hello.c</code> 只会生成汇编代码hello.s  不会生成.out文件</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">    .file   &quot;hello.c&quot;</span><br><span class="line">    .option nopic</span><br><span class="line">    .text</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC2:</span><br><span class="line">    .string &quot;World&quot;</span><br><span class="line">    .align  3</span><br><span class="line">.LC3:</span><br><span class="line">    .string &quot;Hello %s!\n&quot;</span><br><span class="line">    .text</span><br><span class="line">    .align  1</span><br><span class="line">    .globl  main</span><br><span class="line">    .type   main, @function</span><br><span class="line">main:</span><br><span class="line">    addi    sp,sp,-32</span><br><span class="line">    sd  ra,24(sp)</span><br><span class="line">    sd  s0,16(sp)</span><br><span class="line">    addi    s0,sp,32</span><br><span class="line">    lui a5,%hi(.LC0)</span><br><span class="line">    ld  a5,%lo(.LC0)(a5)</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    lui a5,%hi(.LC1)</span><br><span class="line">    flw fa5,%lo(.LC1)(a5)</span><br><span class="line">    fsw fa5,-28(s0)</span><br><span class="line">    lui a5,%hi(.LC2)</span><br><span class="line">    addi    a1,a5,%lo(.LC2)</span><br><span class="line">    lui a5,%hi(.LC3)</span><br><span class="line">    addi    a0,a5,%lo(.LC3)</span><br><span class="line">    call    printf</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    fcvt.s.l    fa4,a5</span><br><span class="line">    flw fa5,-28(s0)</span><br><span class="line">    fmul.s  fa5,fa4,fa5</span><br><span class="line">    fcvt.l.s a5,fa5,rtz</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    sext.w  a5,a5</span><br><span class="line">    mv  a0,a5</span><br><span class="line">    ld  ra,24(sp)</span><br><span class="line">    ld  s0,16(sp)</span><br><span class="line">    addi    sp,sp,32</span><br><span class="line">    jr  ra</span><br><span class="line">    .size   main, .-main</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC0:</span><br><span class="line">    .dword  36344967696</span><br><span class="line">    .align  2</span><br><span class="line">.LC1:</span><br><span class="line">    .word   1078530010</span><br><span class="line">    .ident  &quot;GCC: (GNU) 8.1.0&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="如何反汇编-out文件"><a href="#如何反汇编-out文件" class="headerlink" title="如何反汇编.out文件"></a>如何反汇编.out文件</h3><p>首先生成.out文件<code>riscv64-unknown-elf-gcc -o hello.out hello.c</code></p>
+<p>然后反汇编 <code>riscv64-unknown-elf-objdump -d hello.out &gt; hello_disassemble.s</code></p>
+<p>即可查看反汇编代码,搜索main函数如下，当然也包括其他内置函数<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">hello.out:     file format elf64-littleriscv</span><br><span class="line">Disassembly of section .text:</span><br><span class="line">00000000000100b0 &lt;_start&gt;:</span><br><span class="line">   100b0:   0000d197            auipc   gp,0xd</span><br><span class="line">   100b4:   fd818193            addi    gp,gp,-40 # 1d088 &lt;__global_pointer$&gt;</span><br><span class="line">   100b8:   84818513            addi    a0,gp,-1976 # 1c8d0 &lt;_edata&gt;</span><br><span class="line">   100bc:   8d818613            addi    a2,gp,-1832 # 1c960 &lt;_end&gt;           </span><br><span class="line">   .....</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">000000000001038c &lt;printf&gt;:</span><br><span class="line">   1038c:   711d                    addi    sp,sp,-96</span><br><span class="line">   1038e:   f832                    sd  a2,48(sp)</span><br><span class="line">   10390:   fc36                    sd  a3,56(sp)        </span><br><span class="line">   ....</span><br><span class="line">   ..</span><br><span class="line"></span><br><span class="line">0000000000010198 &lt;main&gt;:</span><br><span class="line">   10198:   1101         addi    sp,sp,-32</span><br><span class="line">   1019a:   ec06         sd  ra,24(sp)</span><br><span class="line">   1019c:   e822         sd  s0,16(sp)</span><br><span class="line">   1019e:   1000         addi    s0,sp,32</span><br><span class="line">   101a0:   67e9         lui a5,0x1a</span><br><span class="line">   101a2:   a687b783     ld  a5,-1432(a5) # 19a68 &lt;__clzdi2+0x54&gt;</span><br><span class="line">   101a6:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101aa:   67e9         lui a5,0x1a</span><br><span class="line">   101ac:   a707a787     flw fa5,-1424(a5) # 19a70 &lt;__clzdi2+0x5c&gt;</span><br><span class="line">   101b0:   fef42227     fsw fa5,-28(s0)</span><br><span class="line">   101b4:   67e9         lui a5,0x1a</span><br><span class="line">   101b6:   a5078593     addi    a1,a5,-1456 # 19a50 &lt;__clzdi2+0x3c&gt;</span><br><span class="line">   101ba:   67e9         lui a5,0x1a</span><br><span class="line">   101bc:   a5878513     addi    a0,a5,-1448 # 19a58 &lt;__clzdi2+0x44&gt;</span><br><span class="line">   101c0:   1cc000ef     jal ra,1038c &lt;printf&gt;</span><br><span class="line">   101c4:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101c8:   d027f753     fcvt.s.l    fa4,a5</span><br><span class="line">   101cc:   fe442787     flw fa5,-28(s0)</span><br><span class="line">   101d0:   10f777d3     fmul.s  fa5,fa4,fa5</span><br><span class="line">   101d4:   c02797d3     fcvt.l.s    a5,fa5,rtz</span><br><span class="line">   101d8:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101dc:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101e0:   2781         sext.w  a5,a5</span><br><span class="line">   101e2:   853e         mv  a0,a5</span><br><span class="line">   101e4:   60e2         ld  ra,24(sp)</span><br><span class="line">   101e6:   6442         ld  s0,16(sp)</span><br><span class="line">   101e8:   6105         addi    sp,sp,32</span><br><span class="line">   101ea:   8082         ret         </span><br><span class="line">   ....</span><br><span class="line">   ...</span><br></pre></td></tr></table></figure></p>
+<h3 id="gdb-查看CPU寄存器"><a href="#gdb-查看CPU寄存器" class="headerlink" title="gdb 查看CPU寄存器"></a>gdb 查看CPU寄存器</h3><p>-print $x0<br>-p $x0<br>-p $pc<br>-info reg<br>-display $x0     ;每跑一步都会显示寄存器<br>-ni              ;next inst</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181120_riscv_c_dev_setp.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/ai1.jpg" alt="RISCV C开发调试笔记">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-19T16:00:00.000Z">2018-11-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 分钟 读完 (大约 1200 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181120_riscv_c_dev_setp.html">RISCV C开发调试笔记</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="hello-c"><a href="#hello-c" class="headerlink" title="hello.c"></a>hello.c</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">long</span> a = <span class="hljs-number">0x876543210</span> ;</span><br><span class="line">    <span class="hljs-keyword">float</span> pi = <span class="hljs-number">3.1415926</span> ;</span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello %s!\n"</span>,<span class="hljs-string">"World"</span>);</span><br><span class="line">    a = a*pi;</span><br><span class="line">    <span class="hljs-keyword">return</span> a ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181120_riscv_c_dev_setp.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181116_RISCV_inst_test.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack3.jpg" alt="RISCV 汇编指令调试">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-15T16:00:00.000Z">2018-11-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 分钟 读完 (大约 2016 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181116_RISCV_inst_test.html">RISCV 汇编指令调试</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="RISCV汇编指令调试，立即数使用分析"><a href="#RISCV汇编指令调试，立即数使用分析" class="headerlink" title="RISCV汇编指令调试，立即数使用分析"></a>RISCV汇编指令调试，立即数使用分析</h2><p>新建文件 test.s</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.global main</span><br><span class="line"></span><br><span class="line">.text</span><br><span class="line">main:</span><br><span class="line">    li a5, 0x12345678</span><br><span class="line">    ret</span><br></pre></td></tr></table></figure>
+<p><code>riscv.....gcc test.s</code> 编译成汇编代码<br><code>riscv.....gdb test.s</code> 用调试器运行</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181116_RISCV_inst_test.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/others/hexo_utlis.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hexo 技巧收录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time></div>
+                    <a href="/others/hexo_utlis.html" class="has-link-black-ter is-size-6">Hexo 技巧收录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/top-index.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="索引置顶">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time></div>
+                    <a href="/top-index.html" class="has-link-black-ter is-size-6">索引置顶</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/python-fp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time></div>
+                    <a href="/sicp/python-fp.html" class="has-link-black-ter is-size-6">Python lambda实现Y组合子</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190411_chisel_version.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time></div>
+                    <a href="/chisel/20190411_chisel_version.html" class="has-link-black-ter is-size-6">Chisel版本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190401_chisel_keep_name.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time></div>
+                    <a href="/chisel/20190401_chisel_keep_name.html" class="has-link-black-ter is-size-6">Chiel Keep变量名</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">10</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="马車同学" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

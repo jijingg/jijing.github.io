@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>RISCV 编译 Link探究 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="问题： 如何将代码编译到指定的mem地址？在用$RISCV/bin/riscv64-unknown-elf-gcc hello.c时生成的目标文件默认的都是从0x0000_1000地址开始，如何自定义指定到从0x8000_0000地址开始？那么就得熟悉连接器的原理 默认链接脚本gcc在编译和链接的时候，如果不指定链接脚本，会指向默认的链接脚本默认的链接脚本可以用 $RISCV/bin/riscv6">
+<meta name="keywords" content="riscv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RISCV 编译 Link探究">
+<meta property="og:url" content="https://jijingg.github.io/riscv/20181127_riscv_link.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="问题： 如何将代码编译到指定的mem地址？在用$RISCV/bin/riscv64-unknown-elf-gcc hello.c时生成的目标文件默认的都是从0x0000_1000地址开始，如何自定义指定到从0x8000_0000地址开始？那么就得熟悉连接器的原理 默认链接脚本gcc在编译和链接的时候，如果不指定链接脚本，会指向默认的链接脚本默认的链接脚本可以用 $RISCV/bin/riscv6">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/riscv2.jpg">
+<meta property="og:updated_time" content="2019-04-13T11:16:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RISCV 编译 Link探究">
+<meta name="twitter:description" content="问题： 如何将代码编译到指定的mem地址？在用$RISCV/bin/riscv64-unknown-elf-gcc hello.c时生成的目标文件默认的都是从0x0000_1000地址开始，如何自定义指定到从0x8000_0000地址开始？那么就得熟悉连接器的原理 默认链接脚本gcc在编译和链接的时候，如果不指定链接脚本，会指向默认的链接脚本默认的链接脚本可以用 $RISCV/bin/riscv6">
+<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/riscv2.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="RISCV 编译 Link探究" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main">目录</a>
+                
+                <a class="navbar-item" href="/topic">主题</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/archives">时间轴</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/riscv2.jpg" alt="RISCV 编译 Link探究">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-26T16:00:00.000Z">2018-11-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 分钟 读完 (大约 2131 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                RISCV 编译 Link探究
+            
+        </h1>
+        <div class="content">
+            <h2 id="问题：-如何将代码编译到指定的mem地址？"><a href="#问题：-如何将代码编译到指定的mem地址？" class="headerlink" title="问题： 如何将代码编译到指定的mem地址？"></a>问题： 如何将代码编译到指定的mem地址？</h2><p>在用<code>$RISCV/bin/riscv64-unknown-elf-gcc hello.c</code>时生成的目标文件默认的都是从0x0000_1000地址开始，<br>如何自定义指定到从0x8000_0000地址开始？<br>那么就得熟悉连接器的原理</p>
+<h2 id="默认链接脚本"><a href="#默认链接脚本" class="headerlink" title="默认链接脚本"></a>默认链接脚本</h2><p>gcc在编译和链接的时候，如果不指定链接脚本，会指向默认的链接脚本<br>默认的链接脚本可以用 <code>$RISCV/bin/riscv64-unknown-elf-ld -verbose</code> 来查看</p>
+<a id="more"></a>
+<h2 id="如何更改链接脚本"><a href="#如何更改链接脚本" class="headerlink" title="如何更改链接脚本"></a>如何更改链接脚本</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SECTIONS</span><br><span class="line">&#123;</span><br><span class="line">  . = 0x8000000;</span><br><span class="line">  .text : &#123; *(.text) &#125;</span><br><span class="line">  . = 0x9000000;</span><br><span class="line">  .data : &#123; *(.data) &#125;</span><br><span class="line">  .bss : &#123; *(.bss) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在编译时指定<code>$RISCV/bin/riscv64-unknown-elf-gcc -T link.lds hello.c  -o hello.out</code><br>默认会报错，没有指定_start 就没有办法分配堆和栈空间<br><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xxxx/bin/../lib/gcc/riscv64-unknown-elf/8.1.0/../../../../riscv64-unknown-elf/lib/rv64imafdc/lp64d/crt0.o: In <span class="hljs-keyword">function</span> `_start<span class="hljs-string">':</span></span><br><span class="line"><span class="hljs-string">(.text+0x0): undefined reference to `__global_pointer$'</span></span><br><span class="line">(.text+0x8): undefined reference to `_edata<span class="hljs-string">'</span></span><br><span class="line"><span class="hljs-string">(.text+0x10): undefined reference to `_end'</span></span><br><span class="line">collect2.exe: error: ld returned 1 <span class="hljs-built_in">exit</span> status</span><br></pre></td></tr></table></figure></p>
+<p>简单起见添加option <code>-nostartfiles</code> 忽略指定_start<br><code>$RISCV/bin/riscv64-unknown-elf-gcc -T link.lds hello.c  -o hello.out -nostartfiles</code><br>然后<code>$RISCV/bin/riscv64-unknown-elf-objdump -d hello.out &gt; hello.dump</code>可以看到.text 从0x8000000地址开始<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hello.out:     file format elf64-littleriscv</span><br><span class="line"></span><br><span class="line">Disassembly of section .text:</span><br><span class="line"></span><br><span class="line">0000000008000000 &lt;main&gt;:</span><br><span class="line"> 8000000:	1101                	addi	sp,sp,-32</span><br><span class="line"> 8000002:	ec06                	sd	ra,24(sp)</span><br><span class="line"> 8000004:	e822                	sd	s0,16(sp)</span><br><span class="line"> 8000006:	1000                	addi	s0,sp,32</span><br></pre></td></tr></table></figure></p>
+<h2 id="完整的参考实例"><a href="#完整的参考实例" class="headerlink" title="完整的参考实例"></a>完整的参考实例</h2><p>参见hbird-e-sdk是RISCV开源E200系列开发板的sdk  </p>
+<p><a href="https://github.com/SI-RISCV/hbird-e-sdk" target="_blank" rel="noopener">https://github.com/SI-RISCV/hbird-e-sdk</a>  </p>
+<p><code>./generate_test4sim.csh</code> 生成指定地址的out以及.verilog 二进制可读文件   </p>
+<p>编译新的case只需<br><code>make dasm      PROGRAM=hellowrold  BOARD=hbird-e200 CORE=e203   DOWNLOAD=itcm</code>即可<br>展看来看，实际上执行的是<br><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">make -C software/hello_world  \</span><br><span class="line">     SIZE=$(RISCV_GNU_TOOLCHAIN)/bin/riscv-none-embed-size  \</span><br><span class="line">     CC=$(RISCV_GNU_TOOLCHAIN)/bin/riscv-none-embed-gcc     \</span><br><span class="line">     RISCV_ARCH=rv32imac \</span><br><span class="line">     REPLACE_PRINTF=0    \</span><br><span class="line">     NANO_PFLOAT=1       \</span><br><span class="line">     USE_NANO=1          \</span><br><span class="line">     DOWNLOAD=itcm       \</span><br><span class="line">     RISCV_ABI=ilp32     \</span><br><span class="line">     AR=$(RISCV_GNU_TOOLCHAIN)/bin/riscv-none-embed-ar  \</span><br><span class="line">     BSP_BASE=/lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp \</span><br><span class="line">     BOARD=hbird-e200  \</span><br></pre></td></tr></table></figure></p>
+<p>具体执行的是<code>hbird-e-sdk/Makefile</code>下的makefile，具体过程如下：<br><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># cd /lifespace/t1/jijing/lab/e200_opensource/hbird-e-sdk/software/hello_world</span></span><br><span class="line"></span><br><span class="line">$(RISCV_GNU_TOOLCHAIN)/bin/riscv-none-embed-gcc -O2 -g -march=rv32imac -mabi=ilp32         \</span><br><span class="line">    -ffunction-sections -fdata-sections -fno-common                                        \</span><br><span class="line">    -I/lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs            \</span><br><span class="line">    -I/lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/drivers          \</span><br><span class="line">    -I/lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/env              \</span><br><span class="line">    -I/lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/include          \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/env/start.o        \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/env/entry.o        \</span><br><span class="line">    hello_world.o                                                                          \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/env/init.o         \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/close.o      \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/_exit.o      \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/write_hex.o  \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/fstat.o      \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/isatty.o     \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/lseek.o      \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/read.o       \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/sbrk.o       \</span><br><span class="line">    /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/stubs/write.o      \</span><br><span class="line">    -o hello_world                                                                         \</span><br><span class="line">    -T /lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/env/link_itcm.lds  -nostartfiles \</span><br><span class="line">    -Wl,--gc-sections  -Wl,--check-sections --specs=nano.specs  -u _printf_float           \</span><br><span class="line">    -L/lifespace/t1/jijing/lab/e200_opensource/hbird<span class="hljs-_">-e</span>-sdk/bsp/hbird-e200/env              \</span><br><span class="line"></span><br><span class="line">$(RISCV_GNU_TOOLCHAIN)/bin/riscv-none-embed-size hello_world</span><br><span class="line"><span class="hljs-comment"># Leaving /lifespace/t1/jijing/lab/e200_opensource/hbird-e-sdk/software/hello_world</span></span><br></pre></td></tr></table></figure></p>
+<p>还可以在bsp/env/common.k 中添加一行查看C编译成的hello.s汇编程序文件</p>
+<figure class="highlight makefile hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-variable">$(TARGET)</span>: <span class="hljs-variable">$(LINK_OBJS)</span> <span class="hljs-variable">$(LINK_DEPS)</span></span><br><span class="line">    <span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$(CFLAGS)</span> <span class="hljs-variable">$(INCLUDES)</span> <span class="hljs-variable">$@</span>.c  -S   <span class="hljs-comment">#添加该行，可以在对于目录下生成 .s汇编程序 </span></span><br><span class="line">    <span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$(CFLAGS)</span> <span class="hljs-variable">$(INCLUDES)</span> <span class="hljs-variable">$(LINK_OBJS)</span> -o <span class="hljs-variable">$@</span> <span class="hljs-variable">$(LDFLAGS)</span></span><br><span class="line">    <span class="hljs-variable">$(SIZE)</span> <span class="hljs-variable">$@</span></span><br></pre></td></tr></table></figure>
+<p>具体link脚本先关细节可见：<br>hbird-e-sdk/bsp/hbird-e200/env/common.mk 文件中 <code>LDFLAGS +=</code>的定义<br>对应脚本</p>
+<ul>
+<li><code>hbird-e-sdk/bsp/hbird-e200/env/link_itcm.lds</code>     下载目标ITCM 链接细节的描述</li>
+<li><code>hbird-e-sdk/bsp/hbird-e200/env/link_flash.lds</code>    下载目标Flash 链接细节的描述</li>
+<li><code>hbird-e-sdk/bsp/hbird-e200/env/link_flashxip.lds</code></li>
+</ul>
+<p>编译好的二进制可读文件在e200的vsim目录下<br><code>make run_test TESTCASE=$PWD/../riscv-tools/fpga_test4sim/hello4sim/hello_world</code> 即可启动仿真环境</p>
+<h2 id="lds-链接脚本的原理介绍"><a href="#lds-链接脚本的原理介绍" class="headerlink" title="lds 链接脚本的原理介绍"></a>lds 链接脚本的原理介绍</h2><p><a href="https://www.cnblogs.com/li-hao/p/4107964.html" target="_blank" rel="noopener">完整的文章</a></p>
+<p>链接器把一个或多个输入文件合成一个输出文件.<br><strong>输入文件</strong>: 目标文件或链接脚本文件.<br><strong>输出文件</strong>: 目标文件或可执行文件.    </p>
+<p>   目标文件(包括可执行文件)具有固定的格式, 在UNIX或GNU/Linux平台下, 一般为ELF格式<br>有时把输入文件内的section称为输入section(input section), 把输出文件内的section称为输出section(output sectin).<br>目标文件的每个section至少包含两个信息: 名字和大小. 大部分section还包含与它相关联的一块数据, 称为section contents(section内容). 一个section可被标记为“loadable(可加载的)”或“allocatable(可分配的)”.<br>loadable section: 在输出文件运行时, 相应的section内容将被载入进程地址空间中.<br>allocatable section: 内容为空的section可被标记为“可分配的”. 在输出文件运行时, 在进程地址空间中空出大小同section指定大小的部分. 某些情况下, 这块内存必须被置零.<br>如果一个section不是“可加载的”或“可分配的”, 那么该section通常包含了调试信息. 可用objdump -h命令查看相关信息.<br>每个“可加载的”或“可分配的”输出section通常包含两个地址:   </p>
+<ul>
+<li>VMA(virtual memory address虚拟内存地址或程序地址空间地址)  </li>
+<li>LMA(load memory address加载内存地址或进程地址空间地址). 通常VMA和LMA是相同的.  </li>
+</ul>
+<p>在目标文件中, loadable或allocatable的输出section有两种地址: VMA(virtual Memory Address)和LMA(Load Memory Address). VMA是执行输出文件时section所在的地址, 而LMA是加载输出文件时section所在的地址. 一般而言, 某section的VMA == LMA. 但在嵌入式系统中, 经常存在加载地址和执行地址不同的情况: 比如将输出文件加载到开发板的flash中(由LMA指定), 而在运行时将位于flash中的输出文件复制到SDRAM中(由VMA指定).<br>可这样来理解VMA和LMA, 假设:  </p>
+<ul>
+<li>(1) .data section对应的VMA地址是0×08050000, 该section内包含了3个32位全局变量, i、j和k, 分别为1,2,3.    </li>
+<li>(2) .text section内包含由”printf( “j=%d “, j );”程序片段产生的代码.    </li>
+</ul>
+<p>连接时指定.data section的VMA为0×08050000, 产生的printf指令是将地址为0×08050004处的4字节内容作为一个整数打印出来。<br>如果.data section的LMA为0×08050000，显然结果是j=2<br>如果.data section的LMA为0×08050004，显然结果是j=1<br>还可这样理解LMA:<br>.text section内容的开始处包含如下两条指令(intel i386指令是10字节，每行对应5字节):<br>jmp 0×08048285<br>movl $0×1,%eax<br>如果.text section的LMA为0×08048280, 那么在进程地址空间内0×08048280处为“jmp 0×08048285”指令, 0×08048285处为movl $0×1,%eax指令. 假设某指令跳转到地址0×08048280, 显然它的执行将导致%eax寄存器被赋值为1.<br>如果.text section的LMA为0×08048285, 那么在进程地址空间内0×08048285处为“jmp 0×08048285”指令, 0×0804828a处为movl $0×1,%eax指令. 假设某指令跳转到地址0×08048285, 显然它的执行又跳转到进程地址空间内0×08048285处, 造成死循环.<br>符号(symbol): 每个目标文件都有符号表(SYMBOL TABLE), 包含已定义的符号(对应全局变量和static变量和定义的函数的名字)和未定义符号(未定义的函数的名字和引用但没定义的符号)信息.<br>符号值: 每个符号对应一个地址, 即符号值(这与c程序内变量的值不一样, 某种情况下可以把它看成变量的地址). 可用nm命令查看它们. (nm的使用方法可参考本blog的GNU binutils笔记)  </p>
+<h2 id="脚本格式"><a href="#脚本格式" class="headerlink" title="脚本格式"></a>脚本格式</h2><p>链接脚本由一系列命令组成, 每个命令由一个关键字(一般在其后紧跟相关参数)或一条对符号的赋值语句组成. 命令由分号‘;’分隔开.<br>文件名或格式名内如果包含分号’;’或其他分隔符, 则要用引号‘”’将名字全称引用起来. 无法处理含引号的文件名./<em> </em>/之间的是注释。  </p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/riscv/">riscv</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/riscv/20181128_makefile_acc.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Makefile 笔记</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/riscv/20181125_gdb_debug.html">
+                <span class="level-item">RISCV GDB debug调试</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: '55520f9af14ee3bc37d6b6a606b0a08c',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#问题：-如何将代码编译到指定的mem地址？">
+        <span class="has-mr-6">1</span>
+        <span>问题： 如何将代码编译到指定的mem地址？</span>
+        </a></li><li>
+        <a class="is-flex" href="#默认链接脚本">
+        <span class="has-mr-6">2</span>
+        <span>默认链接脚本</span>
+        </a></li><li>
+        <a class="is-flex" href="#如何更改链接脚本">
+        <span class="has-mr-6">3</span>
+        <span>如何更改链接脚本</span>
+        </a></li><li>
+        <a class="is-flex" href="#完整的参考实例">
+        <span class="has-mr-6">4</span>
+        <span>完整的参考实例</span>
+        </a></li><li>
+        <a class="is-flex" href="#lds-链接脚本的原理介绍">
+        <span class="has-mr-6">5</span>
+        <span>lds 链接脚本的原理介绍</span>
+        </a></li><li>
+        <a class="is-flex" href="#脚本格式">
+        <span class="has-mr-6">6</span>
+        <span>脚本格式</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/others/hexo_utlis.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hexo 技巧收录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time></div>
+                    <a href="/others/hexo_utlis.html" class="has-link-black-ter is-size-6">Hexo 技巧收录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/top-index.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="索引置顶">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time></div>
+                    <a href="/top-index.html" class="has-link-black-ter is-size-6">索引置顶</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/python-fp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time></div>
+                    <a href="/sicp/python-fp.html" class="has-link-black-ter is-size-6">Python lambda实现Y组合子</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190411_chisel_version.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time></div>
+                    <a href="/chisel/20190411_chisel_version.html" class="has-link-black-ter is-size-6">Chisel版本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/chisel/20190401_chisel_keep_name.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time></div>
+                    <a href="/chisel/20190401_chisel_keep_name.html" class="has-link-black-ter is-size-6">Chiel Keep变量名</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">10</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="RISCV 编译 Link探究" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
