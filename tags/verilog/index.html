@@ -543,66 +543,6 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/eda/timing_analysis.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/led1.jpg" alt="综合时序分析回顾">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 379 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/eda/timing_analysis.html">综合时序分析回顾</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="时序分析"><a href="#时序分析" class="headerlink" title="时序分析"></a>时序分析</h2><p>静态时序分析工具STA，在分析时序的时候会统一从一个点出发开始计算分析（这样才有可行性），往往是从时钟PLL出来以后开始计算  </p>
-<p>一般情况下都会设一个clock network delay 表示从PLL 到寄存器段clk的群延迟 ，理想情况下，到每个寄存器的群延迟都是一样的（时钟balance）<br><img src="http://ppw74l91w.bkt.clouddn.com/riscv/reg_reg.png" alt="寄存器"></p>
-<p><img src="http://ppw74l91w.bkt.clouddn.com/eda/timing_analysis.png" alt="路径计算"></p>
-<p>看一个timing报告：</p>
-<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">****************************************</span><br><span class="line"></span><br><span class="line">  Startpoint: U_xx/_ram_sp1024x8/srsp_1024x8</span><br><span class="line">              (rising edge-triggered flip-flop clocked by clk)</span><br><span class="line">  Endpoint: U_xx/nS_bit_reg_1_</span><br><span class="line">            (rising edge-triggered flip-flop clocked by clk)</span><br><span class="line">  Path Group: clk</span><br><span class="line">  Path Type: max</span><br><span class="line"></span><br><span class="line">  Des/Clust/Port     Wire Load Model       Library</span><br><span class="line">  ------------------------------------------------</span><br><span class="line">  xx_top           ZeroWireload          tef40ulp128x8hd_ph_ssg0p99v2p25vm40c</span><br><span class="line"></span><br><span class="line">  Point                                                   Incr       Path</span><br><span class="line">  --------------------------------------------------------------------------</span><br><span class="line">  clock clk (rise edge)                  0.0000     0.0000</span><br><span class="line">  clock network delay (ideal)            2.0000     2.0000   <span class="hljs-comment">#时钟群延迟设为2ns</span></span><br><span class="line">  xx/srsp_1024x8/CLK (sadr41p1024x8m4b1) 0.0000     2.0000 r <span class="hljs-comment">#arrival + 2ns    </span></span><br><span class="line">  xx/srsp_1024x8/Q[0] (sadr41p1024x8m4b) 2.2361     4.2361 f</span><br><span class="line">  xx/U37/X (SVN_ND2_T_2)                 0.0290     4.2651 r</span><br><span class="line">  xx/U47/X (SVN_ND2_2)                   0.0323     4.2974 f</span><br><span class="line">  ....</span><br><span class="line">  ..</span><br><span class="line">  xx/U188/X (SVN_EN2_F_1)                0.0956     4.8690 f</span><br><span class="line">  xx/nS_bit_reg_1_/D (SVN_FSDPRBQ_D_4)   0.0000     4.8690 f</span><br><span class="line">  data arrival time                                 4.8690</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  clock clk (rise edge)                  3.3300     3.3300   <span class="hljs-comment">#300Mhz = 3.33ns</span></span><br><span class="line">  clock network delay (ideal)            2.0000     5.3300   <span class="hljs-comment">#required + 2  =5.33ns</span></span><br><span class="line">  clock uncertainty                      0.3000     5.0300   <span class="hljs-comment">#恶化抖动</span></span><br><span class="line">  xxx/nS_bit_reg_1_/CK (SVN_FSDPRBQ_D_4) 0.0000     5.0300 r</span><br><span class="line">  library setup time                     0.3303     4.6997   <span class="hljs-comment">#- setup time</span></span><br><span class="line">  data required time                                4.6997</span><br><span class="line">  --------------------------------------------------------------------------</span><br><span class="line">  data required time                                4.6997   <span class="hljs-comment"># = clk_arvl_time - Setuptime - skew</span></span><br><span class="line">  data arrival time                                -4.8690   <span class="hljs-comment">#</span></span><br><span class="line">  --------------------------------------------------------------------------</span><br><span class="line">  slack (VIOLATED)                                 -0.1693</span><br><span class="line"></span><br><span class="line">****************************************</span><br></pre></td></tr></table></figure>
-<p>Clock Setup Slack = Data Required Time – Data Arrival Time</p>
-<p>Clock Arrival Time = Latch Edge + Clock Network Delay to Destination Register</p>
-<p>Data Required = Clock Arrival Time – μtSU – Setup Uncertainty</p>
-<p>Data Arrival Time = Launch Edge + Clock Network Delay Source Register + μtCO + Register-to-Register Delay</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
         <a href="/others/terminal_FAQ.html" class="image is-7by1">
             <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/dog.jpg" alt="Terminal配置常见问题">
         </a>
@@ -653,6 +593,66 @@
 </ol>
 </li>
 </ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/eda/timing_analysis.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/led1.jpg" alt="综合时序分析回顾">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 379 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/eda/timing_analysis.html">综合时序分析回顾</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="时序分析"><a href="#时序分析" class="headerlink" title="时序分析"></a>时序分析</h2><p>静态时序分析工具STA，在分析时序的时候会统一从一个点出发开始计算分析（这样才有可行性），往往是从时钟PLL出来以后开始计算  </p>
+<p>一般情况下都会设一个clock network delay 表示从PLL 到寄存器段clk的群延迟 ，理想情况下，到每个寄存器的群延迟都是一样的（时钟balance）<br><img src="http://ppw74l91w.bkt.clouddn.com/riscv/reg_reg.png" alt="寄存器"></p>
+<p><img src="http://ppw74l91w.bkt.clouddn.com/eda/timing_analysis.png" alt="路径计算"></p>
+<p>看一个timing报告：</p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">****************************************</span><br><span class="line"></span><br><span class="line">  Startpoint: U_xx/_ram_sp1024x8/srsp_1024x8</span><br><span class="line">              (rising edge-triggered flip-flop clocked by clk)</span><br><span class="line">  Endpoint: U_xx/nS_bit_reg_1_</span><br><span class="line">            (rising edge-triggered flip-flop clocked by clk)</span><br><span class="line">  Path Group: clk</span><br><span class="line">  Path Type: max</span><br><span class="line"></span><br><span class="line">  Des/Clust/Port     Wire Load Model       Library</span><br><span class="line">  ------------------------------------------------</span><br><span class="line">  xx_top           ZeroWireload          tef40ulp128x8hd_ph_ssg0p99v2p25vm40c</span><br><span class="line"></span><br><span class="line">  Point                                                   Incr       Path</span><br><span class="line">  --------------------------------------------------------------------------</span><br><span class="line">  clock clk (rise edge)                  0.0000     0.0000</span><br><span class="line">  clock network delay (ideal)            2.0000     2.0000   <span class="hljs-comment">#时钟群延迟设为2ns</span></span><br><span class="line">  xx/srsp_1024x8/CLK (sadr41p1024x8m4b1) 0.0000     2.0000 r <span class="hljs-comment">#arrival + 2ns    </span></span><br><span class="line">  xx/srsp_1024x8/Q[0] (sadr41p1024x8m4b) 2.2361     4.2361 f</span><br><span class="line">  xx/U37/X (SVN_ND2_T_2)                 0.0290     4.2651 r</span><br><span class="line">  xx/U47/X (SVN_ND2_2)                   0.0323     4.2974 f</span><br><span class="line">  ....</span><br><span class="line">  ..</span><br><span class="line">  xx/U188/X (SVN_EN2_F_1)                0.0956     4.8690 f</span><br><span class="line">  xx/nS_bit_reg_1_/D (SVN_FSDPRBQ_D_4)   0.0000     4.8690 f</span><br><span class="line">  data arrival time                                 4.8690</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  clock clk (rise edge)                  3.3300     3.3300   <span class="hljs-comment">#300Mhz = 3.33ns</span></span><br><span class="line">  clock network delay (ideal)            2.0000     5.3300   <span class="hljs-comment">#required + 2  =5.33ns</span></span><br><span class="line">  clock uncertainty                      0.3000     5.0300   <span class="hljs-comment">#恶化抖动</span></span><br><span class="line">  xxx/nS_bit_reg_1_/CK (SVN_FSDPRBQ_D_4) 0.0000     5.0300 r</span><br><span class="line">  library setup time                     0.3303     4.6997   <span class="hljs-comment">#- setup time</span></span><br><span class="line">  data required time                                4.6997</span><br><span class="line">  --------------------------------------------------------------------------</span><br><span class="line">  data required time                                4.6997   <span class="hljs-comment"># = clk_arvl_time - Setuptime - skew</span></span><br><span class="line">  data arrival time                                -4.8690   <span class="hljs-comment">#</span></span><br><span class="line">  --------------------------------------------------------------------------</span><br><span class="line">  slack (VIOLATED)                                 -0.1693</span><br><span class="line"></span><br><span class="line">****************************************</span><br></pre></td></tr></table></figure>
+<p>Clock Setup Slack = Data Required Time – Data Arrival Time</p>
+<p>Clock Arrival Time = Latch Edge + Clock Network Delay to Destination Register</p>
+<p>Data Required = Clock Arrival Time – μtSU – Setup Uncertainty</p>
+<p>Data Arrival Time = Launch Edge + Clock Network Delay Source Register + μtCO + Register-to-Register Delay</p>
 
         </div>
         
