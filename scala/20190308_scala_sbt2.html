@@ -10,7 +10,7 @@
 
 
     <meta name="description" content="package and import1234567├── build.sbt└── src    └── main        └── scala            ├── Interleave.scala            ├── utils.scala            └── config.scala 对于同一目录下的两个文件，可以不用import，默认在一个package内">
-<meta name="keywords" content="scala,函数式编程">
+<meta name="keywords" content="函数式编程,scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scala 初探.四(sbt组织scala代码2)">
 <meta property="og:url" content="https://jijingg.github.io/scala/20190308_scala_sbt2.html">
@@ -18,7 +18,7 @@
 <meta property="og:description" content="package and import1234567├── build.sbt└── src    └── main        └── scala            ├── Interleave.scala            ├── utils.scala            └── config.scala 对于同一目录下的两个文件，可以不用import，默认在一个package内">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg">
-<meta property="og:updated_time" content="2019-04-13T09:42:40.000Z">
+<meta property="og:updated_time" content="2019-04-25T12:44:49.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala 初探.四(sbt组织scala代码2)">
 <meta name="twitter:description" content="package and import1234567├── build.sbt└── src    └── main        └── scala            ├── Interleave.scala            ├── utils.scala            └── config.scala 对于同一目录下的两个文件，可以不用import，默认在一个package内">
@@ -167,7 +167,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 100 个字)
+                    2 分钟 读完 (大约 355 个字)
                 </span>
                 
                 
@@ -186,6 +186,13 @@
 <a id="more"></a>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//utils.scala </span></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassInUtils</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Interleave.scala  不需要import ClassInUtils ,直接使用就可以，sbt 会帮你搞定编译  </p>
+<h3 id="sbt-import-错误解决"><a href="#sbt-import-错误解决" class="headerlink" title="sbt import 错误解决"></a>sbt import 错误解决</h3><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">scalaDSL&gt;</span><span class="hljs-bash"> tree src                                                                                                                                                                                                    ~/lab/scalaDSL</span></span><br><span class="line">src</span><br><span class="line">├── main</span><br><span class="line">    └── scala</span><br><span class="line">        └── parser.scala</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> scala.util.parsing.combinator._</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Arith</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">JavaTokenParsers</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">XXtest</span> </span>&#123;</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]) &#123;</span><br><span class="line">    println(<span class="hljs-string">"Hello scala ***"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>sbt run</code> 总是会显示<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.....object parsing is not a member of pacakge util</span><br><span class="line">[error] import scala.util.parsing.combinator._</span><br><span class="line">[error]                   ^</span><br></pre></td></tr></table></figure></p>
+<p><code>scala src/main/scala/parser.scala</code> 可以正常打印<code>Hello scala ***</code></p>
+<p>命令行的scala版本2.12.6， build.sbt 还是scala 2.12.6 ，所以怀疑是不是sbt的版本有问题<br>查看<code>project/build.property</code>版本号为1.2.8 ，改为1.1.1， 1.1.2都是同样的问题<br>后来在网上搜到，build.sbt需要添加librarydependence 。如下<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name := <span class="hljs-string">"scalaDSL"</span></span><br><span class="line">version := <span class="hljs-string">"0.1"</span></span><br><span class="line"><span class="hljs-comment">//添加下面一行</span></span><br><span class="line">libraryDependencies += <span class="hljs-string">"org.scala-lang.modules"</span> %% <span class="hljs-string">"scala-parser-combinators"</span> % <span class="hljs-string">"1.0.2"</span></span><br><span class="line">scalaVersion := <span class="hljs-string">"2.11.12"</span></span><br></pre></td></tr></table></figure></p>
+<p>重新<code>sbt run</code>编译正常<br>备注：由于在网上搜到的scala-parser-combinators版本为1.0.2，对应的scala版本是2.11<br>因此 <code>scalaVersion := &quot;2.12.6&quot;</code> 改成 <code>scalaVersion := &quot;2.11.12&quot;</code></p>
+<p>同理IDEA设置中有时候发现scala  sbt版本都设置正确了，但是有些库还是找不到，显示红色，<br>很可能就是  libraryDependencies 设置问题</p>
 
         </div>
         
@@ -215,16 +222,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/chisel/20190321_chisel_comb_reg.html">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/scala/20190308_scala_sbt1.html">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Chisel组合逻辑时序逻辑</span>
+                <span class="level-item">Scala 初探.三(sbt组织scala代码1)</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/scala/20190308_scala_sbt1.html">
-                <span class="level-item">Scala 初探.三(sbt组织scala代码1)</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/scala/20190308_scala_package.html">
+                <span class="level-item">Scala 初探.二(package组织方式)</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -285,6 +292,10 @@
         <a class="is-flex" href="#package-and-import">
         <span class="has-mr-6">1</span>
         <span>package and import</span>
+        </a></li><li>
+        <a class="is-flex" href="#sbt-import-错误解决">
+        <span class="has-mr-6">2</span>
+        <span>sbt import 错误解决</span>
         </a></li></ul>
         </div>
     </div>
@@ -349,7 +360,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li>
             </ul>
@@ -382,6 +393,44 @@
                     <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/20190421_whyfp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
+                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/whyfp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
+                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
                     </p>
                 </div>
             </div>
@@ -425,44 +474,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/sicp/lambda_02_number.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/building2.jpg" alt="lambda演算python实现[二]之数字">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-19T12:34:36.000Z">2019-04-19</time></div>
-                    <a href="/sicp/lambda_02_number.html" class="has-link-black-ter is-size-6">lambda演算python实现[二]之数字</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/scala/scala_FAQ.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 避坑大法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-15T16:00:00.000Z">2019-04-16</time></div>
-                    <a href="/scala/scala_FAQ.html" class="has-link-black-ter is-size-6">Scala 避坑大法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -485,7 +496,7 @@
                     <span class="level-item">四月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">15</span>
                 </span>
             </a>
         </li>
@@ -621,7 +632,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 

@@ -269,6 +269,66 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/chisel/20181205_chisel_learning.html" class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg" alt="Chisel 实例问题汇总">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 319 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/20181205_chisel_learning.html">Chisel 实例问题汇总</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题"><a href="#chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题" class="headerlink" title="chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题"></a>chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题</h4><p>同样的一份代码<br><a href="../assets/code/scala/GCD.scala">src/main/scala/GCD.scala</a><br><a href="../assets/code/scala/GCDTester.scla">src/test/scala/GCDTester.scala</a>    </p>
+<p>其中生成vcd波形的代码<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">GCDTester</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">App</span> </span>&#123;</span><br><span class="line">  iotesters.<span class="hljs-type">Driver</span>.execute(<span class="hljs-type">Array</span>(<span class="hljs-string">"--target-dir"</span>, <span class="hljs-string">"generated"</span>, <span class="hljs-string">"--fint-write-vcd"</span>), () =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCD</span>)&#123;</span><br><span class="line">    c =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCDTests</span>(c)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/chisel/20181205_chisel_learning.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/eda/how_to_send_param2tb.html" class="image is-7by1">
             <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata1.jpg" alt="从Shell传递变量给verilog的两种方法">
         </a>
@@ -379,66 +439,6 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/chisel/20190320_verilog_case_ifelse.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/20181205_chisel_learning.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg" alt="Chisel 实例问题汇总">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 319 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20181205_chisel_learning.html">Chisel 实例问题汇总</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题"><a href="#chisel-example-chisel-tutorial-同样代码，生成器输出不一致问题" class="headerlink" title="chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题"></a>chisel-example \ chisel-tutorial 同样代码，生成器输出不一致问题</h4><p>同样的一份代码<br><a href="../assets/code/scala/GCD.scala">src/main/scala/GCD.scala</a><br><a href="../assets/code/scala/GCDTester.scla">src/test/scala/GCDTester.scala</a>    </p>
-<p>其中生成vcd波形的代码<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">GCDTester</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">App</span> </span>&#123;</span><br><span class="line">  iotesters.<span class="hljs-type">Driver</span>.execute(<span class="hljs-type">Array</span>(<span class="hljs-string">"--target-dir"</span>, <span class="hljs-string">"generated"</span>, <span class="hljs-string">"--fint-write-vcd"</span>), () =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCD</span>)&#123;</span><br><span class="line">    c =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">GCDTests</span>(c)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20181205_chisel_learning.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -856,7 +856,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li>
             </ul>
@@ -889,6 +889,44 @@
                     <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/20190421_whyfp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
+                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/whyfp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
+                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
                     </p>
                 </div>
             </div>
@@ -932,44 +970,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/sicp/lambda_02_number.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/building2.jpg" alt="lambda演算python实现[二]之数字">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-19T12:34:36.000Z">2019-04-19</time></div>
-                    <a href="/sicp/lambda_02_number.html" class="has-link-black-ter is-size-6">lambda演算python实现[二]之数字</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/scala/scala_FAQ.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 避坑大法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-15T16:00:00.000Z">2019-04-16</time></div>
-                    <a href="/scala/scala_FAQ.html" class="has-link-black-ter is-size-6">Scala 避坑大法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -992,7 +992,7 @@
                     <span class="level-item">四月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">15</span>
                 </span>
             </a>
         </li>
@@ -1128,7 +1128,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 

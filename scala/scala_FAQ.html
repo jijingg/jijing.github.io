@@ -9,19 +9,19 @@
 
 
 
-    <meta name="description" content="单引号双引号是有区别的  单引号表示：char字符  双引号表示：string字符">
-<meta name="keywords" content="scala,函数式编程">
+    <meta name="description" content="单引号双引号是有区别的  单引号表示：char字符  双引号表示：string字符   scala 为什么不建议用return  return是命令时语句，Scala鼓励函数式编程，函数式在描述关系，而不是高速计算机怎么做 return会破坏Scala的类型推断，加上return 你得显式的声明返回类型 return在有些情况下使返回含义模糊 scala实际上并没有真正意义上的return语句，">
+<meta name="keywords" content="函数式编程,scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scala 避坑大法">
 <meta property="og:url" content="https://jijingg.github.io/scala/scala_FAQ.html">
 <meta property="og:site_name" content="马車同学">
-<meta property="og:description" content="单引号双引号是有区别的  单引号表示：char字符  双引号表示：string字符">
+<meta property="og:description" content="单引号双引号是有区别的  单引号表示：char字符  双引号表示：string字符   scala 为什么不建议用return  return是命令时语句，Scala鼓励函数式编程，函数式在描述关系，而不是高速计算机怎么做 return会破坏Scala的类型推断，加上return 你得显式的声明返回类型 return在有些情况下使返回含义模糊 scala实际上并没有真正意义上的return语句，">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg">
-<meta property="og:updated_time" content="2019-04-16T02:07:05.000Z">
+<meta property="og:updated_time" content="2019-04-24T03:18:56.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala 避坑大法">
-<meta name="twitter:description" content="单引号双引号是有区别的  单引号表示：char字符  双引号表示：string字符">
+<meta name="twitter:description" content="单引号双引号是有区别的  单引号表示：char字符  双引号表示：string字符   scala 为什么不建议用return  return是命令时语句，Scala鼓励函数式编程，函数式在描述关系，而不是高速计算机怎么做 return会破坏Scala的类型推断，加上return 你得显式的声明返回类型 return在有些情况下使返回含义模糊 scala实际上并没有真正意义上的return语句，">
 <meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg">
 
 
@@ -167,7 +167,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 29 个字)
+                    1 分钟 读完 (大约 147 个字)
                 </span>
                 
                 
@@ -181,7 +181,16 @@
         </h1>
         <div class="content">
             <ul>
-<li>单引号双引号是有区别的<br>  单引号表示：char字符<br>  双引号表示：string字符 </li>
+<li><p>单引号双引号是有区别的<br>  单引号表示：char字符<br>  双引号表示：string字符 </p>
+</li>
+<li><p>scala 为什么不建议用return</p>
+<ol>
+<li>return是命令时语句，Scala鼓励函数式编程，函数式在描述关系，而不是高速计算机怎么做</li>
+<li>return会破坏Scala的类型推断，加上return 你得显式的声明返回类型</li>
+<li>return在有些情况下使返回含义模糊</li>
+<li>scala实际上并没有真正意义上的return语句，而是又抛出异常的语法糖包裹实现的</li>
+</ol>
+</li>
 </ul>
 
         </div>
@@ -342,7 +351,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li>
             </ul>
@@ -375,6 +384,44 @@
                     <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/20190421_whyfp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
+                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/sicp/whyfp.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
+                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
                     </p>
                 </div>
             </div>
@@ -418,44 +465,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/sicp/lambda_02_number.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/building2.jpg" alt="lambda演算python实现[二]之数字">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-19T12:34:36.000Z">2019-04-19</time></div>
-                    <a href="/sicp/lambda_02_number.html" class="has-link-black-ter is-size-6">lambda演算python实现[二]之数字</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/scala/scala_FAQ.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 避坑大法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-15T16:00:00.000Z">2019-04-16</time></div>
-                    <a href="/scala/scala_FAQ.html" class="has-link-black-ter is-size-6">Scala 避坑大法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -478,7 +487,7 @@
                     <span class="level-item">四月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">15</span>
                 </span>
             </a>
         </li>
@@ -614,7 +623,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 
