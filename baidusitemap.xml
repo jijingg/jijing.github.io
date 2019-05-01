@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
+    <lastmod>2019-05-01</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/20190429_cps.html</loc>
+    <lastmod>2019-04-30</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/top-index.html</loc>
+    <lastmod>2019-04-29</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/whyfp.html</loc>
+    <lastmod>2019-04-29</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20190428_function_call.html</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
     <loc>https://jijingg.github.io/sicp/20190421_whyfp.html</loc>
     <lastmod>2019-04-26</lastmod>
   </url>  <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
-    <lastmod>2019-04-25</lastmod>
-  </url>  <url>
     <loc>https://jijingg.github.io/scala/scala_FAQ.html</loc>
     <lastmod>2019-04-24</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/sicp/whyfp.html</loc>
-    <lastmod>2019-04-22</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/others/favo_blog.html</loc>
     <lastmod>2019-04-19</lastmod>
@@ -20,9 +29,6 @@
     <lastmod>2019-04-19</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/sicp/lambda_02_number.html</loc>
-    <lastmod>2019-04-19</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/top-index.html</loc>
     <lastmod>2019-04-19</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/riscv/20190418_c_point.html</loc>
@@ -94,19 +100,19 @@
     <loc>https://jijingg.github.io/sicp/python-fp.html</loc>
     <lastmod>2019-04-13</lastmod>
   </url>  <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
     <loc>https://jijingg.github.io/scala/20190308_scala_package.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/20190411_chisel_version.html</loc>
     <lastmod>2019-04-13</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/chisel/20190401_chisel_keep_name.html</loc>
     <lastmod>2019-04-13</lastmod>
   </url>  <url>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
+    <lastmod>2019-04-13</lastmod>
+  </url>  <url>
     <loc>https://jijingg.github.io/chisel/20190322_chisel_module_confilict.html</loc>
+    <lastmod>2019-04-13</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/20190411_chisel_version.html</loc>
     <lastmod>2019-04-13</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/chisel/20190321_chisel_comb_reg.html</loc>

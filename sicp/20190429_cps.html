@@ -4,24 +4,25 @@
     <meta name="baidu-site-verification" content="5NJSOR3owM">
     <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
     <meta charset="utf-8">
-<title>博文收藏 - 马車同学</title>
+<title>CPS变换 - 马車同学</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="博客收藏 道可叨http://zhuoqiang.me/  函数式编程什么是函数式编程函数式代码是对“映射的描述”，输入x和输出y的映射关系 y=f(x)函数式编程在 描述是什么命令式编程在 应该怎样做  理解函数式编程 为什么我们需要（or不需要）科里化 什么是函数式编程思维？ / 知乎 Monad 最简介绍 符号: 抽象、语义(函数式表达最清晰的解释)  其他 程序如何定位自己">
+    <meta name="description" content="为什么函数调用需要保存状态？add(1,2) mul(3,4) 这种调用明显不需要保存状态而add(1,mul(1,2)) 这种计算是需要保存1级函数add的变量,再计算2级函数mul返回值和保存相加最终返回 得出一个结论：函数处在参数位置上，调用后需要返回的函数调用才需要保存状态而什么是尾调用？无需返回的函数调用一个简单的判定原则 即函数不在参数位置上">
+<meta name="keywords" content="函数式编程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="博文收藏">
-<meta property="og:url" content="https://jijingg.github.io/others/favo_blog.html">
+<meta property="og:title" content="CPS变换">
+<meta property="og:url" content="https://jijingg.github.io/sicp/20190429_cps.html">
 <meta property="og:site_name" content="马車同学">
-<meta property="og:description" content="博客收藏 道可叨http://zhuoqiang.me/  函数式编程什么是函数式编程函数式代码是对“映射的描述”，输入x和输出y的映射关系 y=f(x)函数式编程在 描述是什么命令式编程在 应该怎样做  理解函数式编程 为什么我们需要（or不需要）科里化 什么是函数式编程思维？ / 知乎 Monad 最简介绍 符号: 抽象、语义(函数式表达最清晰的解释)  其他 程序如何定位自己">
+<meta property="og:description" content="为什么函数调用需要保存状态？add(1,2) mul(3,4) 这种调用明显不需要保存状态而add(1,mul(1,2)) 这种计算是需要保存1级函数add的变量,再计算2级函数mul返回值和保存相加最终返回 得出一个结论：函数处在参数位置上，调用后需要返回的函数调用才需要保存状态而什么是尾调用？无需返回的函数调用一个简单的判定原则 即函数不在参数位置上">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://jijingg.github.io/images/og_image.png">
-<meta property="og:updated_time" content="2019-04-19T15:05:59.719Z">
+<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg">
+<meta property="og:updated_time" content="2019-04-30T09:06:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="博文收藏">
-<meta name="twitter:description" content="博客收藏 道可叨http://zhuoqiang.me/  函数式编程什么是函数式编程函数式代码是对“映射的描述”，输入x和输出y的映射关系 y=f(x)函数式编程在 描述是什么命令式编程在 应该怎样做  理解函数式编程 为什么我们需要（or不需要）科里化 什么是函数式编程思维？ / 知乎 Monad 最简介绍 符号: 抽象、语义(函数式表达最清晰的解释)  其他 程序如何定位自己">
-<meta name="twitter:image" content="https://jijingg.github.io/images/og_image.png">
+<meta name="twitter:title" content="CPS变换">
+<meta name="twitter:description" content="为什么函数调用需要保存状态？add(1,2) mul(3,4) 这种调用明显不需要保存状态而add(1,mul(1,2)) 这种计算是需要保存1级函数add的变量,再计算2级函数mul返回值和保存相加最终返回 得出一个结论：函数处在参数位置上，调用后需要返回的函数调用才需要保存状态而什么是尾调用？无需返回的函数调用一个简单的判定原则 即函数不在参数位置上">
+<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg">
 
 
 
@@ -91,7 +92,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="博文收藏" height="28">
+                <img src="/images/logo.svg" alt="CPS变换" height="28">
             
             </a>
         </div>
@@ -127,6 +128,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -142,21 +147,27 @@
             <div class="columns">
                 <div class="column is-9 has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg" alt="CPS变换">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-19T12:48:53.000Z">2019-04-19</time>
+                <time class="level-item has-text-grey" datetime="2019-04-28T16:00:00.000Z">2019-04-29</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 228 个字)
+                    9 分钟 读完 (大约 1333 个字)
                 </span>
                 
                 
@@ -165,25 +176,48 @@
         
         <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
             
-                博文收藏
+                CPS变换
             
         </h1>
         <div class="content">
-            <h4 id="博客收藏"><a href="#博客收藏" class="headerlink" title="博客收藏"></a>博客收藏</h4><ul>
-<li>道可叨<a href="http://zhuoqiang.me/" target="_blank" rel="noopener">http://zhuoqiang.me/</a></li>
+            <h4 id="为什么函数调用需要保存状态？"><a href="#为什么函数调用需要保存状态？" class="headerlink" title="为什么函数调用需要保存状态？"></a>为什么函数调用需要保存状态？</h4><p>add(1,2) mul(3,4) 这种调用明显不需要保存状态<br>而add(1,mul(1,2)) 这种计算是需要保存1级函数add的变量,再计算2级函数mul返回值和保存相加最终返回</p>
+<p>得出一个结论：<strong>函数处在参数位置上，调用后需要返回的函数调用才需要保存状态</strong><br>而什么是尾调用？无需返回的函数调用<br>一个简单的判定原则 <strong>即函数不在参数位置上</strong><br><a id="more"></a></p>
+<h4 id="如何避免函数调用时保存状态？"><a href="#如何避免函数调用时保存状态？" class="headerlink" title="如何避免函数调用时保存状态？"></a>如何避免函数调用时保存状态？</h4><ul>
+<li>Inline函数<br>  编译器将函数就地展开，本质上是没有函数，只是代码片段的重复</li>
+<li>尾调用<br>  在函数返回的时候调用，这样主函数该做的都做完了,无需返回,只是将指针跳转,计算结果就是子函数的入参,无需额外变量的保存,函数调用过程可以参考文章 <a href="https://jijing.site/riscv/20190428_function_call.html" target="_blank" rel="noopener">函数调用</a></li>
 </ul>
-<h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h4><p><strong>什么是函数式编程</strong><br>函数式代码是对<strong>“映射的描述”</strong>，输入<code>x</code>和输出<code>y</code>的映射关系 <code>y=f(x)</code><br>函数式编程在 <strong>描述是什么</strong><br>命令式编程在 <strong>应该怎样做</strong></p>
-<ul>
-<li><a href="http://wudaijun.com/2018/05/understand-functional-programing/" target="_blank" rel="noopener">理解函数式编程</a></li>
-<li><a href="https://www.zhihu.com/question/26154999/answer/63140320" target="_blank" rel="noopener">为什么我们需要（or不需要）科里化</a></li>
-<li><a href="https://hcyue.me/2016/05/14/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" target="_blank" rel="noopener">什么是函数式编程思维？</a> / <a href="https://www.zhihu.com/question/28292740/answer/100284611" target="_blank" rel="noopener">知乎</a></li>
-<li><a href="http://zhuoqiang.me/what-is-monad.html" target="_blank" rel="noopener">Monad 最简介绍</a></li>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzIwMDgyNzUzNw==&amp;mid=2247483658&amp;idx=1&amp;sn=2dde89033d2fef0cba307db9b8b5489e&amp;scene=0#wechat_redirect" target="_blank" rel="noopener">符号: 抽象、语义(函数式表达最清晰的解释)</a></li>
-</ul>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
-<li><a href="http://zhuoqiang.me/how-program-find-self.html" target="_blank" rel="noopener">程序如何定位自己</a></li>
-</ul>
+<h5 id="尾递归实例"><a href="#尾递归实例" class="headerlink" title="尾递归实例"></a>尾递归实例</h5><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// fact_iter(n-1, mcc * n) 不处在任何函数的参数位置上</span></span><br><span class="line"><span class="hljs-meta">@annotaion</span>.tailrec  <span class="hljs-comment">//确保是尾递归否则编译器会报错</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fact_iter</span></span>(n: <span class="hljs-type">Int</span>, mcc: <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (n==<span class="hljs-number">0</span>)</span><br><span class="line">      mcc</span><br><span class="line">    <span class="hljs-keyword">else</span> </span><br><span class="line">      fact_iter(n<span class="hljs-number">-1</span>, mcc * n)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="非尾递归实例"><a href="#非尾递归实例" class="headerlink" title="非尾递归实例"></a>非尾递归实例</h5><p>而下面的例子不是尾递归，因为他处在函数”*“的第二个参数位置上, + - * / 实际上都是函数<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// fact_rec(n-1) 在函数乘"\*"的第二个参数位置上</span></span><br><span class="line">fact_rec = x =&gt; x==<span class="hljs-number">1</span> ? <span class="hljs-number">1</span> : x * fact_rec(x<span class="hljs-number">-1</span>) </span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fact_rec</span></span>(n: <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (n==<span class="hljs-number">0</span>) </span><br><span class="line">      <span class="hljs-number">1</span> </span><br><span class="line">    <span class="hljs-keyword">else</span> </span><br><span class="line">      n * fact_rec(n - <span class="hljs-number">1</span>) </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="循环实现"><a href="#循环实现" class="headerlink" title="循环实现"></a>循环实现</h5><p>因为尾递归无需返回，结果只跟出入的参数有关，因此只需要少量变量记录入参的变化，就能轻易改写成循环形式，因此尾递归和循环是等价的。改写循环：</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function fact_loop(x) &#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> r = <span class="hljs-number">1</span>          </span><br><span class="line">    <span class="hljs-keyword">while</span> (x &gt;= <span class="hljs-number">1</span>) &#123; r *= x; x--; &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> r </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="CPS变换实现"><a href="#CPS变换实现" class="headerlink" title="CPS变换实现"></a>CPS变换实现</h5><p>我们把CPS(Continuation Passing Style)的continuation函数按发音简称kont函数</p>
+<p>kont函数在后面讲到扮演的是个随从角色，我们也叫kont随从函数</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@annotation</span>.tailrec</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fact_ite</span></span>(n: <span class="hljs-type">Int</span>, kont: <span class="hljs-type">Int</span> =&gt; <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">   <span class="hljs-keyword">if</span> (n==<span class="hljs-number">0</span>) </span><br><span class="line">     kont(<span class="hljs-number">1</span>) </span><br><span class="line">   <span class="hljs-keyword">else</span> </span><br><span class="line">     fact_ite(n - <span class="hljs-number">1</span>, x =&gt; kont(x * n)) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>x =&gt; kont(x * n)</code>是一个新函数，把保存的脏活交给了这个函数,主函数只负责进入，并不返回<br>所以无需压栈保存，kont函数像个随从，主函数丢一个n给他，他负责保管<br>保管的方式就是<code>n*(n-1)*(n-2)...</code> 直到最终返回他自己</p>
+<p><code>n*fact_iter(n-1)</code><br><code>n*(n-1) *fact_iter(n-2)</code><br><code>n*(n-1)*(n-2) *fact_iter(n-2)</code><br><code>n*(n-1)*(n-2)*(n-3) *fact_iter(n-2)</code><br><code>...........................*fact_iter(0)</code><br><code>n*(n-1)*(n-2)*(n-3)* ......*1</code></p>
+<p><strong>为什么不用循环实现，要搞这么复杂CPS变换实现的目的是什么?</strong></p>
+<p>我们知道函数式编程里面实际上不用循环，循环是有副作用的, 仰仗于函数式编程强大的计算力，循环归类到低等公民</p>
+<p>函数式编程的重要思想是描述问题，而不是如何执行求解问题的过程。求解的问题依赖于程序或者编译器，会大量的用到递归，而不加处理的递归会有栈开销的问题，为了避免递归的栈开销甚至爆栈缺点，CPS变换可以使得递归能被良好的使用 </p>
+<h5 id="Fibonacci-CPS变化实例"><a href="#Fibonacci-CPS变化实例" class="headerlink" title="Fibonacci CPS变化实例"></a>Fibonacci CPS变化实例</h5><p>对于斐波那契函数常规的递归实现<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fib0</span></span>(n: <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">  n <span class="hljs-keyword">match</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-number">0</span> =&gt; <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span> =&gt; <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">case</span> _ =&gt; fib0(n<span class="hljs-number">-1</span>) + fib0(n<span class="hljs-number">-2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一般的尾递归优化实现<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@annotation</span>.tailrec</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fibtail</span></span>(n:<span class="hljs-type">Int</span>, nxt: <span class="hljs-type">Int</span>, res: <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">n <span class="hljs-keyword">match</span> &#123;</span><br><span class="line">  <span class="hljs-keyword">case</span> <span class="hljs-number">0</span> =&gt; res</span><br><span class="line">  <span class="hljs-keyword">case</span> _ =&gt; fibtail(n - <span class="hljs-number">1</span>, nxt + res, nxt )</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">val</span> a3 = fibtail(<span class="hljs-number">9</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p><strong>对于有两个递归进入的函数怎么构造CPS的kont随从函数？</strong><br>2个函数进入，这就要求kont函数接纳2个结果入参，而kont函数要求只能接纳1个参数,请问怎么办？<br>2个参数怎么变成1个参数的函数？如果你还有印象，那就是<strong>闭包</strong><br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@annotation</span>.tailrec</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fib2</span></span>(n: <span class="hljs-type">Int</span>, kont: (<span class="hljs-type">Int</span>) =&gt; <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">  n <span class="hljs-keyword">match</span>&#123;</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-number">0</span> =&gt; kont(<span class="hljs-number">1</span>)</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span> =&gt; kont(<span class="hljs-number">1</span>)</span><br><span class="line">    <span class="hljs-keyword">case</span> _ =&gt; fib2(n<span class="hljs-number">-1</span>, x =&gt; fib2(n<span class="hljs-number">-2</span> , y=&gt; kont(x + y)))</span><br><span class="line">    <span class="hljs-comment">//第二个kont参数本质是携带第一个参数的闭包</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是编译发现，会报错，SCALA编译器并不能将其优化成尾递归函数，不加检查时能正常执行。<br>为什么没有尾递归优化？实际上scala只做了一些简单的tailrec优化，这种复杂的嵌套优化需要一写技巧，那就是：<br><strong>Trampoline技法</strong><br>需要手动的强制弹出下一层调用函数，禁止解释器压栈的行为</p>
+<h5 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h5><p>构造一个这样的序列<code>f(n) = f(n-3)*f(n-2)*f(n-1)</code>, 看看如何使用CPS变换<br>其中初始值f(0)=1,f(1)=1,f(2)=2</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inter</span></span>(n: <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( n== <span class="hljs-number">1</span> ) <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( n== <span class="hljs-number">2</span> ) <span class="hljs-number">2</span></span><br><span class="line">    <span class="hljs-keyword">else</span> inter(n<span class="hljs-number">-3</span>) * inter(n<span class="hljs-number">-2</span>) * inter(n<span class="hljs-number">-1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>CPS变化<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@annotation</span>.tailrec</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inter</span></span>(n: <span class="hljs-type">Int</span>, kont:(<span class="hljs-type">Int</span>)=&gt;<span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = &#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) kont(<span class="hljs-number">1</span>)</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( n== <span class="hljs-number">1</span> ) kont(<span class="hljs-number">1</span>)</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( n== <span class="hljs-number">2</span> ) kont(<span class="hljs-number">2</span>)</span><br><span class="line">    <span class="hljs-keyword">else</span> inter(n<span class="hljs-number">-3</span>, x=&gt;inter(n<span class="hljs-number">-2</span>,y=&gt;inter(n<span class="hljs-number">-1</span>, z=&gt;kont(x*y*z))))</span><br></pre></td></tr></table></figure></p>
+<p>通过3级闭包函数实现，将3个参数携带进去</p>
+<p>CPS变化</p>
+<p>参考文献：<br><a href="https://blog.csdn.net/weixin_33772645/article/details/89084069" target="_blank" rel="noopener">基于CPS变换的尾递归转换算法</a></p>
 
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/函数式编程/">函数式编程</a>
+                </div>
+            </div>
         </div>
         
         
@@ -202,17 +236,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/sicp/whyfp.html">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">为什么函数式编程至关重要</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/sicp/lambda_03_bool_branch.html">
-                <span class="level-item">lambda演算python实现[三]之Bool值和分支</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/riscv/20190418_c_point.html">
+                <span class="level-item">C语言指针注解</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -233,7 +260,7 @@
     var gitalk = new Gitalk({
         clientID: '093159b2b9ec0c354aea',
         clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
-        id: '4dc0542c5a224163756a3c60e8b5b316',
+        id: 'f9a942e4817da06027d063a2e0ca9d38',
         repo: 'jijingg.github.io',
         owner: 'jijingg',
         admin: ["jijingg"]
@@ -263,6 +290,49 @@
         
             
                 
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#为什么函数调用需要保存状态？">
+        <span class="has-mr-6">1</span>
+        <span>为什么函数调用需要保存状态？</span>
+        </a></li><li>
+        <a class="is-flex" href="#如何避免函数调用时保存状态？">
+        <span class="has-mr-6">2</span>
+        <span>如何避免函数调用时保存状态？</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#尾递归实例">
+        <span class="has-mr-6">2.1</span>
+        <span>尾递归实例</span>
+        </a></li><li>
+        <a class="is-flex" href="#非尾递归实例">
+        <span class="has-mr-6">2.2</span>
+        <span>非尾递归实例</span>
+        </a></li><li>
+        <a class="is-flex" href="#循环实现">
+        <span class="has-mr-6">2.3</span>
+        <span>循环实现</span>
+        </a></li><li>
+        <a class="is-flex" href="#CPS变换实现">
+        <span class="has-mr-6">2.4</span>
+        <span>CPS变换实现</span>
+        </a></li><li>
+        <a class="is-flex" href="#Fibonacci-CPS变化实例">
+        <span class="has-mr-6">2.5</span>
+        <span>Fibonacci CPS变化实例</span>
+        </a></li><li>
+        <a class="is-flex" href="#举一反三">
+        <span class="has-mr-6">2.6</span>
+        <span>举一反三</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
             
         
     
@@ -633,7 +703,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="博文收藏" height="28">
+                    <img src="/images/logo.svg" alt="CPS变换" height="28">
                 
                 </a>
                 <p class="is-size-7">
