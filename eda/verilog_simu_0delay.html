@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="马車同学">
 <meta property="og:description" content="现象例如：出现： 原因这是由于采样的时钟tx_gen_symbol_clk 和数据信号subframe_start之间存在竞争关系导致的。我们的设计意图是时钟tx_gen_symbol_clk应该采到subframe_start信号的后沿有人可能会说在代码中加入延迟#1来解决，实际上不推荐这样做，还会存在两个#1的信号同样还会存在竞争。 仿真模型原理分析要搞清楚产生这种问题的原因首先要了解仿真器对">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack1.jpg">
-<meta property="og:updated_time" content="2019-04-13T16:42:26.756Z">
+<meta property="og:image" content="http://source.jijing.site/thumbnails/hack1.jpg">
+<meta property="og:updated_time" content="2019-10-11T07:33:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Verilog仿真不打拍分析">
 <meta name="twitter:description" content="现象例如：出现： 原因这是由于采样的时钟tx_gen_symbol_clk 和数据信号subframe_start之间存在竞争关系导致的。我们的设计意图是时钟tx_gen_symbol_clk应该采到subframe_start信号的后沿有人可能会说在代码中加入延迟#1来解决，实际上不推荐这样做，还会存在两个#1的信号同样还会存在竞争。 仿真模型原理分析要搞清楚产生这种问题的原因首先要了解仿真器对">
-<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack1.jpg">
+<meta name="twitter:image" content="http://source.jijing.site/thumbnails/hack1.jpg">
 
 
 
@@ -104,6 +104,8 @@
                 
                 <a class="navbar-item" href="/main/">目录</a>
                 
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
                 <a class="navbar-item" href="/topic/">主题</a>
                 
                 <a class="navbar-item" href="/categories/">分类</a>
@@ -149,7 +151,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack1.jpg" alt="Verilog仿真不打拍分析">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack1.jpg" alt="Verilog仿真不打拍分析">
         </span>
     </div>
     
@@ -167,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 588 个字)
+                    4 分钟 读完 (大约 573 个字)
                 </span>
                 
                 
@@ -180,9 +182,9 @@
             
         </h1>
         <div class="content">
-            <h4 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h4><p>例如：<br><img src="http://ppw74l91w.bkt.clouddn.com/verilogsimu0delay/1.png" alt="1"><br>出现：<br><img src="http://ppw74l91w.bkt.clouddn.com/verilogsimu0delay/2.png" alt="2"></p>
-<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>这是由于采样的时钟tx_gen_symbol_clk 和数据信号subframe_start之间存在竞争关系导致的。<br>我们的设计意图是时钟tx_gen_symbol_clk应该采到subframe_start信号的后沿<br><img src="http://ppw74l91w.bkt.clouddn.com/verilogsimu0delay/3.png" alt="3"><br>有人可能会说在代码中加入延迟#1来解决，实际上不推荐这样做，还会存在两个#1的信号同样还会存在竞争。</p>
-<h4 id="仿真模型原理分析"><a href="#仿真模型原理分析" class="headerlink" title="仿真模型原理分析"></a>仿真模型原理分析</h4><p>要搞清楚产生这种问题的原因首先要了解仿真器对于时序仿真的模型。<br><img src="http://ppw74l91w.bkt.clouddn.com/verilogsimu0delay/4.png" alt="4"><br>第4级的时钟不能正常采到第3级输出的数据，但是第2级的时钟能采到第二级时钟打出来的数据（D3），<br>原因就是，仿真器会在寄存器输出的时候添加一个虚拟的延迟δ，虽然这个虚拟延迟我们是看不到的，<br>在仿真器上都是0，但是对于仿真器工作的时候，到遇到always采样事件时先要判断这个δ延迟，决定触发器的采样输出。<br>（当延迟相等时，clk延迟的优先级会比data延迟的优先级高，即clk1能采到D1的前沿， 也就是我们看到的数据不打拍，这跟我们的预期是不一致的，<br>而clk1能采不到D2的前沿，但能采到D2的后沿，这跟我们的预期一样的。这些讨论仅限于前仿，<br>实际器件上我们必须有时序约束来保证建立保持时间，也不会存在这样的问题。<br>但是硬件设计就是要保证仿真和物理器件一致。因此我们要注意这个现象。<br><img src="http://ppw74l91w.bkt.clouddn.com/verilogsimu0delay/5.png" alt="5"></p>
+            <h4 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h4><p>例如：<br><img src="http://source.jijing.site/verilogsimu0delay/1.png" alt="1"><br>出现：<br><img src="http://source.jijing.site/verilogsimu0delay/2.png" alt="2"></p>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>这是由于采样的时钟tx_gen_symbol_clk 和数据信号subframe_start之间存在竞争关系导致的。<br>我们的设计意图是时钟tx_gen_symbol_clk应该采到subframe_start信号的后沿<br><img src="http://source.jijing.site/verilogsimu0delay/3.png" alt="3"><br>有人可能会说在代码中加入延迟#1来解决，实际上不推荐这样做，还会存在两个#1的信号同样还会存在竞争。</p>
+<h4 id="仿真模型原理分析"><a href="#仿真模型原理分析" class="headerlink" title="仿真模型原理分析"></a>仿真模型原理分析</h4><p>要搞清楚产生这种问题的原因首先要了解仿真器对于时序仿真的模型。<br><img src="http://source.jijing.site/verilogsimu0delay/4.png" alt="4"><br>第4级的时钟不能正常采到第3级输出的数据，但是第2级的时钟能采到第二级时钟打出来的数据（D3），<br>原因就是，仿真器会在寄存器输出的时候添加一个虚拟的延迟δ，虽然这个虚拟延迟我们是看不到的，<br>在仿真器上都是0，但是对于仿真器工作的时候，到遇到always采样事件时先要判断这个δ延迟，决定触发器的采样输出。<br>（当延迟相等时，clk延迟的优先级会比data延迟的优先级高，即clk1能采到D1的前沿， 也就是我们看到的数据不打拍，这跟我们的预期是不一致的，<br>而clk1能采不到D2的前沿，但能采到D2的后沿，这跟我们的预期一样的。这些讨论仅限于前仿，<br>实际器件上我们必须有时序约束来保证建立保持时间，也不会存在这样的问题。<br>但是硬件设计就是要保证仿真和物理器件一致。因此我们要注意这个现象。<br><img src="http://source.jijing.site/verilogsimu0delay/5.png" alt="5"></p>
 <h4 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h4><p>  在你的TB里时钟都由一个单独的模块产生送给DUT，不管产生多少个时钟，这些时钟保证都经历了n级分频下来的然后送入DUT，这样数据就不会出现不delay的现象。</p>
 
         </div>
@@ -320,7 +322,7 @@
                 <span class="level-item">eda</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/others/">
@@ -328,7 +330,7 @@
                 <span class="level-item">others</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/riscv/">
@@ -344,7 +346,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -352,7 +354,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li>
             </ul>
@@ -373,18 +375,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190429_cps.html" class="media-left">
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg" alt="CPS变换">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-28T16:00:00.000Z">2019-04-29</time></div>
-                    <a href="/sicp/20190429_cps.html" class="has-link-black-ter is-size-6">CPS变换</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -392,18 +394,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190428_function_call.html" class="media-left">
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190428_function_call.html" class="has-link-black-ter is-size-6">C函数调用和汇编代码分析</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
                     </p>
                 </div>
             </div>
@@ -411,18 +413,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190418_c_point.html" class="media-left">
+            <a href="/others/float_trap.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/city.jpg" alt="C语言指针注解">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
                     </p>
                 </div>
             </div>
@@ -430,18 +432,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190421_whyfp.html" class="media-left">
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
-                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -449,18 +451,18 @@
         
         <article class="media">
             
-            <a href="/sicp/whyfp.html" class="media-left">
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
-                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        
                     </p>
                 </div>
             </div>
@@ -481,6 +483,61 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/04/">
@@ -580,6 +637,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -603,7 +667,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
@@ -617,14 +681,21 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/verilog/">
                         <span class="tag">verilog</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">11</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -638,7 +709,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/计算机/">
                         <span class="tag">计算机</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -667,8 +745,9 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2019 jijing&nbsp;
+                &copy; 2020 jijing&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
                 
                 </p>
             </div>
@@ -707,6 +786,7 @@
         </div>
     </div>
 </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("zh-CN");</script>

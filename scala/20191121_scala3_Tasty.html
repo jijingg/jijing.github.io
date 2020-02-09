@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="5NJSOR3owM">
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+    <meta charset="utf-8">
+<title>Scala3-Macro系统Tasty进展 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="Scala3 重新设计Macro系统，这是官网英文原文。翻译的很烂，全当学习笔记而已，仅供参考 Or: Scala in a (Tasty) Nutshell如何迁移到 Scala 3这篇博文中提到最大的一个问题是关于宏的问题。目前我们正在努力将Tasty和macros对齐，接下来谈一谈我们的想法. What is Tasty?Tasty是Scala3的高级交换格式。它基于类型化的抽象语法树这些树">
+<meta name="keywords" content="scala,函数式编程,Macro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scala3-Macro系统Tasty进展">
+<meta property="og:url" content="https://jijingg.github.io/scala/20191121_scala3_Tasty.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="Scala3 重新设计Macro系统，这是官网英文原文。翻译的很烂，全当学习笔记而已，仅供参考 Or: Scala in a (Tasty) Nutshell如何迁移到 Scala 3这篇博文中提到最大的一个问题是关于宏的问题。目前我们正在努力将Tasty和macros对齐，接下来谈一谈我们的想法. What is Tasty?Tasty是Scala3的高级交换格式。它基于类型化的抽象语法树这些树">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://source.jijing.site/thumbnails/boxing1.jpg">
+<meta property="og:updated_time" content="2019-11-21T07:27:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scala3-Macro系统Tasty进展">
+<meta name="twitter:description" content="Scala3 重新设计Macro系统，这是官网英文原文。翻译的很烂，全当学习笔记而已，仅供参考 Or: Scala in a (Tasty) Nutshell如何迁移到 Scala 3这篇博文中提到最大的一个问题是关于宏的问题。目前我们正在努力将Tasty和macros对齐，接下来谈一谈我们的想法. What is Tasty?Tasty是Scala3的高级交换格式。它基于类型化的抽象语法树这些树">
+<meta name="twitter:image" content="http://source.jijing.site/thumbnails/boxing1.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Scala3-Macro系统Tasty进展" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main/">目录</a>
+                
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
+                <a class="navbar-item" href="/topic/">主题</a>
+                
+                <a class="navbar-item" href="/categories/">分类</a>
+                
+                <a class="navbar-item" href="/tags/">标签</a>
+                
+                <a class="navbar-item" href="/archives/">时间轴</a>
+                
+                <a class="navbar-item" href="/about/">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    20 分钟 读完 (大约 3026 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                Scala3-Macro系统Tasty进展
+            
+        </h1>
+        <div class="content">
+            <p>Scala3 重新设计Macro系统，这是官网<a href="https://www.scala-lang.org/blog/2018/04/30/in-a-nutshell.html" target="_blank" rel="noopener">英文原文</a>。<br>翻译的很烂，全当学习笔记而已，仅供参考</p>
+<h2 id="Or-Scala-in-a-Tasty-Nutshell"><a href="#Or-Scala-in-a-Tasty-Nutshell" class="headerlink" title="Or: Scala in a (Tasty) Nutshell"></a>Or: Scala in a (Tasty) Nutshell</h2><p>如何迁移到 <a href="https://www.scala-lang.org/blog/2018/04/19/scala-3.html" target="_blank" rel="noopener">Scala 3</a>这篇博文中提到最大的一个问题是关于宏的问题。<br>目前我们正在努力将Tasty和macros对齐，接下来谈一谈我们的想法.</p>
+<h2 id="What-is-Tasty"><a href="#What-is-Tasty" class="headerlink" title="What is Tasty?"></a>What is Tasty?</h2><p>Tasty是Scala3的高级交换格式。它基于类型化的抽象语法树<br>这些树在某种意义上包含了Scala程序中的所有信息。<br>它们表示程序的语法结构，还包含有关类型和位置的完整信息.<br>Tasty在语法检查之后（这样所有的类型都显式的知道了，并且隐式的东西都已经解释过了）给代码做一个快照，<br>但是在快照之前不会经过任何转换，因此所有的信息都不会丢失。<br>放语法树的文件为了紧凑会压缩优化（有点像javascript的压缩），这意味着我们可以在任何编译器运行期间<br>生成完整的Tasty语法树，即便是单独编译也不依赖任何其他东西。<br><a id="more"></a><br>Tasty语法树可以有很多用途</p>
+<ul>
+<li>编译器可以用来支持单独编译</li>
+<li>基于<a href="http://dotty.epfl.ch/docs/usage/ide-support.html" target="_blank" rel="noopener">LSP-based language server</a> 的语言可以支持超链接，自动补全，文档，查找引用，以及全局的重命名重构操作</li>
+<li>构建工具可以在不同的平台上交叉构建，并将代码以二进制的方式迁移合并</li>
+<li>优化器和分析器可以使用它进行深入的代码分析和高级代码生成 </li>
+</ul>
+<p>以上的CASE前两个已经完成，可以使用，另外两个在将来可以考虑实现</p>
+<p>所以，到底什么是Tasty， 最新的Scala3的 <code>dotc</code>编译器的Tasty版本描述可以参见这里<br><a href="https://github.com/lampepfl/dotty/blob/master/compiler/src/dotty/tools/dotc/core/tasty/TastyFormat.scala" target="_blank" rel="noopener">TastyFormat.scala</a></p>
+<h2 id="What-Does-Tasty-Have-to-Do-with-Macros"><a href="#What-Does-Tasty-Have-to-Do-with-Macros" class="headerlink" title="What Does Tasty Have to Do with Macros?"></a>What Does Tasty Have to Do with Macros?</h2><p>事实证明，Tasty也为新一代基于反射的宏提供了极好的基础，有可能解决当前版本中的许多问题。</p>
+<p>当前<a href="https://docs.scala-lang.org/overviews/macros/overview.html" target="_blank" rel="noopener">Def Macros</a>的第一个问题是它们完全依赖于当前的Scala编译器（内部名为nsc）<br>事实上，def macros像是nsc内部结构之上的一层薄木板罩子, 这使得它功能非常强大，但也非常脆弱和难以使用<br>正因为如此，他们一生都处于“实验”状态<br>由于Scala 3使用不同的编译器（dotc），旧的基于反射的宏系统将不会移植，所以做一个不同并且更好的东西。</p>
+<p>对于当前的宏的另一种批评是它缺乏一个基础。 Scala3已经有一个元编程的基础设施， 特别是一个非常好的explored基础。<br><a href="http://dotty.epfl.ch/docs/reference/metaprogramming/macros.html" target="_blank" rel="noopener">Quotes and Splices</a> 是一种支持staging的方法，<br>只需要向语言添加两个运算：Quote (<code>&#39;</code>)表示引用代码表达式，而splice(<code>~</code>)用来将一段代码插入另一段代码中。<br>这个灵感来自于<a href="https://dl.acm.org/citation.cfm?id=3011069" target="_blank" rel="noopener">termporal logic</a><br> <a href="http://okmij.org/ftp/ML/MetaOCaml.html" target="_blank" rel="noopener">MetaOCaml</a><br>我们通过将两个时态操作符<code>&#39;</code>,<code>~</code>以及scala3 的<code>inline</code>功能得到了一个非常高层次的macro系统 </p>
+<ul>
+<li><code>inline</code> 将代码从定义站点复制到调用站点</li>
+<li><code>(&#39;)</code> 将代码转换为语法树</li>
+<li><code>(~)</code> 在其他代码中嵌入语法树 </li>
+</ul>
+<p>这种处理宏的方法非常优雅，并且具有惊人的表达能力。<br>但这可能有点太偏重原理，仍然有许多零碎的边角的问题需要处理, 特别是：</p>
+<ul>
+<li>语法树是晦涩难懂的，我们缺少分解它们并分析其结构和内容的方法。</li>
+<li>我们只能quote和splice表达式，但不能引用其他程序结构，如定义或参数。</li>
+</ul>
+<p>我们一直在寻找一种通过分解和重构语法树的方式来加强元编程。<br>这里的主要问题是太难选择了，因为基本上有无数种方法可以暴露底层结构。<br>quasiquotes还是语法树？哪些应该明确的暴露出来？<br>辅助类型和操作是什么？</p>
+<p>如果我们在这里要做一个选择的话，我们怎么知道这个选择对于今天的用户是正确的？<br>如何在未来保证Api的稳定性？选择越多导致局面越尴尬，这是困扰def macros的根本原因。<br>为了解决这一难题，我们计划自底向上来而不是自顶向下的方式。<br>我们确立一下原则:</p>
+<p>  <em>The reflective layer of macros will be isomorphic to Tasty.</em><br>  <em>Tasty会将反射和宏同构支持</em></p>
+<p>将会有一下几点好处:</p>
+<ul>
+<li><strong>完整性</strong>. Tasty是Scala3的交换格式，因此基于Tasty的反射API将没有信息的丢失</li>
+<li><strong>稳定</strong>. Tasty作为交换格式会保持稳定，会按照严格的版本系统来谨慎管理Tasty的演进升级。因此反射的API可以以一种可控的方式发展。</li>
+<li><strong>独立于编译器</strong>. Tasty的设计将独立于支持它的编译器。除了Dotty的实现之外，在概念上也可以证明’scalac’也能生成Tasty语法树，甚至JAVA也可以生成。这就意外着反射API可以容易的移植到新的编译器，如果一个编译器支持Tasty格式的交换件，则可以同时支持反射API.</li>
+</ul>
+<h2 id="Scala-in-a-Nutshell"><a href="#Scala-in-a-Nutshell" class="headerlink" title="Scala in a Nutshell"></a>Scala in a Nutshell</h2><p>作为实现这一目标的第一步，我们正在研究一套独立于编译器的数据结构来表示Tasty。<br>目前的状态是已经提供了一个高层次的数据结构，用在Tasty的各个方面。<br>目前大概有200行的定义，它能翻译类型检查后scala程序中包含的每一条信息。<br>200行比mini-lisp的解释器要大，但是比起一个成熟的编译器前段差不多30000行要小的多。</p>
+<h2 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h2><p>下一步<a href="https://github.com/lampepfl/dotty/pull/4279" target="_blank" rel="noopener">WIP</a>, 是将这些定义关联到Tasty文件格式<br>我们将它重写为提取器来实现这一点，提取器根据dotc编译器使用的数据结构实现每种数据类型，<br>然后以Tasty格式对这些数据进行pickle和unpickle<br>另外一个有趣的选项是，直接书写Tasty的picklers和unpickler， 他们直接工作在反射语法树上。</p>
+<p>Once this is done, we need to define and implement semantic operations such as</p>
+<p>一旦这些工作完成以后，我们开始定义和实现语义和语法实现</p>
+<ul>
+<li>what are the members that can be selected on this expression?</li>
+<li>which subclasses are defined for a sealed trait?</li>
+<li><p>does this expression conform to some expected type?</p>
+</li>
+<li><p>可以在此表达式上选择哪些成员？</p>
+</li>
+<li>哪些子类是为一个密封特性定义的？</li>
+<li>此表达式是否符合某些预期类型？</li>
+</ul>
+<p>最后，我们将反射层和现有的基于quotes和spilices的宏链接起来, 这个看起来并不难。<br>实际上，我们需要在scala.quoted.Expr[T]类型的高级树和Tasty.Term类型的低级树之间定义一对映射。<br>将一个高级树映射到一个低级树简单的意思就是要暴露它的结构。<br>将低层语法树树映射到高层scala.quoted.Expr[T]就意味着检查低层语法树是否确实具有给定的T类型。<br>差不多就是这些。</p>
+<h2 id="Future-Macros"><a href="#Future-Macros" class="headerlink" title="Future Macros"></a>Future Macros</h2><p>如果以上方案被接受，很大程度上决定了Scala3上Macro的样子，更重要的是，这些都在类型检查完成以后运行，这也正是Tasty语法树<br>生成使用的时候。在类型检查以后运行Macro有很多优点</p>
+<ul>
+<li>it is safer and more robust, since everything is fully typed,</li>
+<li>it does not affect IDEs, which only run the compiler until typechecking is done,</li>
+<li><p>it offers more potential for incremental compilation and parallelization.</p>
+</li>
+<li><p>它更安全、更健壮，没有类型擦除，类型完整保留 </p>
+</li>
+<li>它不影响IDE，IDE只在类型检查完成之前运行编译器 </li>
+<li>它为增量编译和并行化提供了更大的潜力 </li>
+</ul>
+<p>不过这样做也限制了Macro的标识类型，Macro将是<a href="https://docs.scala-lang.org/overviews/macros/blackbox-whitebox.html" target="_blank" rel="noopener">blackbox</a>.<br>这意味着从类型检查中看到的扩展表达式不能受Macro扩展的影响。只要满足这个约束条件，就能同时支持经典的def宏和宏注释。</p>
+<p>例如，可以定义一个宏注释@json，将JSON的序列添加到类型种。与当前<a href="https://docs.scala-lang.org/overviews/macros/paradise.html" target="_blank" rel="noopener">macro paradise</a><br><a href="https://docs.scala-lang.org/overviews/macros/annotations.html" target="_blank" rel="noopener">annotation macros</a>(并不属于Scala的正式发行版本)<br>的不同之处是, 在Scala3中由于注释驱动的扩展是在类型检查之后发生的，因此生成的序列化程序只能在下游项目中看到</p>
+<p>（译注： 这段没看明白，生翻过来，见谅）</p>
+<p>我们相信通过使用更具表现力的计算类型可以在一定程度上环境Whitebox macros的不足，<br>[Dotty PR 3844](<a href="https://github.com/lampepfl/dotty/pull/3844中发布了该系统的草图。" target="_blank" rel="noopener">https://github.com/lampepfl/dotty/pull/3844中发布了该系统的草图。</a></p>
+<p>Scala3语言还将直接包含一些更高级的结果，目前为止需要高级的Macro方式来定义。<br>尤其：</p>
+<ul>
+<li>直接通过<a href="http://dotty.epfl.ch/docs/reference/other-new-features/implicit-by-name-parameters.html" target="_blank" rel="noopener">by-name parameters</a>为Lazy implicit建模，取代了之前通过Macro的方式</li>
+<li>原生的 <a href="http://dotty.epfl.ch/docs/reference/new-types/type-lambdas.html" target="_blank" rel="noopener">type lambdas</a> 减少了<a href="https://github.com/non/kind-projector" target="_blank" rel="noopener">kind projector</a>的需求.</li>
+<li>将会用一种不用宏的方式来派生类，其中有<a href="https://github.com/milessabin/kittens" target="_blank" rel="noopener">Kittens</a>, <a href="https://github.com/propensive/magnolia" target="_blank" rel="noopener">Magnolia</a>,<a href="https://gitlab.com/fommil/scalaz-deriving" target="_blank" rel="noopener">scalaz-deriving</a>，目前还在评估具体是哪一种替代方案。主要目标是开发一个易于使用且在编译和运行期间都能稳定的方案，第二个目标是通用性，只要他与主目标不冲突</li>
+</ul>
+<h2 id="Meta-Programming-in-the-Large"><a href="#Meta-Programming-in-the-Large" class="headerlink" title="Meta Programming in the Large"></a>Meta Programming in the Large</h2><p>未来Scala3宏的设计旨在取代现有的Macro和<code>scala.reflect</code>. 目前还有一个元编程系统<a href="http://scalameta.org/" target="_blank" rel="noopener">Scalameta</a>相当有竞争力, 他提供了高质量的语法和予以分析以及独立于Scala编译器的代码生成工具，顾名思义，ScalaMeta是在元级别上运行的，也就是说，他一程序为输入，生成语法和语义信息，或者以重写的程序为输入出。相反，Macro系统集成在语言中，并在翻译过程中扩展程序，这两个项目之间可能存在潜在的协作性。可以举两种可能性。</p>
+<ul>
+<li>Scalameta或者由它派生出来的<a href="https://github.com/scalameta/scalameta/blob/master/semanticdb/semanticdb3/semanticdb3.md" target="_blank" rel="noopener">SemanticDB</a>项目可以直接从Tasty获取信息，这将使得他们完全独立于编译器之外。</li>
+<li>IDE可以在单个项目上使用Tasy， 而对于复杂的多项目多语言的构造请参考SemanticDB</li>
+</ul>
+<h2 id="Please-Give-Us-Your-Feedback"><a href="#Please-Give-Us-Your-Feedback" class="headerlink" title="Please Give Us Your Feedback!"></a>Please Give Us Your Feedback!</h2><p>如果你对于Macro的roadmap有更好的想法，欢迎到这里讨论，<a href="https://contributors.scala-lang.org/t/what-kinds-of-macros-should-scala-3-support/1850" target="_blank" rel="noopener">thread</a> on <a href="https://contributors.scala-lang.org" target="_blank" rel="noopener">Scala Contributors</a>.<br>你们的建议都非常重要，加入Dotty贡献你的力量，一起重建Scala未来</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Macro/">Macro</a>, <a class="has-link-grey -link" href="/tags/scala/">scala</a>, <a class="has-link-grey -link" href="/tags/函数式编程/">函数式编程</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/others/float_trap.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">浮点避坑</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/thought/why-simple-so-complex.html">
+                <span class="level-item">为什么&#34;简单&#34;如此复杂</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: 'd4a4b799734460f47c8a44e7a774e2ca',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Or-Scala-in-a-Tasty-Nutshell">
+        <span class="has-mr-6">1</span>
+        <span>Or: Scala in a (Tasty) Nutshell</span>
+        </a></li><li>
+        <a class="is-flex" href="#What-is-Tasty">
+        <span class="has-mr-6">2</span>
+        <span>What is Tasty?</span>
+        </a></li><li>
+        <a class="is-flex" href="#What-Does-Tasty-Have-to-Do-with-Macros">
+        <span class="has-mr-6">3</span>
+        <span>What Does Tasty Have to Do with Macros?</span>
+        </a></li><li>
+        <a class="is-flex" href="#Scala-in-a-Nutshell">
+        <span class="has-mr-6">4</span>
+        <span>Scala in a Nutshell</span>
+        </a></li><li>
+        <a class="is-flex" href="#Next-Steps">
+        <span class="has-mr-6">5</span>
+        <span>Next Steps</span>
+        </a></li><li>
+        <a class="is-flex" href="#Future-Macros">
+        <span class="has-mr-6">6</span>
+        <span>Future Macros</span>
+        </a></li><li>
+        <a class="is-flex" href="#Meta-Programming-in-the-Large">
+        <span class="has-mr-6">7</span>
+        <span>Meta Programming in the Large</span>
+        </a></li><li>
+        <a class="is-flex" href="#Please-Give-Us-Your-Feedback">
+        <span class="has-mr-6">8</span>
+        <span>Please Give Us Your Feedback!</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/others/float_trap.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">17</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Scala3-Macro系统Tasty进展" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="马車同学">
 <meta property="og:description" content="risc-v C函数调用反汇编示例首先有一段C程序，其中main函数调用子函数add1234567//main.c int add(int a, int b)&amp;#123;  return a + b ;&amp;#125;int main(void)&amp;#123;  return add(2, 3);&amp;#125;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg">
-<meta property="og:updated_time" content="2019-04-28T09:56:52.000Z">
+<meta property="og:image" content="http://source.jijing.site/thumbnails/bigdata2.jpg">
+<meta property="og:updated_time" content="2019-10-11T07:33:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C函数调用和汇编代码分析">
 <meta name="twitter:description" content="risc-v C函数调用反汇编示例首先有一段C程序，其中main函数调用子函数add1234567//main.c int add(int a, int b)&amp;#123;  return a + b ;&amp;#125;int main(void)&amp;#123;  return add(2, 3);&amp;#125;">
-<meta name="twitter:image" content="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg">
+<meta name="twitter:image" content="http://source.jijing.site/thumbnails/bigdata2.jpg">
 
 
 
@@ -103,6 +103,8 @@
                 
                 <a class="navbar-item" href="/main/">目录</a>
                 
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
                 <a class="navbar-item" href="/topic/">主题</a>
                 
                 <a class="navbar-item" href="/categories/">分类</a>
@@ -148,7 +150,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
         </span>
     </div>
     
@@ -166,7 +168,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1041 个字)
+                    7 分钟 读完 (大约 1035 个字)
                 </span>
                 
                 
@@ -183,7 +185,7 @@
 <a id="more"></a> 
 <p>终端敲入<code>rvgcc main.c -g</code> 加<code>-g</code>是为了反汇编时将C和汇编交差显示，方便阅读<br><code>rvobjdum -dS a.out &gt; main.S</code> 反汇编看到</p>
 <figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">000000000001019</span>c &lt;add&gt;:</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">   <span class="hljs-number">1019</span>c:   <span class="hljs-number">1101</span>          addi    sp,sp,<span class="hljs-number">-32</span>      <span class="hljs-comment">//从原来的栈顶再向下再开辟32Byte栈空间 </span></span><br><span class="line">   <span class="hljs-number">1019</span>e:   ec22          sd      s0,<span class="hljs-number">24</span>(sp)      <span class="hljs-comment">//保存 保存寄存器，</span></span><br><span class="line">   <span class="hljs-number">101</span>a0:   <span class="hljs-number">1000</span>          addi    s0,sp,<span class="hljs-number">32</span>       <span class="hljs-comment">//栈底保存到fp/s0</span></span><br><span class="line">   <span class="hljs-number">101</span>a2:   <span class="hljs-number">87</span>aa          mv      a5,a0          <span class="hljs-comment">//a5=a0=2        ------</span></span><br><span class="line">   <span class="hljs-number">101</span>a4:   <span class="hljs-number">872</span>e          mv      a4,a1          <span class="hljs-comment">//a4=a1=3             |</span></span><br><span class="line">   <span class="hljs-number">101</span>a6:   fef42623      sw      a5,<span class="hljs-number">-20</span>(s0)     <span class="hljs-comment">//a5=a0=2             |</span></span><br><span class="line">   <span class="hljs-number">101</span>aa:   <span class="hljs-number">87b</span>a          mv      a5,a4                                |</span><br><span class="line">   <span class="hljs-number">101</span>ac:   fef42423      sw      a5,<span class="hljs-number">-24</span>(s0)     <span class="hljs-comment">//a5=a4=a1=3          |-- 可以优化掉</span></span><br><span class="line">   <span class="hljs-keyword">return</span> a + b ;                                                      |</span><br><span class="line">   <span class="hljs-number">101b</span>0:   fec42703      lw      a4,<span class="hljs-number">-20</span>(s0)     <span class="hljs-comment">//a4=2                |</span></span><br><span class="line">   <span class="hljs-number">101b</span>4:   fe842783      lw      a5,<span class="hljs-number">-24</span>(s0)     <span class="hljs-comment">//a5=3          -------</span></span><br><span class="line">   <span class="hljs-number">101b</span>8:   <span class="hljs-number">9f</span>b9          addw    a5,a5,a4       <span class="hljs-comment">//相加赋值给a5</span></span><br><span class="line">   <span class="hljs-number">101b</span>a:   <span class="hljs-number">2781</span>          sext.w  a5,a5          <span class="hljs-comment">//有符号扩展</span></span><br><span class="line">&#125;</span><br><span class="line">   <span class="hljs-number">101b</span>c:   <span class="hljs-number">853</span>e          mv      a0,a5          <span class="hljs-comment">//a5赋给返回寄存器a0</span></span><br><span class="line">   <span class="hljs-number">101b</span>e:   <span class="hljs-number">6462</span>          ld      s0,<span class="hljs-number">24</span>(sp)</span><br><span class="line">   <span class="hljs-number">101</span>c0:   <span class="hljs-number">6105</span>          addi    sp,sp,<span class="hljs-number">32</span>       <span class="hljs-comment">//释放子函数开辟的栈空间</span></span><br><span class="line">   <span class="hljs-number">101</span>c2:   <span class="hljs-number">8082</span>          ret                    <span class="hljs-comment">//返回到ra内容地址</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-number">00000000000101</span>c4 &lt;main&gt;:</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>&#123;</span><br><span class="line">   <span class="hljs-number">101</span>c4:   <span class="hljs-number">1141</span>          addi    sp,sp,<span class="hljs-number">-16</span>      <span class="hljs-comment">//向下开辟16Byte栈空间</span></span><br><span class="line">   <span class="hljs-number">101</span>c6:   e406          sd      ra,<span class="hljs-number">8</span>(sp)       <span class="hljs-comment">//调用子函数前需要将ra压栈，否则子函数会覆盖ra</span></span><br><span class="line">   <span class="hljs-number">101</span>c8:   e022          sd      s0,<span class="hljs-number">0</span>(sp)</span><br><span class="line">   <span class="hljs-number">101</span>ca:   <span class="hljs-number">0800</span>          addi    s0,sp,<span class="hljs-number">16</span>       <span class="hljs-comment">//栈底保存到fp/s0</span></span><br><span class="line">  <span class="hljs-keyword">return</span> add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);</span><br><span class="line">   <span class="hljs-number">101</span>cc:   <span class="hljs-number">458</span>d          li      a1,<span class="hljs-number">3</span>           <span class="hljs-comment">//参数寄存器赋值</span></span><br><span class="line">   <span class="hljs-number">101</span>ce:   <span class="hljs-number">4509</span>          li      a0,<span class="hljs-number">2</span>           <span class="hljs-comment">//参数寄存器赋值</span></span><br><span class="line">   <span class="hljs-number">101</span>d0:   fcdff0ef      jal     ra,<span class="hljs-number">1019</span>c &lt;add&gt; <span class="hljs-comment">//跳进函数add的地址1019c，并将返回地址(pc+4)存入ra</span></span><br><span class="line">   <span class="hljs-number">101</span>d4:   <span class="hljs-number">87</span>aa          mv      a5,a0          <span class="hljs-comment">//计算结果a0 赋给a5</span></span><br><span class="line">&#125;</span><br><span class="line">   <span class="hljs-number">101</span>d6:   <span class="hljs-number">853</span>e          mv      a0,a5          <span class="hljs-comment">//赋给a0，作为main函数的返回值</span></span><br><span class="line">   <span class="hljs-number">101</span>d8:   <span class="hljs-number">60</span>a2          ld      ra,<span class="hljs-number">8</span>(sp)       <span class="hljs-comment">//main函数的ra出栈</span></span><br><span class="line">   <span class="hljs-number">101</span>da:   <span class="hljs-number">6402</span>          ld      s0,<span class="hljs-number">0</span>(sp)       <span class="hljs-comment">//main函数的sp出栈</span></span><br><span class="line">   <span class="hljs-number">101</span>dc:   <span class="hljs-number">0141</span>          addi    sp,sp,<span class="hljs-number">16</span>       <span class="hljs-comment">//栈指针指向栈底,释放栈</span></span><br><span class="line">   <span class="hljs-number">101</span>de:   <span class="hljs-number">8082</span>          ret                    <span class="hljs-comment">//从main函数的ra返回</span></span><br></pre></td></tr></table></figure>
-<div align="center"><br><img src="http://ppw74l91w.bkt.clouddn.com/riscv/function_call.png" alt="函数调用"><br></div><br>将上面的代码用伪代码概况精简如下：<br><br><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">子函数：</span><br><span class="line"><span class="hljs-built_in">malloc</span> <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//申请栈空间</span></span><br><span class="line">push   ra        <span class="hljs-comment">//如果内部还有子函数，ra入栈，否则省略该步骤</span></span><br><span class="line">push   s0/s...   <span class="hljs-comment">//保存子函数用到的保存寄存器</span></span><br><span class="line">ld     sp   s0   <span class="hljs-comment">//若是栈传参，将参数堆栈地址赋给sp，将参数出栈 ，否则省略该步骤</span></span><br><span class="line">pop    a1</span><br><span class="line">pop    a2</span><br><span class="line">ld     sp   crt  <span class="hljs-comment">//将当前子函数的栈指针恢复</span></span><br><span class="line">process          <span class="hljs-comment">//执行子函数运算</span></span><br><span class="line">ld     a0   res  <span class="hljs-comment">//讲计算结果保存到返回寄存器ra</span></span><br><span class="line">pop    s0/s...   <span class="hljs-comment">//恢复保存寄存器</span></span><br><span class="line"><span class="hljs-built_in">free</span>   <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//释放栈</span></span><br><span class="line">ret              <span class="hljs-comment">//从ra地址返回</span></span><br><span class="line"></span><br><span class="line">母函数：</span><br><span class="line"><span class="hljs-built_in">malloc</span> <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//申请栈空间</span></span><br><span class="line">push   ra        <span class="hljs-comment">//母函数ra入栈，否则会被子程序覆盖</span></span><br><span class="line">push   s0/s...   <span class="hljs-comment">//保存子函数用到的保存寄存器</span></span><br><span class="line">passParameter    <span class="hljs-comment">//3种传参方法</span></span><br><span class="line">call   subFunc   <span class="hljs-comment">//pc跳转到子函数地址</span></span><br><span class="line">ld     a5 a0     <span class="hljs-comment">//获取返回值</span></span><br><span class="line">pop    s0/s...   <span class="hljs-comment">//恢复保存寄存器</span></span><br><span class="line">pop    ra        <span class="hljs-comment">//恢复ra</span></span><br><span class="line"><span class="hljs-built_in">free</span>   <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//释放栈空间</span></span><br></pre></td></tr></table></figure><br><br>栈底在最上面，示意如下<br><div align="center"><br><img src="http://ppw74l91w.bkt.clouddn.com/riscv/riscv_malloc.svg?center" alt="riscv存储空间分配"><br></div>
+<div align="center"><br><img src="http://source.jijing.site/riscv/function_call.png" alt="函数调用"><br></div><br>将上面的代码用伪代码概况精简如下：<br><br><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">子函数：</span><br><span class="line"><span class="hljs-built_in">malloc</span> <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//申请栈空间</span></span><br><span class="line">push   ra        <span class="hljs-comment">//如果内部还有子函数，ra入栈，否则省略该步骤</span></span><br><span class="line">push   s0/s...   <span class="hljs-comment">//保存子函数用到的保存寄存器</span></span><br><span class="line">ld     sp   s0   <span class="hljs-comment">//若是栈传参，将参数堆栈地址赋给sp，将参数出栈 ，否则省略该步骤</span></span><br><span class="line">pop    a1</span><br><span class="line">pop    a2</span><br><span class="line">ld     sp   crt  <span class="hljs-comment">//将当前子函数的栈指针恢复</span></span><br><span class="line">process          <span class="hljs-comment">//执行子函数运算</span></span><br><span class="line">ld     a0   res  <span class="hljs-comment">//讲计算结果保存到返回寄存器ra</span></span><br><span class="line">pop    s0/s...   <span class="hljs-comment">//恢复保存寄存器</span></span><br><span class="line"><span class="hljs-built_in">free</span>   <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//释放栈</span></span><br><span class="line">ret              <span class="hljs-comment">//从ra地址返回</span></span><br><span class="line"></span><br><span class="line">母函数：</span><br><span class="line"><span class="hljs-built_in">malloc</span> <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//申请栈空间</span></span><br><span class="line">push   ra        <span class="hljs-comment">//母函数ra入栈，否则会被子程序覆盖</span></span><br><span class="line">push   s0/s...   <span class="hljs-comment">//保存子函数用到的保存寄存器</span></span><br><span class="line">passParameter    <span class="hljs-comment">//3种传参方法</span></span><br><span class="line">call   subFunc   <span class="hljs-comment">//pc跳转到子函数地址</span></span><br><span class="line">ld     a5 a0     <span class="hljs-comment">//获取返回值</span></span><br><span class="line">pop    s0/s...   <span class="hljs-comment">//恢复保存寄存器</span></span><br><span class="line">pop    ra        <span class="hljs-comment">//恢复ra</span></span><br><span class="line"><span class="hljs-built_in">free</span>   <span class="hljs-built_in">stack</span>     <span class="hljs-comment">//释放栈空间</span></span><br></pre></td></tr></table></figure><br><br>栈底在最上面，示意如下<br><div align="center"><br><img src="http://source.jijing.site/riscv/riscv_malloc.svg?center" alt="riscv存储空间分配"><br></div>
 
 <h4 id="汇编语言参数传递的3种方法"><a href="#汇编语言参数传递的3种方法" class="headerlink" title="汇编语言参数传递的3种方法"></a>汇编语言参数传递的3种方法</h4><ul>
 <li>寄存器传参, 效率高，适合少量参数</li>
@@ -213,16 +215,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/riscv/20190418_c_point.html">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/sicp/20190429_cps.html">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">C语言指针注解</span>
+                <span class="level-item">CPS变换</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/sicp/20190421_whyfp.html">
-                <span class="level-item"></span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/riscv/20190418_c_point.html">
+                <span class="level-item">C语言指针注解</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -319,7 +321,7 @@
                 <span class="level-item">eda</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/others/">
@@ -327,7 +329,7 @@
                 <span class="level-item">others</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/riscv/">
@@ -343,7 +345,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -351,7 +353,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li>
             </ul>
@@ -372,18 +374,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190429_cps.html" class="media-left">
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg" alt="CPS变换">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-28T16:00:00.000Z">2019-04-29</time></div>
-                    <a href="/sicp/20190429_cps.html" class="has-link-black-ter is-size-6">CPS变换</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -391,18 +393,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190428_function_call.html" class="media-left">
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190428_function_call.html" class="has-link-black-ter is-size-6">C函数调用和汇编代码分析</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
                     </p>
                 </div>
             </div>
@@ -410,18 +412,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190418_c_point.html" class="media-left">
+            <a href="/others/float_trap.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/city.jpg" alt="C语言指针注解">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
                     </p>
                 </div>
             </div>
@@ -429,18 +431,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190421_whyfp.html" class="media-left">
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
-                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -448,18 +450,18 @@
         
         <article class="media">
             
-            <a href="/sicp/whyfp.html" class="media-left">
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
-                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        
                     </p>
                 </div>
             </div>
@@ -480,6 +482,61 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/04/">
@@ -579,6 +636,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -602,7 +666,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
@@ -616,14 +680,21 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/verilog/">
                         <span class="tag">verilog</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">11</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -637,7 +708,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/计算机/">
                         <span class="tag">计算机</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -666,8 +744,9 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2019 jijing&nbsp;
+                &copy; 2020 jijing&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
                 
                 </p>
             </div>
@@ -706,6 +785,7 @@
         </div>
     </div>
 </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("zh-CN");</script>

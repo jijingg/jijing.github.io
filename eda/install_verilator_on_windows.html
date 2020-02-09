@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="5NJSOR3owM">
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+    <meta charset="utf-8">
+<title>Spinal-sim Verilator install on Windows - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="Verilator install on WindowsStep1 : install MSYS32到官网https://www.msys2.org/ 下载最近安装文件 msys2-x86_64-20190524.exe 运行安装到d:/msys64,安装完毕后打开 mingw64.exe 在命令行输入 pacman -Suyy 如果遇到以下异常12345# pacman -Syuu错误：无法初始">
+<meta name="keywords" content="verilog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spinal-sim Verilator install on Windows">
+<meta property="og:url" content="https://jijingg.github.io/eda/install_verilator_on_windows.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="Verilator install on WindowsStep1 : install MSYS32到官网https://www.msys2.org/ 下载最近安装文件 msys2-x86_64-20190524.exe 运行安装到d:/msys64,安装完毕后打开 mingw64.exe 在命令行输入 pacman -Suyy 如果遇到以下异常12345# pacman -Syuu错误：无法初始">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://source.jijing.site/thumbnails/tools6.jpg">
+<meta property="og:updated_time" content="2020-01-11T12:26:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spinal-sim Verilator install on Windows">
+<meta name="twitter:description" content="Verilator install on WindowsStep1 : install MSYS32到官网https://www.msys2.org/ 下载最近安装文件 msys2-x86_64-20190524.exe 运行安装到d:/msys64,安装完毕后打开 mingw64.exe 在命令行输入 pacman -Suyy 如果遇到以下异常12345# pacman -Syuu错误：无法初始">
+<meta name="twitter:image" content="http://source.jijing.site/thumbnails/tools6.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Spinal-sim Verilator install on Windows" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main/">目录</a>
+                
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
+                <a class="navbar-item" href="/topic/">主题</a>
+                
+                <a class="navbar-item" href="/categories/">分类</a>
+                
+                <a class="navbar-item" href="/tags/">标签</a>
+                
+                <a class="navbar-item" href="/archives/">时间轴</a>
+                
+                <a class="navbar-item" href="/about/">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1017 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                Spinal-sim Verilator install on Windows
+            
+        </h1>
+        <div class="content">
+            <h2 id="Verilator-install-on-Windows"><a href="#Verilator-install-on-Windows" class="headerlink" title="Verilator install on Windows"></a>Verilator install on Windows</h2><h3 id="Step1-install-MSYS32"><a href="#Step1-install-MSYS32" class="headerlink" title="Step1 : install MSYS32"></a>Step1 : install MSYS32</h3><p>到官网<a href="https://www.msys2.org/" target="_blank" rel="noopener">https://www.msys2.org/</a> 下载最近安装文件 msys2-x86_64-20190524.exe</p>
+<p>运行安装到<code>d:/msys64</code>,安装完毕后打开 mingw64.exe</p>
+<p>在命令行输入 <code>pacman -Suyy</code></p>
+<p>如果遇到以下异常<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># pacman -Syuu</span><br><span class="line">错误：无法初始化事务处理 (无法锁定数据库)</span><br><span class="line">错误：无法锁定数据库：File exists</span><br><span class="line">  如果你确认软件包管理器没有在运行，</span><br><span class="line">  你可以删除 /var/lib/pacman/db.lck。</span><br></pre></td></tr></table></figure></p>
+<p>解决办法，删掉之前的文件： /var/lib/pacman/db.lck<br>出现错误的原因是，之前同步的时候，由于异常中断，导致之前进程锁文件未被释放。</p>
+<h3 id="Step2-Change-mirrors-for-China-user"><a href="#Step2-Change-mirrors-for-China-user" class="headerlink" title="Step2 Change mirrors for China user"></a>Step2 Change mirrors for China user</h3><p>如果更新库很慢导致失败<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># pacman -Syuu</span><br><span class="line">:: 正在同步软件包数据库...</span><br><span class="line">错误：无法从 repo.msys2.org : Operation too slow. Less than 1 bytes/sec transferred the last 10 seconds 获取文件 &apos;mingw32.db&apos;]  49%</span><br><span class="line">错误：无法从 sourceforge.net : Operation too slow. Less than 1 bytes/sec transferred the last 10 seconds 获取文件 &apos;mingw32.db&apos;   3%</span><br><span class="line">错误：无法从 www2.futureware.at : Operation too slow. Less than 1 bytes/sec transferred the last 10 seconds 获取文件 &apos;mingw32.db&apos;7%</span><br><span class="line">错误：无法从 mirror.yandex.ru : Operation too slow. Less than 1 bytes/sec transferred the last 10 seconds 获取文件 &apos;mingw32.db&apos; 10%</span><br><span class="line">错误：无法升级 mingw32 (下载数据库出错)</span><br></pre></td></tr></table></figure></p>
+<p>请更新 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/msys2/" target="_blank" rel="noopener">清华镜像</a></p>
+<p>编辑 /etc/pacman.d/mirrorlist.mingw32 ，在文件开头添加：<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686</span><br></pre></td></tr></table></figure></p>
+<p>编辑 /etc/pacman.d/mirrorlist.mingw64 ，在文件开头添加：<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64</span><br></pre></td></tr></table></figure></p>
+<p>编辑 /etc/pacman.d/mirrorlist.msys ，在文件开头添加：<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch</span><br></pre></td></tr></table></figure></p>
+<p>然后执行 <code>pacman -Sy</code> 刷新软件包数据即可。</p>
+<h3 id="Step3-Install-Verilator"><a href="#Step3-Install-Verilator" class="headerlink" title="Step3: Install Verilator"></a>Step3: Install Verilator</h3><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pacman -Syuu</span><br><span class="line"><span class="hljs-meta">#</span><span class="hljs-bash">Close the MSYS2 shell once you<span class="hljs-string">'re asked to</span></span></span><br><span class="line">pacman -Syuu</span><br><span class="line">pacman -S --needed base-devel mingw-w64-x86_64-toolchain \</span><br><span class="line">                   git flex\</span><br><span class="line">                   mingw-w64-x86_64-cmake</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S mingw-w64-x86_64-verilator</span><br></pre></td></tr></table></figure>
+<h3 id="Step4-Add-to-ENV"><a href="#Step4-Add-to-ENV" class="headerlink" title="Step4: Add to ENV"></a>Step4: Add to ENV</h3><p>Add <code>D:\msys64\usr\bin;D:\msys64\mingw64\bin</code> to you windows PATH</p>
+<h3 id="Step4-Spinal-simulation-by-verialtor"><a href="#Step4-Spinal-simulation-by-verialtor" class="headerlink" title="Step4: Spinal simulation by verialtor"></a>Step4: Spinal simulation by verialtor</h3><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Progress] Verilator compilation started</span><br><span class="line">VDFT2Cell.mk:67: /mingw64/share/verilator/include/verilated.mk: No such file or directory</span><br><span class="line">make: *** No rule to make target '/mingw64/share/verilator/include/verilated.mk'.  Stop.</span><br><span class="line">Exception in thread "main" java.lang.AssertionError: assertion failed: Verilator C++ model compilation failed</span><br><span class="line">	at scala.Predef$.assert(Predef.scala:170)</span><br><span class="line">	at spinal.sim.VerilatorBackend.compileVerilator(VerilatorBackend.scala:376)</span><br><span class="line">	at spinal.sim.VerilatorBackend.&lt;init&gt;(VerilatorBackend.scala:429)</span><br><span class="line">	at spinal.core.sim.SpinalVerilatorBackend$.apply(SimBootstraps.scala:120)</span><br><span class="line">	at spinal.core.sim.SpinalSimConfig.compile(SimBootstraps.scala:400)</span><br><span class="line">	at spinal.core.sim.SpinalSimConfig.compile(SimBootstraps.scala:364)</span><br><span class="line">	at FFT.DFT2CellTest$.main(FFTsim.scala:27)</span><br><span class="line">	at FFT.DFT2CellTest.main(FFTsim.scala)</span><br></pre></td></tr></table></figure>
+<p>显示verilated.mk路径找不到，我忍为应该是VERILATOR_ROOT目录设置有误， 查找verilated.mk的目录所在地，<br>然后在windows Env 中添加系统变量 <code>VERILATOR_ROOT</code>= <code>/d/msys64/mingw64/share/verilator</code> </p>
+<p>任然遇到问题<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x86_64-w64-mingw32-g++.exe: error: /d/msys64/mingw64/share/verilator/include/verilated.cpp: No such file or directory</span><br><span class="line">x86_64-w64-mingw32-g++.exe: fatal error: no input files</span><br><span class="line">compilation terminated.</span><br><span class="line">make: *** [/d/msys64/mingw64/share/verilator/include/verilated.mk:192: verilated.o] Error 1</span><br><span class="line">make: *** Waiting for unfinished jobs....</span><br><span class="line">x86_64-w64-mingw32-g++.exe: error: /d/msys64/mingw64/share/verilator/include/verilated_vcd_c.cpp: No such file or directory</span><br><span class="line">x86_64-w64-mingw32-g++.exe: fatal error: no input files</span><br><span class="line">compilation terminated.</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.AssertionError: assertion failed: Verilator C++ model compilation failed</span><br></pre></td></tr></table></figure></p>
+<p>x86_64-w64-mingw32-g++.exe 不能访问/d/myss64/….，后来重新安装MSYS2到 C盘，并且将系统变量删除 <code>VERILATOR_ROOT</code></p>
+<p>任然遇到问题：<br>检查环境变量Paht的值为<code>C:\Users\Administrator\.babun\cygwin\bin;D:\Program\emacs-26.2\bin;C:\Users\Administrator\.babun;C:\Users\Administrator\AppData\Roaming\npm;%IntelliJ IDEA Community Edition%;C:\Users\Administrator\AppData\Local\Pandoc\;c:\msys64\usr\bin\;c:\msys64\mingw64\bin\</code> 发现很乱 ,删除一些不用的<br><code>D:\Program\emacs-26.2\bin;C:\Users\Administrator\.babun;C:\Users\Administrator\AppData\Local\Pandoc\;c:\msys64\usr\bin\;c:\msys64\mingw64\bin\;</code><br>更新PATH</p>
+<p>重新开启Project , 运行Spinal-sim ，Wow 居然成了， 非常痛苦， 饶了一大圈，居然是PATH变量的问题。总算是解决了</p>
+<h3 id="最后："><a href="#最后：" class="headerlink" title="最后："></a>最后：</h3><p>特别注意：</p>
+<p>尽量把MSYS2安装到C盘  在环境变量Path末尾追加C:\msys64\usr\bin;C:\msys64\mingw64\bin</p>
+<p>不要多此一举设置VERILATOR_ROOT， Spinal会默认识别到 /mingw64/share/verilator</p>
+<p>如果运行不成功，请检查你的PATH，设置是不是非常杂乱，请删除不用的，尽量保持干净。</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/verilog/">verilog</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/scala/20200119_scala_single_object.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Scala 单例对象的三个应用</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/others/float_trap.html">
+                <span class="level-item">浮点避坑</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: '2844e8566b94039daac8736fa54e27c8',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Verilator-install-on-Windows">
+        <span class="has-mr-6">1</span>
+        <span>Verilator install on Windows</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Step1-install-MSYS32">
+        <span class="has-mr-6">1.1</span>
+        <span>Step1 : install MSYS32</span>
+        </a></li><li>
+        <a class="is-flex" href="#Step2-Change-mirrors-for-China-user">
+        <span class="has-mr-6">1.2</span>
+        <span>Step2 Change mirrors for China user</span>
+        </a></li><li>
+        <a class="is-flex" href="#Step3-Install-Verilator">
+        <span class="has-mr-6">1.3</span>
+        <span>Step3: Install Verilator</span>
+        </a></li><li>
+        <a class="is-flex" href="#Step4-Add-to-ENV">
+        <span class="has-mr-6">1.4</span>
+        <span>Step4: Add to ENV</span>
+        </a></li><li>
+        <a class="is-flex" href="#Step4-Spinal-simulation-by-verialtor">
+        <span class="has-mr-6">1.5</span>
+        <span>Step4: Spinal simulation by verialtor</span>
+        </a></li><li>
+        <a class="is-flex" href="#最后：">
+        <span class="has-mr-6">1.6</span>
+        <span>最后：</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/others/float_trap.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">17</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Spinal-sim Verilator install on Windows" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

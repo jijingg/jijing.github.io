@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="5NJSOR3owM">
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+    <meta charset="utf-8">
+<title>Lisp之根 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="The Root of List约翰麦卡锡于1960年发表了一篇非凡的论文,他在这篇论文中对编程的贡献有如 欧几里德对几何的贡献.1 他向我们展示了,在只给定几个简单的操作符和一个 表示函数的记号的基础上, 如何构造出一个完整的编程语言. 麦卡锡称这种语 言为Lisp, 意为List Processing, 因为他的主要思想之一是用一种简单的数据 结构表(list)来代表代码和数据.     值得">
+<meta name="keywords" content="函数式编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lisp之根">
+<meta property="og:url" content="https://jijingg.github.io/sicp/20191025_the-root-of-lisp.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="The Root of List约翰麦卡锡于1960年发表了一篇非凡的论文,他在这篇论文中对编程的贡献有如 欧几里德对几何的贡献.1 他向我们展示了,在只给定几个简单的操作符和一个 表示函数的记号的基础上, 如何构造出一个完整的编程语言. 麦卡锡称这种语 言为Lisp, 意为List Processing, 因为他的主要思想之一是用一种简单的数据 结构表(list)来代表代码和数据.     值得">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://source.jijing.site/thumbnails/sicp.jpg">
+<meta property="og:updated_time" content="2019-10-25T06:26:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lisp之根">
+<meta name="twitter:description" content="The Root of List约翰麦卡锡于1960年发表了一篇非凡的论文,他在这篇论文中对编程的贡献有如 欧几里德对几何的贡献.1 他向我们展示了,在只给定几个简单的操作符和一个 表示函数的记号的基础上, 如何构造出一个完整的编程语言. 麦卡锡称这种语 言为Lisp, 意为List Processing, 因为他的主要思想之一是用一种简单的数据 结构表(list)来代表代码和数据.     值得">
+<meta name="twitter:image" content="http://source.jijing.site/thumbnails/sicp.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Lisp之根" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main/">目录</a>
+                
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
+                <a class="navbar-item" href="/topic/">主题</a>
+                
+                <a class="navbar-item" href="/categories/">分类</a>
+                
+                <a class="navbar-item" href="/tags/">标签</a>
+                
+                <a class="navbar-item" href="/archives/">时间轴</a>
+                
+                <a class="navbar-item" href="/about/">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/sicp.jpg" alt="Lisp之根">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-24T16:00:00.000Z">2019-10-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 分钟 读完 (大约 1924 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                Lisp之根
+            
+        </h1>
+        <div class="content">
+            <h2 id="The-Root-of-List"><a href="#The-Root-of-List" class="headerlink" title="The Root of List"></a>The Root of List</h2><p>约翰麦卡锡于1960年发表了一篇非凡的论文,他在这篇论文中对编程的贡献有如 欧几里德对几何的贡献.1 他向我们展示了,在只给定几个简单的操作符和一个 表示函数的记号的基础上, 如何构造出一个完整的编程语言. 麦卡锡称这种语 言为Lisp, 意为List Processing, 因为他的主要思想之一是用一种简单的数据 结构表(list)来代表代码和数据.    </p>
+<p>值得注意的是,麦卡锡所作的发现,不仅是计算机史上划时代的大事, 而且是一种 在我们这个时代编程越来越趋向的模式.我认为目前为止只有两种真正干净利落, 始终如一的编程模式:C语言模式和Lisp语言模式.此二者就象两座高地, 在它们 中间是尤如沼泽的低地.随着计算机变得越来越强大,新开发的语言一直在坚定地 趋向于Lisp模式. 二十年来,开发新编程语言的一个流行的秘决是,取C语言的计 算模式,逐渐地往上加Lisp模式的特性,例如运行时类型和无用单元收集.   </p>
+<p>在这篇文章中我尽可能用最简单的术语来解释约翰麦卡锡所做的发现. 关键是我 们不仅要学习某个人四十年前得出的有趣理论结果, 而且展示编程语言的发展方 向. Lisp的不同寻常之处–也就是它优质的定义–是它能够自己来编写自己. 为了理解约翰麦卡锡所表述的这个特点,我们将追溯他的步伐,并将他的数学标记 转换成能够运行的Common Lisp代码.<br><a id="more"></a></p>
+<h3 id="七个原始操作符"><a href="#七个原始操作符" class="headerlink" title="七个原始操作符"></a>七个原始操作符</h3><p>开始我们先定义表达式.表达式或是一个原子(atom),它是一个字母序列(如 foo),或是一个由零个或多个表达式组成的表(list), 表达式之间用空格分开, 放入一对括号中. 以下是一些表达式:<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo</span><br><span class="line">()</span><br><span class="line">(<span class="hljs-name">foo</span>)</span><br><span class="line">(<span class="hljs-name">foo</span> bar)</span><br><span class="line">(<span class="hljs-name">a</span> b (<span class="hljs-name">c</span>) d)</span><br></pre></td></tr></table></figure></p>
+<p>最后一个表达式是由四个元素组成的表, 第三个元素本身是由一个元素组成的表.<br>在算术中表达式 1 + 1 得出值2. 正确的Lisp表达式也有值. 如果表达式e得出 值v,我们说e返回v. 下一步我们将定义几种表达式以及它们的返回值.</p>
+<p>如果一个表达式是表,我们称第一个元素为操作符,其余的元素为自变量.我们将 定义七个原始(从公理的意义上说)操作符: quote,atom,eq,car,cdr,cons,和 cond.</p>
+<h4 id="quote-x-返回x-为了可读性我们把-quote-x-简记-为’x"><a href="#quote-x-返回x-为了可读性我们把-quote-x-简记-为’x" class="headerlink" title="(quote x) 返回x.为了可读性我们把(quote x)简记 为’x."></a>(quote x) 返回x.为了可读性我们把(quote x)简记 为’x.</h4><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">quote</span> a)</span><br><span class="line">a</span><br><span class="line">&gt; 'a</span><br><span class="line">a</span><br><span class="line">&gt; (<span class="hljs-name">quote</span> (a b c))</span><br><span class="line">(<span class="hljs-name">a</span> b c)</span><br></pre></td></tr></table></figure>
+<h4 id="atom-x-返回原子t如果x的值是一个原子或是空表-否则返回-在Lisp中我们-按惯例用原子t表示真-而用空表表示假"><a href="#atom-x-返回原子t如果x的值是一个原子或是空表-否则返回-在Lisp中我们-按惯例用原子t表示真-而用空表表示假" class="headerlink" title="(atom x)返回原子t如果x的值是一个原子或是空表,否则返回(). 在Lisp中我们 按惯例用原子t表示真, 而用空表表示假."></a>(atom x)返回原子t如果x的值是一个原子或是空表,否则返回(). 在Lisp中我们 按惯例用原子t表示真, 而用空表表示假.</h4><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">atom</span> 'a)</span><br><span class="line"><span class="hljs-literal">t</span></span><br><span class="line">&gt; (<span class="hljs-name">atom</span> '(a b c))</span><br><span class="line">()</span><br><span class="line">&gt; (<span class="hljs-name">atom</span> '())</span><br><span class="line"><span class="hljs-literal">t</span></span><br></pre></td></tr></table></figure>
+<p>既然有了一个自变量需要求值的操作符, 我们可以看一下quote的作用. 通过引 用(quote)一个表,我们避免它被求值. 一个未被引用的表作为自变量传给象 atom这样的操作符将被视为代码:<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">atom</span> (<span class="hljs-name">atom</span> 'a))</span><br><span class="line"><span class="hljs-literal">t</span></span><br></pre></td></tr></table></figure></p>
+<p>反之一个被引用的表仅被视为表, 在此例中就是有两个元素的表:<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">atom</span> '(atom 'a))</span><br><span class="line">()</span><br></pre></td></tr></table></figure></p>
+<p>这与我们在英语中使用引号的方式一致. Cambridge(剑桥)是一个位于麻萨诸塞 州有90000人口的城镇. 而<code></code>Cambridge’’是一个由9个字母组成的单词.</p>
+<p>引用看上去可能有点奇怪因为极少有其它语言有类似的概念. 它和Lisp最与众 不同的特征紧密联系:代码和数据由相同的数据结构构成, 而我们用quote操作符 来区分它们.</p>
+<h4 id="eq-x-y-返回t如果x和y的值是同一个原子或都是空表-否则返回"><a href="#eq-x-y-返回t如果x和y的值是同一个原子或都是空表-否则返回" class="headerlink" title="(eq x y)返回t如果x和y的值是同一个原子或都是空表, 否则返回()."></a>(eq x y)返回t如果x和y的值是同一个原子或都是空表, 否则返回().</h4><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">eq</span> 'a 'a)</span><br><span class="line"><span class="hljs-literal">t</span></span><br><span class="line">&gt; (<span class="hljs-name">eq</span> 'a 'b)</span><br><span class="line">()</span><br><span class="line">&gt; (<span class="hljs-name">eq</span> '() '())</span><br><span class="line"><span class="hljs-literal">t</span></span><br></pre></td></tr></table></figure>
+<h4 id="car-x-期望x的值是一个表并且返回x的第一个元素"><a href="#car-x-期望x的值是一个表并且返回x的第一个元素" class="headerlink" title="(car x)期望x的值是一个表并且返回x的第一个元素."></a>(car x)期望x的值是一个表并且返回x的第一个元素.</h4><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">car</span> '(a b c))</span><br><span class="line">a</span><br></pre></td></tr></table></figure>
+<h4 id="cdr-x-期望x的值是一个表并且返回x的第一个元素之后的所有元素"><a href="#cdr-x-期望x的值是一个表并且返回x的第一个元素之后的所有元素" class="headerlink" title="(cdr x)期望x的值是一个表并且返回x的第一个元素之后的所有元素."></a>(cdr x)期望x的值是一个表并且返回x的第一个元素之后的所有元素.</h4><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">cdr</span> '(a b c))</span><br><span class="line">(<span class="hljs-name">b</span> c)</span><br></pre></td></tr></table></figure>
+<h4 id="cons-x-y-期望y的值是一个表并且返回一个新表-它的第一个元素是x的值-后-面跟着y的值的各个元素"><a href="#cons-x-y-期望y的值是一个表并且返回一个新表-它的第一个元素是x的值-后-面跟着y的值的各个元素" class="headerlink" title="(cons x y)期望y的值是一个表并且返回一个新表,它的第一个元素是x的值, 后 面跟着y的值的各个元素."></a>(cons x y)期望y的值是一个表并且返回一个新表,它的第一个元素是x的值, 后 面跟着y的值的各个元素.</h4><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">cons</span> 'a '(b c))</span><br><span class="line">(<span class="hljs-name">a</span> b c)</span><br><span class="line">&gt; (<span class="hljs-name">cons</span> 'a (<span class="hljs-name">cons</span> 'b (<span class="hljs-name">cons</span> 'c '())))</span><br><span class="line">(<span class="hljs-name">a</span> b c)</span><br><span class="line">&gt; (<span class="hljs-name">car</span> (<span class="hljs-name">cons</span> 'a '(b c)))</span><br><span class="line">a</span><br><span class="line">&gt; (<span class="hljs-name">cdr</span> (<span class="hljs-name">cons</span> 'a '(b c)))</span><br><span class="line">(<span class="hljs-name">b</span> c)</span><br></pre></td></tr></table></figure>
+<h4 id="cond-p-1-…-e-1-…-p-n-…-e-n-的求值规则如下-p表达式依次求值直到有一个-返回t-如果能找到这样的p表达式-相应的e表达式的值作为整个cond表达式的-返回值"><a href="#cond-p-1-…-e-1-…-p-n-…-e-n-的求值规则如下-p表达式依次求值直到有一个-返回t-如果能找到这样的p表达式-相应的e表达式的值作为整个cond表达式的-返回值" class="headerlink" title="(cond ($p_{1}$…$e_{1}$) …($p_{n}$…$e_{n}$)) 的求值规则如下. p表达式依次求值直到有一个 返回t. 如果能找到这样的p表达式,相应的e表达式的值作为整个cond表达式的 返回值."></a>(cond ($p_{1}$…$e_{1}$) …($p_{n}$…$e_{n}$)) 的求值规则如下. p表达式依次求值直到有一个 返回t. 如果能找到这样的p表达式,相应的e表达式的值作为整个cond表达式的 返回值.</h4><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">cond</span> ((<span class="hljs-name">eq</span> 'a 'b) 'first)</span><br><span class="line">        ((<span class="hljs-name">atom</span> 'a)  'second))</span><br><span class="line">second</span><br></pre></td></tr></table></figure>
+<p>当表达式以七个原始操作符中的五个开头时,它的自变量总是要求值的.2 我们称这样 的操作符为函数.</p>
+<h3 id="函数的表示"><a href="#函数的表示" class="headerlink" title="函数的表示"></a>函数的表示</h3><p>接着我们定义一个记号来描述函数.函数表示为(lambda ($p_{1}$…$p_{n}$) e),其中 $p_{1}$…$p_{n}$是原子(叫做参数),e是表达式. 如果表达式的第一个元素形式如 上<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((<span class="hljs-name">lambda</span> ($p_&#123;<span class="hljs-number">1</span>&#125;$...$p_&#123;n&#125;$) e) $a_&#123;<span class="hljs-number">1</span>&#125;$...$a_&#123;n&#125;$)</span><br></pre></td></tr></table></figure></p>
+<p>则称为函数调用.它的值计算如下.每一个表达式$a_{i}$先求值,然后e再求值.在e的 求值过程中,每个出现在e中的$p_{i}$的值是相应的$a_{i}$在最近一 次的函数调用中的值.<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; ((<span class="hljs-name">lambda</span> (<span class="hljs-name">x</span>) (<span class="hljs-name">cons</span> x '(b))) 'a)</span><br><span class="line">(<span class="hljs-name">a</span> b)</span><br><span class="line">&gt; ((<span class="hljs-name">lambda</span> (<span class="hljs-name">x</span> y) (<span class="hljs-name">cons</span> x (<span class="hljs-name">cdr</span> y)))</span><br><span class="line">   'z</span><br><span class="line">   '(a b c))</span><br><span class="line">(<span class="hljs-name">z</span> b c)</span><br></pre></td></tr></table></figure></p>
+<p>如果一个表达式的第一个元素f是原子且f不是原始操作符<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="hljs-name">f</span> $a_&#123;<span class="hljs-number">1</span>&#125;$...$a_&#123;n&#125;$)</span><br></pre></td></tr></table></figure></p>
+<p>并且f的值是一个函数(lambda ($p_{1}$…$p_{n}$)),则以上表达式的值就是<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((<span class="hljs-name">lambda</span> ($p_&#123;<span class="hljs-number">1</span>&#125;$...$p_&#123;n&#125;$) e) $a_&#123;<span class="hljs-number">1</span>&#125;$...$a_&#123;n&#125;$)</span><br></pre></td></tr></table></figure></p>
+<p>的值. 换句话说,参数在表达式中不但可以作为自变量也可以作为操作符使用:<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; ((<span class="hljs-name">lambda</span> (<span class="hljs-name">f</span>) (<span class="hljs-name">f</span> '(b c)))</span><br><span class="line">   '(lambda (x) (cons 'a x)))</span><br><span class="line">(<span class="hljs-name">a</span> b c)</span><br></pre></td></tr></table></figure></p>
+<p>有另外一个函数记号使得函数能提及它本身,这样我们就能方便地定义递归函 数.3 记号<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="hljs-name">label</span> f (<span class="hljs-name">lambda</span> ($p_&#123;<span class="hljs-number">1</span>&#125;$...$p_&#123;n&#125;$) e))</span><br></pre></td></tr></table></figure></p>
+<p>表示一个象(lambda ($p_{1}$…$p_{n}$) e)那样的函数,加上这样的特性: 任何出现在e中的f将求值为此label表达式, 就好象f是此函数的参数.</p>
+<p>假设我们要定义函数(subst x y z), 它取表达式x,原子y和表z做参数,返回一个 象z那样的表, 不过z中出现的y(在任何嵌套层次上)被x代替.<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; (<span class="hljs-name">subst</span> 'm 'b '(a b (a b c) d))</span><br><span class="line">(<span class="hljs-name">a</span> m (<span class="hljs-name">a</span> m c) d)</span><br></pre></td></tr></table></figure></p>
+<p>我们可以这样表示此函数<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="hljs-name">label</span> subst (<span class="hljs-name">lambda</span> (<span class="hljs-name">x</span> y z)</span><br><span class="line">               (<span class="hljs-name">cond</span> ((<span class="hljs-name">atom</span> z)</span><br><span class="line">                      (<span class="hljs-name">cond</span> ((<span class="hljs-name">eq</span> z y) x)</span><br><span class="line">                            ('t z)))</span><br><span class="line">                     ('t (<span class="hljs-name">cons</span> (<span class="hljs-name">subst</span> x y (<span class="hljs-name">car</span> z))</span><br><span class="line">                               (<span class="hljs-name">subst</span> x y (<span class="hljs-name">cdr</span> z)))))))</span><br></pre></td></tr></table></figure></p>
+<p>我们简记f=(label f (lambda ($p_{1}$…$p_{n}$) e))为<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="hljs-name">defun</span> f ($p_&#123;<span class="hljs-number">1</span>&#125;$...$p_&#123;n&#125;$) e)</span><br></pre></td></tr></table></figure></p>
+<p>于是<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="hljs-name">defun</span> subst (<span class="hljs-name">x</span> y z)</span><br><span class="line">  (<span class="hljs-name">cond</span> ((<span class="hljs-name">atom</span> z)</span><br><span class="line">         (<span class="hljs-name">cond</span> ((<span class="hljs-name">eq</span> z y) x)</span><br><span class="line">               ('t z)))</span><br><span class="line">        ('t (<span class="hljs-name">cons</span> (<span class="hljs-name">subst</span> x y (<span class="hljs-name">car</span> z))</span><br><span class="line">                  (<span class="hljs-name">subst</span> x y (<span class="hljs-name">cdr</span> z))))))</span><br></pre></td></tr></table></figure></p>
+<p>偶然地我们在这儿看到如何写cond表达式的缺省子句. 第一个元素是’t的子句总 是会成功的. 于是<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="hljs-name">cond</span> (<span class="hljs-name">x</span> y) ('t z))</span><br></pre></td></tr></table></figure></p>
+<p>等同于我们在某些语言中写的<br><figure class="highlight lisp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if x then y else z</span><br></pre></td></tr></table></figure></p>
+<p>####<br><figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">#### </span><br><span class="line">```lisp</span><br></pre></td></tr></table></figure></p>
+<p>#### </p>
+<pre><code class="lisp">
+</code></pre>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/函数式编程/">函数式编程</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/thought/why-simple-so-complex.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">为什么&#34;简单&#34;如此复杂</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/others/revealjs2pdf.html">
+                <span class="level-item">slides(revealjs 导出PDF)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: 'bf2606433392f49c93c19b130bc0537f',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#The-Root-of-List">
+        <span class="has-mr-6">1</span>
+        <span>The Root of List</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#七个原始操作符">
+        <span class="has-mr-6">1.1</span>
+        <span>七个原始操作符</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#quote-x-返回x-为了可读性我们把-quote-x-简记-为’x">
+        <span class="has-mr-6">1.1.1</span>
+        <span>(quote x) 返回x.为了可读性我们把(quote x)简记 为’x.</span>
+        </a></li><li>
+        <a class="is-flex" href="#atom-x-返回原子t如果x的值是一个原子或是空表-否则返回-在Lisp中我们-按惯例用原子t表示真-而用空表表示假">
+        <span class="has-mr-6">1.1.2</span>
+        <span>(atom x)返回原子t如果x的值是一个原子或是空表,否则返回(). 在Lisp中我们 按惯例用原子t表示真, 而用空表表示假.</span>
+        </a></li><li>
+        <a class="is-flex" href="#eq-x-y-返回t如果x和y的值是同一个原子或都是空表-否则返回">
+        <span class="has-mr-6">1.1.3</span>
+        <span>(eq x y)返回t如果x和y的值是同一个原子或都是空表, 否则返回().</span>
+        </a></li><li>
+        <a class="is-flex" href="#car-x-期望x的值是一个表并且返回x的第一个元素">
+        <span class="has-mr-6">1.1.4</span>
+        <span>(car x)期望x的值是一个表并且返回x的第一个元素.</span>
+        </a></li><li>
+        <a class="is-flex" href="#cdr-x-期望x的值是一个表并且返回x的第一个元素之后的所有元素">
+        <span class="has-mr-6">1.1.5</span>
+        <span>(cdr x)期望x的值是一个表并且返回x的第一个元素之后的所有元素.</span>
+        </a></li><li>
+        <a class="is-flex" href="#cons-x-y-期望y的值是一个表并且返回一个新表-它的第一个元素是x的值-后-面跟着y的值的各个元素">
+        <span class="has-mr-6">1.1.6</span>
+        <span>(cons x y)期望y的值是一个表并且返回一个新表,它的第一个元素是x的值, 后 面跟着y的值的各个元素.</span>
+        </a></li><li>
+        <a class="is-flex" href="#cond-p-1-…-e-1-…-p-n-…-e-n-的求值规则如下-p表达式依次求值直到有一个-返回t-如果能找到这样的p表达式-相应的e表达式的值作为整个cond表达式的-返回值">
+        <span class="has-mr-6">1.1.7</span>
+        <span>(cond ($p_{1}$…$e_{1}$) …($p_{n}$…$e_{n}$)) 的求值规则如下. p表达式依次求值直到有一个 返回t. 如果能找到这样的p表达式,相应的e表达式的值作为整个cond表达式的 返回值.</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#函数的表示">
+        <span class="has-mr-6">1.2</span>
+        <span>函数的表示</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/others/float_trap.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">17</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Lisp之根" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

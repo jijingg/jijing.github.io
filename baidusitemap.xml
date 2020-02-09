@@ -1,125 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
-    <lastmod>2019-05-01</lastmod>
+    <loc>https://jijingg.github.io/scala/20200119_scala_single_object.html</loc>
+    <lastmod>2020-02-09</lastmod>
   </url>  <url>
-    <loc>https://jijingg.github.io/sicp/20190429_cps.html</loc>
-    <lastmod>2019-04-30</lastmod>
+    <loc>https://jijingg.github.io/others/float_trap.html</loc>
+    <lastmod>2020-02-09</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/scala/scala_FAQ.html</loc>
+    <lastmod>2020-01-19</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/top-index.html</loc>
-    <lastmod>2019-04-29</lastmod>
+    <lastmod>2020-01-13</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/eda/install_verilator_on_windows.html</loc>
+    <lastmod>2020-01-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/others/revealjs2pdf.html</loc>
+    <lastmod>2019-11-30</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/scala/20191121_scala3_Tasty.html</loc>
+    <lastmod>2019-11-21</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/thought/why-simple-so-complex.html</loc>
+    <lastmod>2019-11-05</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/20191025_the-root-of-lisp.html</loc>
+    <lastmod>2019-10-25</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/20190414-fp-closure-iterator.html</loc>
+    <lastmod>2019-10-11</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/sicp/whyfp.html</loc>
-    <lastmod>2019-04-29</lastmod>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/python-fp.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/lambda_03_bool_branch.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/ipc_msg_communication.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/lambda_02_number.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/20190429_cps.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/sicp/20190505_fractal.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/scala/20190308_scala_main.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/others/terminal_FAQ.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20181127_riscv_link.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20181120_riscv_c_dev_setp.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/eda/verilog_simu_0delay.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20181128_makefile_acc.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20181130_idea_scala_config.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20181221_riscv_verctor.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20190418_c_point.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/scala/20190308_scala_package.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/others/crystals-pll-vco.html</loc>
+    <lastmod>2019-10-11</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/riscv/20190428_function_call.html</loc>
-    <lastmod>2019-04-28</lastmod>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20181116_RISCV_inst_test.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/others/lsb_hsb.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/riscv/20181125_gdb_debug.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/eda/eda_option.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/eda/how_to_send_param2tb.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/eda/timing_analysis.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/eda/20181130_sy_QA.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/20190320_verilog_case_ifelse.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/20190321_chisel_comb_reg.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/chisel_bugs.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/20181205_chisel_learning.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/20190322_chisel_module_confilict.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/chisel_QA.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/20190401_chisel_keep_name.html</loc>
+    <lastmod>2019-10-11</lastmod>
+  </url>  <url>
+    <loc>https://jijingg.github.io/chisel/20190411_chisel_version.html</loc>
+    <lastmod>2019-10-11</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/sicp/20190421_whyfp.html</loc>
     <lastmod>2019-04-26</lastmod>
   </url>  <url>
-    <loc>https://jijingg.github.io/scala/scala_FAQ.html</loc>
-    <lastmod>2019-04-24</lastmod>
-  </url>  <url>
     <loc>https://jijingg.github.io/others/favo_blog.html</loc>
     <lastmod>2019-04-19</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/sicp/lambda_03_bool_branch.html</loc>
-    <lastmod>2019-04-19</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/sicp/lambda_02_number.html</loc>
-    <lastmod>2019-04-19</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20190418_c_point.html</loc>
-    <lastmod>2019-04-19</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/sicp/20190414-fp-closure-iterator.html</loc>
-    <lastmod>2019-04-19</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/chisel_bugs.html</loc>
-    <lastmod>2019-04-16</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/chisel_QA.html</loc>
-    <lastmod>2019-04-16</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/sicp/ipc_msg_communication.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20181125_gdb_debug.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/others/crystals-pll-vco.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/others/terminal_FAQ.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/others/lsb_hsb.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/eda/20181130_sy_QA.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/eda/timing_analysis.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/eda/verilog_simu_0delay.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/eda/eda_option.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/eda/how_to_send_param2tb.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20181128_makefile_acc.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20181221_riscv_verctor.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20181120_riscv_c_dev_setp.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/20181205_chisel_learning.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20181130_idea_scala_config.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/20190320_verilog_case_ifelse.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20181127_riscv_link.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/riscv/20181116_RISCV_inst_test.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/sicp/python-fp.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_package.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/20190401_chisel_keep_name.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/20190322_chisel_module_confilict.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/20190411_chisel_version.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/chisel/20190321_chisel_comb_reg.html</loc>
-    <lastmod>2019-04-13</lastmod>
-  </url>  <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_main.html</loc>
-    <lastmod>2019-04-13</lastmod>
   </url>  <url>
     <loc>https://jijingg.github.io/others/hexo_utlis.html</loc>
     <lastmod>2019-04-12</lastmod>

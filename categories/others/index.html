@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head><meta name="generator" content="Hexo 3.8.0">
-    <meta name="baidu-site-verification" content="5NJSOR3owM">
-    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+<html  lang="zh">
+<head>
+    <meta name="baidu-site-verification" content="5NJSOR3owM" />
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6" />
     <meta charset="utf-8">
 <title>分类: others - 马車同学</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -99,6 +99,8 @@
                 
                 <a class="navbar-item" href="/main/">目录</a>
                 
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
                 <a class="navbar-item" href="/topic/">主题</a>
                 
                 <a class="navbar-item" href="/categories/">分类</a>
@@ -147,6 +149,136 @@
         </nav>
     </div>
 </div>
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/others/float_trap.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 749 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/float_trap.html">浮点避坑</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="浮点数相加"><a href="#浮点数相加" class="headerlink" title="浮点数相加"></a>浮点数相加</h3><p>我们知道浮点数尽量避免不同量纲的数相加<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-number">1023</span> + <span class="hljs-number">0.00000000000001</span></span><br><span class="line"><span class="hljs-type">Double</span> = <span class="hljs-number">1023.0</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="浮点数除法"><a href="#浮点数除法" class="headerlink" title="浮点数除法"></a>浮点数除法</h3><p>不同量纲之间的除法也会得到不一样的结果<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-number">1.023</span>/<span class="hljs-number">2.047</span></span><br><span class="line"><span class="hljs-type">Double</span> = <span class="hljs-number">0.49975574010747426</span></span><br><span class="line">&gt; <span class="hljs-number">1023.0</span>/<span class="hljs-number">2047.0</span></span><br><span class="line"><span class="hljs-type">Double</span> = <span class="hljs-number">0.49975574010747437</span></span><br></pre></td></tr></table></figure></p>
+<p>因此对于有些应用可能引入意向不到的结果<br>比如<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-number">1023.0</span>/<span class="hljs-number">2047.0</span>*<span class="hljs-number">2.047</span> == <span class="hljs-number">1.023</span></span><br><span class="line"><span class="hljs-type">Boolean</span> = <span class="hljs-literal">false</span></span><br><span class="line">&gt; <span class="hljs-number">1023.0</span>/<span class="hljs-number">2047.0</span>*<span class="hljs-number">2047</span> == <span class="hljs-number">1023</span></span><br><span class="line"><span class="hljs-type">Boolean</span> = <span class="hljs-literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>避免不同量纲的数做加减法，还要注意不同量纲的数做乘除法带来的意外结果</p>
+<h3 id="典型的例子"><a href="#典型的例子" class="headerlink" title="典型的例子"></a>典型的例子</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0.3 - 0.1</span><br><span class="line">floor( 0.3*10 - 0.1 *10 )  //2.0</span><br><span class="line">floor((0.3 - 0.1)*10 )     //1.0</span><br></pre></td></tr></table></figure>
+<h2 id="Double-Eps-精度"><a href="#Double-Eps-精度" class="headerlink" title="Double Eps 精度"></a>Double Eps 精度</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Float  (B=2 / p=24): Eps = 2^(-24) = 5.9604644775390625E-8</span><br><span class="line">Double (B=2 / p=53): Eps = 2^(-53) = 1.1102230246251565E-16</span><br></pre></td></tr></table></figure>
+<p>也就是说计算机能表示的最小绝对值<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0+1E-16 = E-16</span><br><span class="line">1+1E-16 = 1.0</span><br></pre></td></tr></table></figure></p>
+<p>他的精度跟指数位有关，总共E-16次方的误差范围，指数位占n位，那么误差就等与E(-16+n)<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1000+1e-16= 1000.0</span><br><span class="line">1000+1e-15= 1000.0</span><br><span class="line">1000+1e-14= 1000.0</span><br><span class="line">1000+1e-13= 1000.0000000000001</span><br></pre></td></tr></table></figure></p>
+<p>只要指数位和分数位之和不要超过16，都可以表示<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1E10+1E-6 = 1.0000000000000002E10   //能表示1E-6不能表示</span><br><span class="line"></span><br><span class="line">1E10+1E-7 = 1.0E10                  //误差1E-7不能表示</span><br><span class="line">1E8+1E-7  = 1.000000000000001E8     //指数位8，误差1E-7可以表示</span><br><span class="line">1000000  +1E-10 = 100000.0000000001 //可以表示1E-10</span><br><span class="line">10000000 +1E-10 = 10000000.0        //不能表示1E-10误差,指数位占了7</span><br><span class="line">1E18 + 13  =   1e18</span><br></pre></td></tr></table></figure></p>
+<p>所以你在用浮点计算的时候，要看数的量纲，量纲越大，Eps要设置的大一些, 否则就失去了意义</p>
+<p><a href="https://github.com/scala/bug/issues/3791#issuecomment-292385589" target="_blank" rel="noopener">Scala EPS</a></p>
+<p>所以在判断一个数是否为0是， 不能 <code>a == 0</code> 而是要  <code>abs(a)     &lt;= Eps</code> ,<br>同样在比较两个数是否相等时，不能 <code>a == b</code> 而是要  <code>abs(a - b) &lt;= Eps</code></p>
+<h2 id="BigDecimal"><a href="#BigDecimal" class="headerlink" title="BigDecimal"></a>BigDecimal</h2><p>Double的问题是精度有限<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val a = 0.02</span><br><span class="line">val b = 0.03</span><br><span class="line">val c = b - a</span><br></pre></td></tr></table></figure></p>
+<p>c的结果不是0.01，而是c: Double = 0.009999999999999998<br>因此有些系统设计中不能用double，不如金融银行金额计算<br>为什么会这样呢? 因为float和double都是浮点数, 都有取值范围, 都有精度范围. 浮点数与通常使用的小数不同, 使用中, 往往难以确定.<br>常见的问题是定义了一个浮点数, 经过一系列的计算, 它本来应该等于某个确定值, 但实际上并不是!<br>double相减会转换成二进制，因double有效位数为 16位这就会出现存储小数位数不够的情况，这种情况下就会出现误差，解决方法就是使用BigDecimal，它的有效长度足够长可存储小数位数。<br>因此可代替double来进行加减乘除， 金额必须是完全精确的计算, 故不能使用double或者float, 而应该采用java.math.BigDecimal.<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val a = BigDecimal(0.02)</span><br><span class="line">val b = BigDecimal(0.03)</span><br><span class="line">val c = b - a</span><br></pre></td></tr></table></figure></p>
+<p>c的结果得到0.01</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val a =  BigInt(&quot;1234567890123456&quot;).toLong</span><br><span class="line">val b =  0.001</span><br><span class="line">val c = a + b</span><br></pre></td></tr></table></figure>
+<p>c的值为1234567890123456，0.01丢失<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val a =  BigDecimal(&quot;1234567890123456&quot;)</span><br><span class="line">val b =  BigDecimal(0.001)</span><br><span class="line">val c = a + b</span><br></pre></td></tr></table></figure></p>
+<p>c的值为1234567890123456.001，精度并不会丢失</p>
+<p>BigDecimal(value), value可以用数字初始化，太大的值只能用字符串初始化如“123456789012345678”</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val a =  BigDecimal(&quot;1234567890123456001&quot;)</span><br><span class="line">val b =  BigDecimal(0.1231)</span><br><span class="line">val c = a * b </span><br><span class="line">c.precision</span><br><span class="line">c.rounded</span><br><span class="line">c.scale</span><br><span class="line">c.pow(2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val c= BigDecimal(&quot;1234.5000&quot;)</span><br><span class="line">c.doubleValue</span><br><span class="line">c.round(new java.math.MathContext(4, java.math.RoundingMode.HALF_UP))</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/others/revealjs2pdf.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="slides(revealjs 导出PDF)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-31T16:00:00.000Z">2019-09-01</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 176 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/revealjs2pdf.html">slides(revealjs 导出PDF)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="1-export-HTML-to-slides"><a href="#1-export-HTML-to-slides" class="headerlink" title="1. export HTML to slides"></a>1. export HTML to slides</h2><p>  $: unzip reveal.js.master.zip<br>  $: cd reveal.js.master </p>
+<h2 id="2-Edit-index-html"><a href="#2-Edit-index-html" class="headerlink" title="2. Edit index.html"></a>2. Edit index.html</h2><p>  Export to reveal.js from <a href="https://slides.com/yourname/yourslide/edit" target="_blank" rel="noopener">https://slides.com/yourname/yourslide/edit</a><br>  Presentation made with Slides are powered by the reveal.js open source presentation framework. This export lets you migrate your slide content to a fresh reveal.js install.<br>  a. Download a copy of the reveal.js framework and make the following edits to its index.html.<br>  b. In the <head><meta name="generator" content="Hexo 3.8.0">, replace the theme CSS <link> with:<br>  c. In the </head><body>, replace the <div class="reveal"> node with:<br>  d. In the Reveal.initialize call towards the bottom of your index.html, append these config values:</div></body></p>
+<h2 id="3-Edit-index-pdf-config"><a href="#3-Edit-index-pdf-config" class="headerlink" title="3. Edit index pdf config"></a>3. Edit index pdf config</h2><p>  a. edit index.html<br>  add. Reveal.Configure before Reveal.initialize<br>  <figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Reveal.configure(&#123; <span class="hljs-attr">pdfSeparateFragments</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">                   pdfMaxPagesPerSlide: <span class="hljs-number">1</span> &#125;);</span><br><span class="line">Reveal.initialize(&#123; ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-Export-pdf"><a href="#4-Export-pdf" class="headerlink" title="4.  Export pdf"></a>4.  Export pdf</h2><p>  open index.html by Chrome like <code>http://xxxx.index.html?print-pdf</code><br>  Ctrl-P(windows)  or COMMAND-P(Mac-OS)<br>  Save</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ol>
+<li>Save Fail(Preview Failure)<br>print range - full<br>I found Chrome export pdf raise Error when pages number bigger than 56<br>So you should export it twice 1-56, 57~64</li>
+</ol>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
     <div class="card">
     
@@ -260,8 +392,63 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/others/lsb_hsb.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="综合时序分析回顾">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 125 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/lsb_hsb.html">综合时序分析回顾</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="关于计算机大小端"><a href="#关于计算机大小端" class="headerlink" title="关于计算机大小端"></a>关于计算机大小端</h3><p>一般计算机所讲的大小端指的是字节序的大小端，比特序一般默认都是小端无论字节序为大端还是小端</p>
+<h4 id="字节序大小端"><a href="#字节序大小端" class="headerlink" title="字节序大小端"></a>字节序大小端</h4><p>HSB(大端格式):<br>按字节从大到小排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte0,byte1,byte2,byte3</span><br><span class="line">byte4,byte5,byte6,byte7</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>LSB(小端格式):<br>按字节从小到大排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte3,byte2,byte1,byte0</span><br><span class="line">byte7,byte6,byte5,byte4</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h4 id="比特序大小端"><a href="#比特序大小端" class="headerlink" title="比特序大小端"></a>比特序大小端</h4><p>bit大端 =[01234567]<br>bit小端 =[76543210]<br>一般常见的都是bit小端 </p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/others/terminal_FAQ.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/dog.jpg" alt="Terminal配置常见问题">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/dog.jpg" alt="Terminal配置常见问题">
         </a>
     </div>
     
@@ -329,63 +516,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/others/lsb_hsb.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/city.jpg" alt="综合时序分析回顾">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/others/">others</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 125 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/others/lsb_hsb.html">综合时序分析回顾</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="关于计算机大小端"><a href="#关于计算机大小端" class="headerlink" title="关于计算机大小端"></a>关于计算机大小端</h3><p>一般计算机所讲的大小端指的是字节序的大小端，比特序一般默认都是小端无论字节序为大端还是小端</p>
-<h4 id="字节序大小端"><a href="#字节序大小端" class="headerlink" title="字节序大小端"></a>字节序大小端</h4><p>HSB(大端格式):<br>按字节从大到小排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte0,byte1,byte2,byte3</span><br><span class="line">byte4,byte5,byte6,byte7</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>LSB(小端格式):<br>按字节从小到大排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte3,byte2,byte1,byte0</span><br><span class="line">byte7,byte6,byte5,byte4</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<h4 id="比特序大小端"><a href="#比特序大小端" class="headerlink" title="比特序大小端"></a>比特序大小端</h4><p>bit大端 =[01234567]<br>bit小端 =[76543210]<br>一般常见的都是bit小端 </p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
         <a href="/others/crystals-pll-vco.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/book4.jpg" alt="晶振，PLL, VCO介绍">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/book4.jpg" alt="晶振，PLL, VCO介绍">
         </a>
     </div>
     
@@ -502,7 +634,7 @@
                 <span class="level-item">eda</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/others/">
@@ -510,7 +642,7 @@
                 <span class="level-item">others</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/riscv/">
@@ -526,7 +658,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -534,7 +666,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li>
             </ul>
@@ -555,18 +687,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190429_cps.html" class="media-left">
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg" alt="CPS变换">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-28T16:00:00.000Z">2019-04-29</time></div>
-                    <a href="/sicp/20190429_cps.html" class="has-link-black-ter is-size-6">CPS变换</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -574,18 +706,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190428_function_call.html" class="media-left">
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190428_function_call.html" class="has-link-black-ter is-size-6">C函数调用和汇编代码分析</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
                     </p>
                 </div>
             </div>
@@ -593,18 +725,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190418_c_point.html" class="media-left">
+            <a href="/others/float_trap.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/city.jpg" alt="C语言指针注解">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
                     </p>
                 </div>
             </div>
@@ -612,18 +744,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190421_whyfp.html" class="media-left">
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
-                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -631,18 +763,18 @@
         
         <article class="media">
             
-            <a href="/sicp/whyfp.html" class="media-left">
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
-                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        
                     </p>
                 </div>
             </div>
@@ -663,6 +795,61 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/04/">
@@ -762,6 +949,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -785,7 +979,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
@@ -799,14 +993,21 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/verilog/">
                         <span class="tag">verilog</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">11</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -820,7 +1021,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/计算机/">
                         <span class="tag">计算机</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -849,8 +1057,9 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2019 jijing&nbsp;
+                &copy; 2020 jijing&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
                 
                 </p>
             </div>
@@ -889,6 +1098,7 @@
         </div>
     </div>
 </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("zh-CN");</script>

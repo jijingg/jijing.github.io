@@ -99,6 +99,8 @@
                 
                 <a class="navbar-item" href="/main/">目录</a>
                 
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
                 <a class="navbar-item" href="/topic/">主题</a>
                 
                 <a class="navbar-item" href="/categories/">分类</a>
@@ -150,8 +152,283 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/scala/20200119_scala_single_object.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1335 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20200119_scala_single_object.html">Scala 单例对象的三个应用</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="一-进度条"><a href="#一-进度条" class="headerlink" title="一 进度条"></a>一 进度条</h3><p>有时候我们在编写代码时希望能够查看运行时间，最简单的方法：</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]) &#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> startTime: <span class="hljs-type">Long</span> = <span class="hljs-type">System</span>.currentTimeMillis</span><br><span class="line">      待测试的代码块</span><br><span class="line">  <span class="hljs-keyword">val</span> endTime: <span class="hljs-type">Long</span> = <span class="hljs-type">System</span>.currentTimeMillis</span><br><span class="line">  <span class="hljs-type">System</span>.out.println(<span class="hljs-string">"程序运行时间： "</span> + (endTime - startTime) + <span class="hljs-string">"ms"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但这个方法显然不是那么优雅。如果你在使用Scala的时候注意运行log，你会发下进度条更漂亮直观的。</p>
+<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Runtime] SpinalHDL v1.3.9    git head : a4cb4aadf0820174c1b48023bfcd3e9981de1d4a</span><br><span class="line">[Runtime] JVM max memory : 1820.5MiB</span><br><span class="line">[Runtime] Current date : 2020.01.23 10:44:55</span><br><span class="line">[Progress] at 0.000 : Elaborate components</span><br><span class="line">[Progress] at 0.513 : Checks and transforms</span><br><span class="line">[Progress] at 0.705 : Generate Verilog</span><br><span class="line">[Done] at 0.806</span><br></pre></td></tr></table></figure>
+<p>实现非常简单，首先得创建一个单例对象，单例对象一旦被实例化以后，startTime就会确定，不管Driver后面被调用多少次只会用到第一次被实例化的对象，startTime也不会改变。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Driver</span> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> startTime = <span class="hljs-type">System</span>.currentTimeMillis()</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">executionTime</span></span>: <span class="hljs-type">Double</span> = (<span class="hljs-type">System</span>.currentTimeMillis - startTime) / <span class="hljs-number">1000.0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再创建一个名叫“MyProgress”的用户接口, 每次执行“MyProgress”时调用单例对象Driver的executionTime打印当前时刻。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">MyProgress</span> </span>&#123;</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(message: <span class="hljs-type">String</span>) = </span><br><span class="line">     println(<span class="hljs-string">s"<span class="hljs-subst">$&#123;MyLog.tag("Progress", Console.BLUE)&#125;</span> at <span class="hljs-subst">$&#123;f"$&#123;Driver.executionTime&#125;</span>%1.3f"</span>&#125; : $<span class="hljs-string">message")</span></span><br><span class="line"><span class="hljs-string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>以下是一个基带仿真的case，每个关键节点调用MyProgress， 每步耗费的时间一目了然（单位s）。</p>
+<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Progress] at 0.000 : Coherence correlation start</span><br><span class="line">[Progress] at 0.076 : DopplerOffset HertzNumber(250.0)</span><br><span class="line">[Progress] at 0.296 : Sample done</span><br><span class="line">[Progress] at 0.481 : add AWGN noise</span><br><span class="line">[Progress] at 0.488 : Normalized rx power to 0 dB</span><br><span class="line">[Progress] at 0.489 : Receive data with AWGN, Sampled at 2.048/40.96MHz</span><br><span class="line">[Progress] at 0.529 : Quantization to 2bit done</span><br><span class="line">[Progress] at 0.538 : 2 bit AD data remaping done</span><br><span class="line">[Progress] at 2.243 : carrier Mixing done</span><br></pre></td></tr></table></figure>
+<p>我也听到有人抱怨Rocket生成时间巨长，自己也搞不清楚时间到底耗费在什么地方，有可能是编译，也有可能是逻辑代码，也有可能是firrtl的解析生成。 现在你就可以用MyProgress来诊断瓶颈到底出在哪儿。</p>
+<p>我自己用Scala编写算法参考平台时就遇到一个怪异的问题，按理说Scala是静态语言比Python更快，但是大致相同的算法，运行时间奇慢无比，后来就用MyProgress的进行二分法，找到问题的症结，我在打印文件时代用折叠的方式拼接字符串，foldLeft在功能上并没有问题，但是在字符串拼接是时间复杂度应该不是线性的（具体我没有深究，有兴趣的同学可以研究一下），导致很慢。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fp.write(content.foldLeft(<span class="hljs-string">""</span>)(_+<span class="hljs-string">"\n"</span>+_))</span><br></pre></td></tr></table></figure>
+<p>正确的方法是用mkString，速度回复正常，问题解决</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fp.write(content.mkString(<span class="hljs-string">"("</span>\<span class="hljs-string">n")))</span></span><br></pre></td></tr></table></figure>
+<p>最后这里的<strong>MyProgress</strong>正是SpinalHDL的<strong>SpinalProgress</strong>，有兴趣可以阅读其源码</p>
+<h3 id="二-开关"><a href="#二-开关" class="headerlink" title="二 开关"></a>二 开关</h3><p>开关应用还是比较广泛，用过Matlab你就会比较熟悉</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grid on</span><br><span class="line">grid off</span><br></pre></td></tr></table></figure>
+<p>我举另外一个例子，算法在设计完功能和性能仿真以后要做定点性能仿真，定点的过程是需要修改代码，但是算法需要经常在全精度和定点之间切换调试，因为有时候性能不过，我们不清楚是逻辑的问题还是定点的问题。</p>
+<p>当一个很大的project中定点地方可能非常多，我们不可能每次去来回修改定点代码，优雅的方式应该设置一个开关，而不是去修改代码。</p>
+<p>首先设置一个开关单例对象</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">protected</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">FixSwitch</span> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> switch: <span class="hljs-type">Boolean</span> = <span class="hljs-literal">true</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">state</span></span>: <span class="hljs-type">Boolean</span> = switch</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">on</span></span>: <span class="hljs-type">Boolean</span> = &#123;</span><br><span class="line">    <span class="hljs-type">SpinalInfo</span>(<span class="hljs-string">"FixPoint Switch on"</span>)</span><br><span class="line">    switch = <span class="hljs-literal">true</span></span><br><span class="line">    state</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">off</span></span>: <span class="hljs-type">Boolean</span> = &#123;</span><br><span class="line">    <span class="hljs-type">SpinalInfo</span>(<span class="hljs-string">"FixPoint Switch off"</span>)</span><br><span class="line">    switch = <span class="hljs-literal">false</span></span><br><span class="line">    state</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>然后设置2个开关动作来改变单例对象的状态。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">FixOn</span></span>&#123;</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(): <span class="hljs-type">Boolean</span> = <span class="hljs-type">FixSwitch</span> on</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">FixOff</span></span>&#123;</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(): <span class="hljs-type">Boolean</span> = <span class="hljs-type">FixSwitch</span> off</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定点源码中加入开关状态</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FixData</span>(<span class="hljs-params">...</span>)</span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fixProcess</span></span>(): <span class="hljs-type">Double</span> =&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(<span class="hljs-type">FixSwitch</span>.state)&#123;</span><br><span class="line">      fixPoint logic .....</span><br><span class="line">    &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">      raw</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>性能仿真</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">PerformanceRegression</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">App</span></span>&#123;</span><br><span class="line">  <span class="hljs-type">FixOff</span>()       <span class="hljs-comment">//关闭定点，默认定点开启</span></span><br><span class="line">  <span class="hljs-type">Simulation5G</span>() <span class="hljs-comment">//代码中的定点自动失效，不需要手动修改</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有些人发现本质上这就是设置了一个全局可变的变量而已,</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> <span class="hljs-type">FixSwitchState</span>: <span class="hljs-type">Boolean</span> = <span class="hljs-literal">true</span></span><br></pre></td></tr></table></figure>
+<p>但是我们为什么不用全局变量, 而是单例对象，留给大家思考。</p>
+<h3 id="三-全局默认参数"><a href="#三-全局默认参数" class="headerlink" title="三 全局默认参数"></a>三 全局默认参数</h3><p>同样也是定点上的一个例子，SpinalHDL提供定点工厂函数</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> wire5bit = wire10bit.fixTo( <span class="hljs-number">6</span> downto <span class="hljs-number">2</span>, roundType = <span class="hljs-type">FLOOR</span>, symmetric = <span class="hljs-literal">true</span>)</span><br></pre></td></tr></table></figure>
+<p>但是一个Project可能有成百上千的定点处理, 每个定点都添加roundType, symmetric显然很累赘，当然你可以选择默认参数</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> wire5bit = wire10bit.fixTo( <span class="hljs-number">6</span> downto <span class="hljs-number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>不同的团队，不同的项目，可能使用不同的Round方式还有对称方式，我们希望默认参数也是可配置的。SpinalHDL UInt/SInt定点源码：</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fixTo</span></span>(x: <span class="hljs-type">Range</span>.<span class="hljs-type">Inclusive</span>): <span class="hljs-type">IQ</span> = </span><br><span class="line">      fixTo(x, round = getFixRound(), sym = getFixSym())</span><br></pre></td></tr></table></figure>
+<p>默认的round，和 symmetric 参数通过getFixRound, getFixSym从全局获得。</p>
+<p>一般一个工程种round 和 symmetric都是固定的，直接在SpinalConfig种设置即可。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">SpinalConfig</span>(mode = <span class="hljs-type">Verilog</span>,</span><br><span class="line">             fixPointConfig = <span class="hljs-type">FixPointConfig</span>(<span class="hljs-type">ROUNDUP</span>, <span class="hljs-literal">true</span>))</span><br></pre></td></tr></table></figure>
+<p>当然也可以在通过以下方式来刷新默认配置。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">FixPointConfig</span>(<span class="hljs-type">ROUNDUP</span>, <span class="hljs-literal">true</span>).flush()</span><br></pre></td></tr></table></figure>
+<p>具体实现参见<a href="https://github.com/jijingg/SpinalHDL/blob/1e13681878fae2d43f3bac35289fbb97baa321d1/core/src/main/scala/spinal/core/FixedPoint.scala#L40" target="_blank" rel="noopener">源码</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20191121_scala3_Tasty.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    20 分钟 读完 (大约 3026 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20191121_scala3_Tasty.html">Scala3-Macro系统Tasty进展</a>
+            
+        </h1>
+        <div class="content">
+            <p>Scala3 重新设计Macro系统，这是官网<a href="https://www.scala-lang.org/blog/2018/04/30/in-a-nutshell.html" target="_blank" rel="noopener">英文原文</a>。<br>翻译的很烂，全当学习笔记而已，仅供参考</p>
+<h2 id="Or-Scala-in-a-Tasty-Nutshell"><a href="#Or-Scala-in-a-Tasty-Nutshell" class="headerlink" title="Or: Scala in a (Tasty) Nutshell"></a>Or: Scala in a (Tasty) Nutshell</h2><p>如何迁移到 <a href="https://www.scala-lang.org/blog/2018/04/19/scala-3.html" target="_blank" rel="noopener">Scala 3</a>这篇博文中提到最大的一个问题是关于宏的问题。<br>目前我们正在努力将Tasty和macros对齐，接下来谈一谈我们的想法.</p>
+<h2 id="What-is-Tasty"><a href="#What-is-Tasty" class="headerlink" title="What is Tasty?"></a>What is Tasty?</h2><p>Tasty是Scala3的高级交换格式。它基于类型化的抽象语法树<br>这些树在某种意义上包含了Scala程序中的所有信息。<br>它们表示程序的语法结构，还包含有关类型和位置的完整信息.<br>Tasty在语法检查之后（这样所有的类型都显式的知道了，并且隐式的东西都已经解释过了）给代码做一个快照，<br>但是在快照之前不会经过任何转换，因此所有的信息都不会丢失。<br>放语法树的文件为了紧凑会压缩优化（有点像javascript的压缩），这意味着我们可以在任何编译器运行期间<br>生成完整的Tasty语法树，即便是单独编译也不依赖任何其他东西。<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20191121_scala3_Tasty.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/thought/why-simple-so-complex.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    25 分钟 读完 (大约 3775 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/thought/why-simple-so-complex.html">为什么&#34;简单&#34;如此复杂</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="软件工程中”简单”的复杂性"><a href="#软件工程中”简单”的复杂性" class="headerlink" title="软件工程中”简单”的复杂性"></a>软件工程中”简单”的复杂性</h2><p>简单可能比复杂更难：你必须努力使思维清晰才能简化它。但最终这一切都是值得的，因为它能使你翻越高山。<br>—— Steve Jobs</p>
+<p>我相信有两种设计软件的方式：一种是使软件足够简单而明显没有缺陷；另一种是使它如此的复杂，以至于没有明显的（可被轻易发现的）缺陷。</p>
+<p>—— Tony<br>Hoare（译者注：英国计算机科学家、图灵奖得主、快速排序算法的发明人、哲学家就餐问题的提出者……）</p>
+<p>简单，软件工程的圣杯。业界的前辈一直在驱策我们去追求它。</p>
+<p>（软件设计）是一门手艺……相对”复杂”而言，它赋予”简单”更高的价值<br>—— Barbara Liskov（译者注：2008年图灵奖得主）<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/thought/why-simple-so-complex.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/20191025_the-root-of-lisp.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/sicp.jpg" alt="Lisp之根">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-24T16:00:00.000Z">2019-10-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 分钟 读完 (大约 1924 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/20191025_the-root-of-lisp.html">Lisp之根</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="The-Root-of-List"><a href="#The-Root-of-List" class="headerlink" title="The Root of List"></a>The Root of List</h2><p>约翰麦卡锡于1960年发表了一篇非凡的论文,他在这篇论文中对编程的贡献有如 欧几里德对几何的贡献.1 他向我们展示了,在只给定几个简单的操作符和一个 表示函数的记号的基础上, 如何构造出一个完整的编程语言. 麦卡锡称这种语 言为Lisp, 意为List Processing, 因为他的主要思想之一是用一种简单的数据 结构表(list)来代表代码和数据.    </p>
+<p>值得注意的是,麦卡锡所作的发现,不仅是计算机史上划时代的大事, 而且是一种 在我们这个时代编程越来越趋向的模式.我认为目前为止只有两种真正干净利落, 始终如一的编程模式:C语言模式和Lisp语言模式.此二者就象两座高地, 在它们 中间是尤如沼泽的低地.随着计算机变得越来越强大,新开发的语言一直在坚定地 趋向于Lisp模式. 二十年来,开发新编程语言的一个流行的秘决是,取C语言的计 算模式,逐渐地往上加Lisp模式的特性,例如运行时类型和无用单元收集.   </p>
+<p>在这篇文章中我尽可能用最简单的术语来解释约翰麦卡锡所做的发现. 关键是我 们不仅要学习某个人四十年前得出的有趣理论结果, 而且展示编程语言的发展方 向. Lisp的不同寻常之处–也就是它优质的定义–是它能够自己来编写自己. 为了理解约翰麦卡锡所表述的这个特点,我们将追溯他的步伐,并将他的数学标记 转换成能够运行的Common Lisp代码.<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/sicp/20191025_the-root-of-lisp.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/sicp/20190429_cps.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg" alt="CPS变换">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack6.jpg" alt="CPS变换">
         </a>
     </div>
     
@@ -211,7 +488,7 @@
     
     <div class="card-image">
         <a href="/sicp/whyfp.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
         </a>
     </div>
     
@@ -276,7 +553,7 @@
     
     <div class="card-image">
         <a href="/sicp/lambda_03_bool_branch.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/building3.jpg" alt="lambda演算python实现[三]之Bool值和分支">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building3.jpg" alt="lambda演算python实现[三]之Bool值和分支">
         </a>
     </div>
     
@@ -336,7 +613,7 @@
     
     <div class="card-image">
         <a href="/sicp/lambda_02_number.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/building2.jpg" alt="lambda演算python实现[二]之数字">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building2.jpg" alt="lambda演算python实现[二]之数字">
         </a>
     </div>
     
@@ -396,7 +673,7 @@
     
     <div class="card-image">
         <a href="/scala/scala_FAQ.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 避坑大法">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/happy3.jpg" alt="Scala 避坑大法">
         </a>
     </div>
     
@@ -414,7 +691,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 147 个字)
+                    1 分钟 读完 (大约 200 个字)
                 </span>
                 
                 
@@ -438,7 +715,12 @@
 <li>scala实际上并没有真正意义上的return语句，而是又抛出异常的语法糖包裹实现的</li>
 </ol>
 </li>
+<li><p>如何定义一个无限长的序列 Infinite Stream<br>  无限长的序列有什么用</p>
+</li>
 </ul>
+<h3 id="BugList"><a href="#BugList" class="headerlink" title="BugList"></a>BugList</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object fix&#123;</span><br><span class="line">  def on: Boolean = FixSwitch on</span><br><span class="line">  def off: Boolean = FixSwitch off</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fix on</span><br><span class="line"><span class="hljs-keyword">val</span> a = <span class="hljs-number">2</span> <span class="hljs-comment">// is Ok</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fix on</span><br><span class="line">println(<span class="hljs-string">"xxx"</span>) <span class="hljs-comment">// Compile error</span></span><br><span class="line"><span class="hljs-keyword">val</span> a = <span class="hljs-number">2</span></span><br></pre></td></tr></table></figure>
 
         </div>
         
@@ -459,7 +741,7 @@
     
     <div class="card-image">
         <a href="/sicp/20190414-fp-closure-iterator.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/wb2.jpg" alt="函数是编程的闭包和迭代器理解">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/wb2.jpg" alt="函数是编程的闭包和迭代器理解">
         </a>
     </div>
     
@@ -494,249 +776,6 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/sicp/20190414-fp-closure-iterator.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/sicp/python-fp.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 209 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/sicp/python-fp.html">Python lambda实现Y组合子</a>
-            
-        </h1>
-        <div class="content">
-            <p>也许你我都难以理解，为什么有人对她痴迷疯狂，铭记在心中不说，还要刻在身上：</p>
-<p>她让人绞尽脑汁，也琢磨不定！她让人心力憔悴，又百般回味！</p>
-<p>她，看似平淡，却深藏玄机！她，貌不惊人，却天下无敌！</p>
-<p>她是谁？</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/sicp/python-fp.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/scala/20190308_scala_sbt1.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/macbook2.jpg" alt="Scala 初探.三(sbt组织scala代码1)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 308 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt1.html">Scala 初探.三(sbt组织scala代码1)</a>
-            
-        </h1>
-        <div class="content">
-            <p>上一节我们用Makefile来组织scala代码，这里有更好的选择sbt来管理项目<br>sbt推荐将scala代码放在src路径，如下为标准的组织方式(代码还是原封使用第二节的样例代码)<br>总共3个文件      </p>
-<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── a.scala</span><br><span class="line">            ├── b.scala</span><br><span class="line">            └── c.scala</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt1.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/scala/20190308_scala_sbt2.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 初探.四(sbt组织scala代码2)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 586 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt2.html">Scala 初探.四(sbt组织scala代码2)</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="package-and-import"><a href="#package-and-import" class="headerlink" title="package and import"></a>package and import</h3><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── Interleave.scala</span><br><span class="line">            ├── utils.scala</span><br><span class="line">            └── config.scala</span><br></pre></td></tr></table></figure>
-<p>对于同一目录下的两个文件，可以不用import，默认在一个package内  </p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//Interleave.scala</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> a = <span class="hljs-keyword">new</span> <span class="hljs-type">ClassInUtils</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt2.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/scala/20190308_scala_main.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/led2.jpg" alt="Scala 初探.一(main函数)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 749 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/scala/20190308_scala_main.html">Scala 初探.一(main函数)</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="SCALA-程序的几种运行方式"><a href="#SCALA-程序的几种运行方式" class="headerlink" title="SCALA 程序的几种运行方式"></a>SCALA 程序的几种运行方式</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>脚本式的使用，<code>scala a.scala</code> 可正常打印<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function">def <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>= &#123;</span><br><span class="line">  println(<span class="hljs-string">"Hello, Scala way1"</span>)</span><br><span class="line">&#125;</span><br><span class="line">main()</span><br></pre></td></tr></table></figure></p>
-<p>但这种写法不能被 <code>scalac a.scala</code>正确编译，可能JVM对象必须要有个main入口函数</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/scala/20190308_scala_main.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -818,7 +857,7 @@
                 <span class="level-item">eda</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/others/">
@@ -826,7 +865,7 @@
                 <span class="level-item">others</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/riscv/">
@@ -842,7 +881,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -850,7 +889,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li>
             </ul>
@@ -871,18 +910,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190429_cps.html" class="media-left">
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg" alt="CPS变换">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-28T16:00:00.000Z">2019-04-29</time></div>
-                    <a href="/sicp/20190429_cps.html" class="has-link-black-ter is-size-6">CPS变换</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -890,18 +929,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190428_function_call.html" class="media-left">
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190428_function_call.html" class="has-link-black-ter is-size-6">C函数调用和汇编代码分析</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
                     </p>
                 </div>
             </div>
@@ -909,18 +948,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190418_c_point.html" class="media-left">
+            <a href="/others/float_trap.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/city.jpg" alt="C语言指针注解">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
                     </p>
                 </div>
             </div>
@@ -928,18 +967,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190421_whyfp.html" class="media-left">
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
-                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -947,18 +986,18 @@
         
         <article class="media">
             
-            <a href="/sicp/whyfp.html" class="media-left">
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
-                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        
                     </p>
                 </div>
             </div>
@@ -979,6 +1018,61 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/04/">
@@ -1078,6 +1172,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -1101,7 +1202,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
@@ -1115,14 +1216,21 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/verilog/">
                         <span class="tag">verilog</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">11</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1136,7 +1244,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/计算机/">
                         <span class="tag">计算机</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1165,8 +1280,9 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2019 jijing&nbsp;
+                &copy; 2020 jijing&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
                 
                 </p>
             </div>
@@ -1205,6 +1321,7 @@
         </div>
     </div>
 </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("zh-CN");</script>

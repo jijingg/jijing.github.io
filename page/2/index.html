@@ -99,6 +99,8 @@
                 
                 <a class="navbar-item" href="/main/">目录</a>
                 
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
                 <a class="navbar-item" href="/topic/">主题</a>
                 
                 <a class="navbar-item" href="/categories/">分类</a>
@@ -140,8 +142,425 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/riscv/20190428_function_call.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1035 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20190428_function_call.html">C函数调用和汇编代码分析</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="risc-v-C函数调用反汇编示例"><a href="#risc-v-C函数调用反汇编示例" class="headerlink" title="risc-v C函数调用反汇编示例"></a>risc-v C函数调用反汇编示例</h4><p>首先有一段C程序，其中main函数调用子函数add<br><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//main.c </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> a + b ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20190428_function_call.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20190418_c_point.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="C语言指针注解">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 606 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20190418_c_point.html">C语言指针注解</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="C语言指针实例"><a href="#C语言指针实例" class="headerlink" title="C语言指针实例"></a>C语言指针实例</h3><p>指针的类型可以是int，double，float，struct …. 决定指针内部存放的数据大小，<br>如果定义的是一个数组，类型可以让编译器 在p++是跳多少个大小的地址<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20190418_c_point.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 小时 读完 (大约 15130 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/20190421_whyfp.html"></a>
+            
+        </h1>
+        <div class="content">
+            <p>函数式程序设计为什么至关重要<br>Why Functional Programming Matters<br>函数式程序设计为什么至关重要</p>
+<p>作者： John Hughes<br>翻译： CloudiDust ［<a href="http://blog.csdn.net/ddwn/］" target="_blank" rel="noopener">http://blog.csdn.net/ddwn/］</a><br>［在网上也可以找到其他同学的翻译哦，我翻译完了才看到的，呵呵。］</p>
+<p>原文地址：<a href="http://www.md.chalmers.se/~rjmh/Papers/whyfp.html" target="_blank" rel="noopener">http://www.md.chalmers.se/~rjmh/Papers/whyfp.html</a></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/sicp/20190421_whyfp.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/whyfp.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    15 分钟 读完 (大约 2309 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/whyfp.html">为什么函数式编程至关重要</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="函数式程序的特点"><a href="#函数式程序的特点" class="headerlink" title="函数式程序的特点"></a>函数式程序的特点</h4><ol>
+<li>函数式编程不包含任何赋值语句（也就是没有变量），所有的值从一开始就确定了</li>
+<li>函数式编程不包含副作用，除了计数它本身的值以外不产生任何副作用，这一特性消灭了bug的一个主要来源</li>
+<li>函数式编程值是一定的，那么执行顺序就不在重要，所以它可以在任何时候被执行，这一过程将程序员从控制流中解放</li>
+<li>由于在任意时候求值，程序员可以随性所欲的用变量值来代替变量表达式，反之也可以用变量表达式代替变量的值。程序是引用透明，可以更容易的数学化控制</li>
+<li>函数是一等公民，函数式编程中努力用函数来表达所有的概念，完成所有的操作</li>
+<li>变量的不变性，赋值操作低人一等。简单将在scala函数是编程中只用val，不用var</li></ol>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/sicp/whyfp.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-19T12:48:53.000Z">2019-04-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 228 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/favo_blog.html">博文收藏</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="博客收藏"><a href="#博客收藏" class="headerlink" title="博客收藏"></a>博客收藏</h4><ul>
+<li>道可叨<a href="http://zhuoqiang.me/" target="_blank" rel="noopener">http://zhuoqiang.me/</a></li>
+</ul>
+<h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h4><p><strong>什么是函数式编程</strong><br>函数式代码是对<strong>“映射的描述”</strong>，输入<code>x</code>和输出<code>y</code>的映射关系 <code>y=f(x)</code><br>函数式编程在 <strong>描述是什么</strong><br>命令式编程在 <strong>应该怎样做</strong></p>
+<ul>
+<li><a href="http://wudaijun.com/2018/05/understand-functional-programing/" target="_blank" rel="noopener">理解函数式编程</a></li>
+<li><a href="https://www.zhihu.com/question/26154999/answer/63140320" target="_blank" rel="noopener">为什么我们需要（or不需要）科里化</a></li>
+<li><a href="https://hcyue.me/2016/05/14/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" target="_blank" rel="noopener">什么是函数式编程思维？</a> / <a href="https://www.zhihu.com/question/28292740/answer/100284611" target="_blank" rel="noopener">知乎</a></li>
+<li><a href="http://zhuoqiang.me/what-is-monad.html" target="_blank" rel="noopener">Monad 最简介绍</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzIwMDgyNzUzNw==&amp;mid=2247483658&amp;idx=1&amp;sn=2dde89033d2fef0cba307db9b8b5489e&amp;scene=0#wechat_redirect" target="_blank" rel="noopener">符号: 抽象、语义(函数式表达最清晰的解释)</a></li>
+</ul>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
+<li><a href="http://zhuoqiang.me/how-program-find-self.html" target="_blank" rel="noopener">程序如何定位自己</a></li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/lambda_03_bool_branch.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building3.jpg" alt="lambda演算python实现[三]之Bool值和分支">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-19T12:34:36.000Z">2019-04-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 274 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/lambda_03_bool_branch.html">lambda演算python实现[三]之Bool值和分支</a>
+            
+        </h1>
+        <div class="content">
+            <p>原文出处：<a href="https://cgnail.github.io/academic/lambda-3/" target="_blank" rel="noopener">Lambda演算中的布尔值和选择</a></p>
+<h4 id="python实现"><a href="#python实现" class="headerlink" title="python实现"></a>python实现</h4><p>用python定义Bool值和bool运算如下<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/sicp/lambda_03_bool_branch.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/lambda_02_number.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building2.jpg" alt="lambda演算python实现[二]之数字">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-19T12:34:36.000Z">2019-04-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 515 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/lambda_02_number.html">lambda演算python实现[二]之数字</a>
+            
+        </h1>
+        <div class="content">
+            <p>原文出处：<a href="https://cgnail.github.io/academic/lambda-2/" target="_blank" rel="noopener">lambda演算中的数字</a></p>
+<h3 id="python实现"><a href="#python实现" class="headerlink" title="python实现"></a>python实现</h3><p>数字和加法的函数表示<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/sicp/lambda_02_number.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/scala/scala_FAQ.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy3.jpg" alt="Scala 避坑大法">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/happy3.jpg" alt="Scala 避坑大法">
         </a>
     </div>
     
@@ -159,7 +578,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 147 个字)
+                    1 分钟 读完 (大约 200 个字)
                 </span>
                 
                 
@@ -183,6 +602,68 @@
 <li>scala实际上并没有真正意义上的return语句，而是又抛出异常的语法糖包裹实现的</li>
 </ol>
 </li>
+<li><p>如何定义一个无限长的序列 Infinite Stream<br>  无限长的序列有什么用</p>
+</li>
+</ul>
+<h3 id="BugList"><a href="#BugList" class="headerlink" title="BugList"></a>BugList</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object fix&#123;</span><br><span class="line">  def on: Boolean = FixSwitch on</span><br><span class="line">  def off: Boolean = FixSwitch off</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fix on</span><br><span class="line"><span class="hljs-keyword">val</span> a = <span class="hljs-number">2</span> <span class="hljs-comment">// is Ok</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fix on</span><br><span class="line">println(<span class="hljs-string">"xxx"</span>) <span class="hljs-comment">// Compile error</span></span><br><span class="line"><span class="hljs-keyword">val</span> a = <span class="hljs-number">2</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/chisel/chisel_QA.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/book5.jpg" alt="Chisel 常见问题">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-15T16:00:00.000Z">2019-04-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 2 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/chisel_QA.html">Chisel 常见问题</a>
+            
+        </h1>
+        <div class="content">
+            <ul>
+<li><p>Q1:</p>
+</li>
+<li><p>Q1:</p>
+</li>
 </ul>
 
         </div>
@@ -204,7 +685,7 @@
     
     <div class="card-image">
         <a href="/sicp/20190414-fp-closure-iterator.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/wb2.jpg" alt="函数是编程的闭包和迭代器理解">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/wb2.jpg" alt="函数是编程的闭包和迭代器理解">
         </a>
     </div>
     
@@ -239,473 +720,6 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/sicp/20190414-fp-closure-iterator.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-11T16:00:00.000Z">2019-04-12</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/others/">others</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 173 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/others/hexo_utlis.html">Hexo 技巧收录</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="草稿功能"><a href="#草稿功能" class="headerlink" title="草稿功能"></a>草稿功能</h3><p>草稿相当于很多博客都有的“私密文章”功能。<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">$</span><span class="hljs-bash"> hexo new draft <span class="hljs-string">"new draft"</span></span></span><br></pre></td></tr></table></figure></p>
-<p>会在source/_drafts目录下生成一个new-draft.md文件。但是这个文件不被显示在页面上，链接也访问不到。也就是说如果你想把某一篇文章移除显示，又不舍得删除，可以把它移动到_drafts目录之中。<br>如果你希望强行预览草稿，更改配置文件：</p>
-<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">render_drafts: true</span><br></pre></td></tr></table></figure>
-<p>或者，如下方式启动server：<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">$</span><span class="hljs-bash"> hexo server --drafts</span></span><br></pre></td></tr></table></figure></p>
-<p>下面这条命令可以把草稿变成文章，或者页面：<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">$</span><span class="hljs-bash"> hexo publish [layout] &lt;filename&gt;</span></span><br></pre></td></tr></table></figure></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/sicp/python-fp.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/y-combinator.jpg" alt="Python lambda实现Y组合子">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-11T12:34:36.000Z">2019-04-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 209 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/sicp/python-fp.html">Python lambda实现Y组合子</a>
-            
-        </h1>
-        <div class="content">
-            <p>也许你我都难以理解，为什么有人对她痴迷疯狂，铭记在心中不说，还要刻在身上：</p>
-<p>她让人绞尽脑汁，也琢磨不定！她让人心力憔悴，又百般回味！</p>
-<p>她，看似平淡，却深藏玄机！她，貌不惊人，却天下无敌！</p>
-<p>她是谁？</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/sicp/python-fp.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/20190411_chisel_version.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel1.jpg" alt="Chisel版本">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 223 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20190411_chisel_version.html">Chisel版本</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="如何查看当前使用的chisel版本"><a href="#如何查看当前使用的chisel版本" class="headerlink" title="如何查看当前使用的chisel版本"></a>如何查看当前使用的chisel版本</h3><p>一般情况下chisel的版本会在build.sbt里显式定义，但有时候像jupter-notebook里并不能看到版本号<br>这种情况下有一个方法可以得到版本号<br>即生成的firrtl文件头会打印版本信息    </p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20190411_chisel_version.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/chisel_bugs.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/work2.jpg" alt="Chisel BugList">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 36 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/chisel_bugs.html">Chisel BugList</a>
-            
-        </h1>
-        <div class="content">
-            <ul>
-<li><p>[ ] BitPat length bugs<br>  <code>BitPat.pare(&quot;b1100_0000&quot;) = (192,255,9)</code> 实际8bit，返回9bit<br>  <code>BitPat.pare(&quot;b11000000&quot;)  = (192,255,8)</code></p>
-  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">35:     (bits, mask, x.length - 1) </span><br><span class="line">fix 剔除字符&apos;_&apos; 后统计长度</span><br><span class="line">35:     (bits, mask, x.filter(_!=&apos;_&apos;).length - 1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>[ ] bug2</p>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/20190401_chisel_keep_name.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 608 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20190401_chisel_keep_name.html">Chiel Keep变量名</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="how-to-keep-chisel-variable-name-when-generate-verilog"><a href="#how-to-keep-chisel-variable-name-when-generate-verilog" class="headerlink" title="how to keep chisel variable name when generate verilog"></a>how to keep chisel variable name when generate verilog</h3><p>There are several reasons why a name may be disappearing.</p>
-<p>Constant Propagation<br>For many reasons, including interoperability with existing CAD tools, performance, and Verilog debug-ability, Chisel (actually the FIRRTL compiler underneath Chisel) will propagate constants and direct wire connections. For example:</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20190401_chisel_keep_name.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/20190322_chisel_module_confilict.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/cpu1.jpg" alt="Verilog 模块重名问题">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-21T16:00:00.000Z">2019-03-22</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 246 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20190322_chisel_module_confilict.html">Verilog 模块重名问题</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="Chisel-不同开发生产的Verilog-模块名冲突"><a href="#Chisel-不同开发生产的Verilog-模块名冲突" class="headerlink" title="Chisel 不同开发生产的Verilog 模块名冲突"></a>Chisel 不同开发生产的Verilog 模块名冲突</h3><p>同学A 负责开发AP<br>同学B 负责开发CP<br>其中都会用到Queue，生产的AP_system_top.v  CP_system_top.v中可能都会包含一个<br><code>module Queue (</code><br>集成到SOC_top.v时会面临模块名冲突的问题，目前Chisel 本身没有提供解决该问题的方法。<br>只能依赖于原始verilog 的解决方法 </p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20190322_chisel_module_confilict.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/20190321_chisel_comb_reg.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/led1.jpg" alt="Chisel组合逻辑时序逻辑">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-20T16:00:00.000Z">2019-03-21</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 357 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20190321_chisel_comb_reg.html">Chisel组合逻辑时序逻辑</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="时序逻辑的声明和写法"><a href="#时序逻辑的声明和写法" class="headerlink" title="时序逻辑的声明和写法"></a>时序逻辑的声明和写法</h3><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">实例<span class="hljs-number">1</span></span><br><span class="line">  <span class="hljs-keyword">val</span> tiRomStartAddr = <span class="hljs-type">RegInit</span>(<span class="hljs-number">0.</span><span class="hljs-type">U</span>(<span class="hljs-number">6.</span><span class="hljs-type">W</span>))  <span class="hljs-comment">//显示的声明Reg</span></span><br><span class="line">  when      (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">40.</span><span class="hljs-type">U</span>  )&#123;tiRomStartAddr :=  <span class="hljs-number">25.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">159.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">21.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">200.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">35.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">481.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">15.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">530.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">10.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">2881.</span><span class="hljs-type">U</span>)&#123;tiRomStartAddr :=   <span class="hljs-number">5.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .otherwise                  &#123;tiRomStartAddr :=  <span class="hljs-number">25.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">实例<span class="hljs-number">2</span></span><br><span class="line">  <span class="hljs-keyword">val</span> <span class="hljs-type">RRomRdata</span> = <span class="hljs-type">RegInit</span>(<span class="hljs-number">0.</span><span class="hljs-type">U</span>(log2Up(pm.<span class="hljs-type">MaxR</span>).<span class="hljs-type">W</span>)) <span class="hljs-comment">//显示的声明Reg并初始化（switch语句不带default)</span></span><br><span class="line">  switch (io.<span class="hljs-type">RRomAddr</span>) &#123;</span><br><span class="line">    is (<span class="hljs-number">0.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">0</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">1.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">1</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">2.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">2</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">3.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">3</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">4.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">4</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">5.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">5</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">6.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">6</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">7.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">7</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20190321_chisel_comb_reg.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/scala/20190308_scala_sbt1.html" class="image is-7by1">
-            <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/macbook2.jpg" alt="Scala 初探.三(sbt组织scala代码1)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 308 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt1.html">Scala 初探.三(sbt组织scala代码1)</a>
-            
-        </h1>
-        <div class="content">
-            <p>上一节我们用Makefile来组织scala代码，这里有更好的选择sbt来管理项目<br>sbt推荐将scala代码放在src路径，如下为标准的组织方式(代码还是原封使用第二节的样例代码)<br>总共3个文件      </p>
-<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── a.scala</span><br><span class="line">            ├── b.scala</span><br><span class="line">            └── c.scala</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt1.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -793,7 +807,7 @@
                 <span class="level-item">eda</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/others/">
@@ -801,7 +815,7 @@
                 <span class="level-item">others</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/riscv/">
@@ -817,7 +831,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -825,7 +839,7 @@
                 <span class="level-item">sicp</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li>
             </ul>
@@ -846,18 +860,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190429_cps.html" class="media-left">
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/hack6.jpg" alt="CPS变换">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-28T16:00:00.000Z">2019-04-29</time></div>
-                    <a href="/sicp/20190429_cps.html" class="has-link-black-ter is-size-6">CPS变换</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -865,18 +879,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190428_function_call.html" class="media-left">
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190428_function_call.html" class="has-link-black-ter is-size-6">C函数调用和汇编代码分析</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
                     </p>
                 </div>
             </div>
@@ -884,18 +898,18 @@
         
         <article class="media">
             
-            <a href="/riscv/20190418_c_point.html" class="media-left">
+            <a href="/others/float_trap.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/city.jpg" alt="C语言指针注解">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time></div>
-                    <a href="/riscv/20190418_c_point.html" class="has-link-black-ter is-size-6">C语言指针注解</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
                     </p>
                 </div>
             </div>
@@ -903,18 +917,18 @@
         
         <article class="media">
             
-            <a href="/sicp/20190421_whyfp.html" class="media-left">
+            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-26T15:06:30.436Z">2019-04-26</time></div>
-                    <a href="/sicp/20190421_whyfp.html" class="has-link-black-ter is-size-6"></a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
+                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
                     </p>
                 </div>
             </div>
@@ -922,18 +936,18 @@
         
         <article class="media">
             
-            <a href="/sicp/whyfp.html" class="media-left">
+            <a href="/thought/why-simple-so-complex.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://ppw74l91w.bkt.clouddn.com/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time></div>
-                    <a href="/sicp/whyfp.html" class="has-link-black-ter is-size-6">为什么函数式编程至关重要</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
+                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                        
                     </p>
                 </div>
             </div>
@@ -954,6 +968,61 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/04/">
@@ -1053,6 +1122,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -1076,7 +1152,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
@@ -1090,14 +1166,21 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/verilog/">
                         <span class="tag">verilog</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">11</span>
+                        <span class="tag is-grey">15</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1111,7 +1194,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/计算机/">
                         <span class="tag">计算机</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1140,8 +1230,9 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2019 jijing&nbsp;
+                &copy; 2020 jijing&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
                 
                 </p>
             </div>
@@ -1180,6 +1271,7 @@
         </div>
     </div>
 </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("zh-CN");</script>
