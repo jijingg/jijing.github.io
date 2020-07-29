@@ -142,6 +142,460 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/eda/how_to_send_param2tb.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata1.jpg" alt="从Shell传递变量给verilog的两种方法">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 304 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/eda/how_to_send_param2tb.html">从Shell传递变量给verilog的两种方法</a>
+            
+        </h1>
+        <div class="content">
+            <ul>
+<li><h4 id="通过define宏传递"><a href="#通过define宏传递" class="headerlink" title="通过define宏传递"></a>通过define宏传递</h4><p>  首先在命令行中定义define</p>
+  <figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vcs -sverilog -debug_all +define%s+CASENAME=\<span class="hljs-string">"%s\" </span></span><br><span class="line"><span class="hljs-string">-timescale=1ns/100ps </span></span><br><span class="line"><span class="hljs-string">+notimingcheck </span></span><br><span class="line"><span class="hljs-string">+nospecify +v2k +memcbk </span></span><br><span class="line"><span class="hljs-string">-fsdb </span></span><br><span class="line"><span class="hljs-string">-l com.log </span></span><br><span class="line"><span class="hljs-string">-f top.f</span></span><br></pre></td></tr></table></figure>
+<p>  尤其要注意<code>CASENAME=\&quot;%s\&quot;</code>的转义“\”的应用，比如命令行被包含在python脚本内部，需要两次转义, 而shell可能只要一次</p>
+  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span><span class="hljs-params">(case,defines=<span class="hljs-string">""</span>)</span>:</span></span><br><span class="line">    os.system(<span class="hljs-string">'vcs -sverilog -debug_all +define%s+CASENAME=\\"%s\\" -timescale=1ns/100ps +notimingcheck +nospecify +v2k +memcbk -fsdb -l com.log -f top.f'</span>%(defines,case))</span><br><span class="line">    os.system(<span class="hljs-string">'./simv -l sim.log +notimingcheck +nospecify +loopreport +memcbk +novopt'</span>)</span><br></pre></td></tr></table></figure>
+<p>  否则verilog文件是无法获取CASENAM的意思</p>
+<p>  然后在verilog中通过宏取出</p>
+  <figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fp_reg = <span class="hljs-built_in">$fopen</span>(&#123;<span class="hljs-string">"./case/"</span>,<span class="hljs-meta">`CASENAME,"/source_dpp.txt"&#125;,"r");</span></span><br></pre></td></tr></table></figure>
+<p>  这种方式比较繁琐，而且转义嵌套难以理解，另外一种方便的方法如下</p>
+</li>
+</ul>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/eda/how_to_send_param2tb.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/chisel/20190320_verilog_case_ifelse.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/electric1.jpg" alt="Chisel-Verilog查找表优先级问题讨论">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1627 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/20190320_verilog_case_ifelse.html">Chisel-Verilog查找表优先级问题讨论</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="Chisel-查找表电路优先级问题"><a href="#Chisel-查找表电路优先级问题" class="headerlink" title="Chisel 查找表电路优先级问题"></a>Chisel 查找表电路优先级问题</h3><h4 id="verilog-ROM的两种写法及区别"><a href="#verilog-ROM的两种写法及区别" class="headerlink" title="verilog ROM的两种写法及区别"></a>verilog ROM的两种写法及区别</h4><figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">    <span class="hljs-keyword">case</span>(addr0)  </span><br><span class="line">        <span class="hljs-number">6'd0</span> :  data0 &lt;= <span class="hljs-number">8'd214</span>;</span><br><span class="line">        <span class="hljs-number">6'd1</span> :  data0 &lt;= <span class="hljs-number">8'd213</span>;</span><br><span class="line">        <span class="hljs-number">6'd2</span> :  data0 &lt;= <span class="hljs-number">8'd212</span>;</span><br><span class="line">        <span class="hljs-number">6'd3</span> :  data0 &lt;= <span class="hljs-number">8'd211</span>;</span><br><span class="line">        <span class="hljs-number">6'd4</span> :  data0 &lt;= <span class="hljs-number">8'd210</span>;</span><br><span class="line">        <span class="hljs-number">6'd5</span> :  data0 &lt;= <span class="hljs-number">8'd209</span>;</span><br><span class="line">        <span class="hljs-number">6'd6</span> :  data0 &lt;= <span class="hljs-number">8'd208</span>;</span><br><span class="line">        <span class="hljs-number">6'd7</span> :  data0 &lt;= <span class="hljs-number">8'd207</span>;   </span><br><span class="line">方法<span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd2</span> )  data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd5</span> )  data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br></pre></td></tr></table></figure>
+<p>方法2是不是带优先级？ 实际上是不带优先级<br>逻辑上if取的条件都是addr1的值，一定是互斥的，综合工具也能自动识别出这种if else<br>它有别于以下这种情况，这种情况下是真实带有优先级的电路，其中<code>another_cond_A,another_cond_B</code><br>是独立的两个输入条件，和addr1的取值可能同时发生，所以不能被综合器当做查找表来对待。<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/chisel/20190320_verilog_case_ifelse.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181130_idea_scala_config.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="IDEA Scala开发环境配置">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-29T16:00:00.000Z">2018-11-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 280 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181130_idea_scala_config.html">IDEA Scala开发环境配置</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h2><ul>
+<li><ol>
+<li>下载社区版本是免费的，scala开发够用，专业版面向web部分是收费的</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>启动idea ，<code>import project</code>  按钮倒入 .sbt 文件 </li>
+</ol>
+</li>
+<li><ol start="3">
+<li><p>setting java JDK, <code>File&gt;&gt;Project Structure&gt;&gt;Project&gt;&gt;Project SDK</code>, 按new ,选择JAVA jdk.</p>
+<p>默认会自动识别，否则手动下载指定xxx/1.8.0-openjdk-amd64)(一般要求1.8版本)</p>
+</li>
+</ol>
+</li>
+</ul>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181130_idea_scala_config.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181128_makefile_acc.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack5.jpg" alt="Makefile 笔记">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-27T16:00:00.000Z">2018-11-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1067 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181128_makefile_acc.html">Makefile 笔记</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><h3 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h3><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量定义的3种方式</p>
+<ul>
+<li><p>1  foo = bar (递归展开式变量)<br> 会在引用$(foo)地方原地替换，直到不能再替换，这种方式称之为递归展开式变量  </p>
+ <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo = $(bar)</span><br><span class="line">bar = $(ugh)</span><br><span class="line">ugh = Huh?</span><br><span class="line">all @echo $(foo)</span><br></pre></td></tr></table></figure>
+<p> 以上例子会在@echo $(foo) 地方递归展开<br> 缺点一 ： 是当嵌套定义 <code>foo = $(foo) bar</code> 时讲进入死循环，导致Make失败<br> 其他例子<br> <code>x = $(y)</code><br> <code>y = $(x) $(z)</code><br> 同样会陷入死循环，所以这种定义方法只推荐在不引用变量的时候应用<br> 缺点二 这种定义中如果使用函数，只会在变量被引用时展开，而不是在定义时展开<br> 会使得Make的效率降低，另外有可能会在变量函数的引用会出现非预期结果，特别当变量<br> 定义引用到shell wildcard 函数的情况下，出现不可控的结果  </p>
+ <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = foo</span><br><span class="line">y = $(x) bar  //$(x) 不会被立即替换，只有在$(y)被用到的地方才用x的值替换</span><br><span class="line">x = later     //将会覆盖 原来的 x , </span><br><span class="line">等价于</span><br><span class="line">y = later bar</span><br><span class="line">x = later</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181128_makefile_acc.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181127_riscv_link.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/riscv2.jpg" alt="RISCV 编译 Link探究">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-26T16:00:00.000Z">2018-11-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 分钟 读完 (大约 2131 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181127_riscv_link.html">RISCV 编译 Link探究</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="问题：-如何将代码编译到指定的mem地址？"><a href="#问题：-如何将代码编译到指定的mem地址？" class="headerlink" title="问题： 如何将代码编译到指定的mem地址？"></a>问题： 如何将代码编译到指定的mem地址？</h2><p>在用<code>$RISCV/bin/riscv64-unknown-elf-gcc hello.c</code>时生成的目标文件默认的都是从0x0000_1000地址开始，<br>如何自定义指定到从0x8000_0000地址开始？<br>那么就得熟悉连接器的原理</p>
+<h2 id="默认链接脚本"><a href="#默认链接脚本" class="headerlink" title="默认链接脚本"></a>默认链接脚本</h2><p>gcc在编译和链接的时候，如果不指定链接脚本，会指向默认的链接脚本<br>默认的链接脚本可以用 <code>$RISCV/bin/riscv64-unknown-elf-ld -verbose</code> 来查看</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20181127_riscv_link.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/riscv/20181125_gdb_debug.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack5.jpg" alt="RISCV GDB debug调试">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-24T16:00:00.000Z">2018-11-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 526 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20181125_gdb_debug.html">RISCV GDB debug调试</a>
+            
+        </h1>
+        <div class="content">
+            <p><a href="https://riscv.org/software-tools/risc-v-isa-simulator/" target="_blank" rel="noopener">RISCV-GDB启动步骤</a></p>
+<h3 id="hello-c"><a href="#hello-c" class="headerlink" title="hello.c"></a>hello.c</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">long</span> a = <span class="hljs-number">0x876543210</span> ;</span><br><span class="line">    <span class="hljs-keyword">float</span> pi = <span class="hljs-number">3.1415926</span> ;</span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello %s!\n"</span>,<span class="hljs-string">"World"</span>);</span><br><span class="line">    a = a*pi;</span><br><span class="line">    <span class="hljs-keyword">return</span> a ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="如何生成汇编代码"><a href="#如何生成汇编代码" class="headerlink" title="如何生成汇编代码"></a>如何生成汇编代码</h3><p><code>riscv64-unknown-elf-gcc -S hello.c</code> 只会生成汇编代码hello.s  不会生成.out文件</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">    .file   &quot;hello.c&quot;</span><br><span class="line">    .option nopic</span><br><span class="line">    .text</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC2:</span><br><span class="line">    .string &quot;World&quot;</span><br><span class="line">    .align  3</span><br><span class="line">.LC3:</span><br><span class="line">    .string &quot;Hello %s!\n&quot;</span><br><span class="line">    .text</span><br><span class="line">    .align  1</span><br><span class="line">    .globl  main</span><br><span class="line">    .type   main, @function</span><br><span class="line">main:</span><br><span class="line">    addi    sp,sp,-32</span><br><span class="line">    sd  ra,24(sp)</span><br><span class="line">    sd  s0,16(sp)</span><br><span class="line">    addi    s0,sp,32</span><br><span class="line">    lui a5,%hi(.LC0)</span><br><span class="line">    ld  a5,%lo(.LC0)(a5)</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    lui a5,%hi(.LC1)</span><br><span class="line">    flw fa5,%lo(.LC1)(a5)</span><br><span class="line">    fsw fa5,-28(s0)</span><br><span class="line">    lui a5,%hi(.LC2)</span><br><span class="line">    addi    a1,a5,%lo(.LC2)</span><br><span class="line">    lui a5,%hi(.LC3)</span><br><span class="line">    addi    a0,a5,%lo(.LC3)</span><br><span class="line">    call    printf</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    fcvt.s.l    fa4,a5</span><br><span class="line">    flw fa5,-28(s0)</span><br><span class="line">    fmul.s  fa5,fa4,fa5</span><br><span class="line">    fcvt.l.s a5,fa5,rtz</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    sext.w  a5,a5</span><br><span class="line">    mv  a0,a5</span><br><span class="line">    ld  ra,24(sp)</span><br><span class="line">    ld  s0,16(sp)</span><br><span class="line">    addi    sp,sp,32</span><br><span class="line">    jr  ra</span><br><span class="line">    .size   main, .-main</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC0:</span><br><span class="line">    .dword  36344967696</span><br><span class="line">    .align  2</span><br><span class="line">.LC1:</span><br><span class="line">    .word   1078530010</span><br><span class="line">    .ident  &quot;GCC: (GNU) 8.1.0&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="如何反汇编-out文件"><a href="#如何反汇编-out文件" class="headerlink" title="如何反汇编.out文件"></a>如何反汇编.out文件</h3><p>首先生成.out文件<code>riscv64-unknown-elf-gcc -o hello.out hello.c</code></p>
+<p>然后反汇编 <code>riscv64-unknown-elf-objdump -d hello.out &gt; hello_disassemble.s</code></p>
+<p>即可查看反汇编代码,搜索main函数如下，当然也包括其他内置函数<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">hello.out:     file format elf64-littleriscv</span><br><span class="line">Disassembly of section .text:</span><br><span class="line">00000000000100b0 &lt;_start&gt;:</span><br><span class="line">   100b0:   0000d197            auipc   gp,0xd</span><br><span class="line">   100b4:   fd818193            addi    gp,gp,-40 # 1d088 &lt;__global_pointer$&gt;</span><br><span class="line">   100b8:   84818513            addi    a0,gp,-1976 # 1c8d0 &lt;_edata&gt;</span><br><span class="line">   100bc:   8d818613            addi    a2,gp,-1832 # 1c960 &lt;_end&gt;           </span><br><span class="line">   .....</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">000000000001038c &lt;printf&gt;:</span><br><span class="line">   1038c:   711d                    addi    sp,sp,-96</span><br><span class="line">   1038e:   f832                    sd  a2,48(sp)</span><br><span class="line">   10390:   fc36                    sd  a3,56(sp)        </span><br><span class="line">   ....</span><br><span class="line">   ..</span><br><span class="line"></span><br><span class="line">0000000000010198 &lt;main&gt;:</span><br><span class="line">   10198:   1101         addi    sp,sp,-32</span><br><span class="line">   1019a:   ec06         sd  ra,24(sp)</span><br><span class="line">   1019c:   e822         sd  s0,16(sp)</span><br><span class="line">   1019e:   1000         addi    s0,sp,32</span><br><span class="line">   101a0:   67e9         lui a5,0x1a</span><br><span class="line">   101a2:   a687b783     ld  a5,-1432(a5) # 19a68 &lt;__clzdi2+0x54&gt;</span><br><span class="line">   101a6:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101aa:   67e9         lui a5,0x1a</span><br><span class="line">   101ac:   a707a787     flw fa5,-1424(a5) # 19a70 &lt;__clzdi2+0x5c&gt;</span><br><span class="line">   101b0:   fef42227     fsw fa5,-28(s0)</span><br><span class="line">   101b4:   67e9         lui a5,0x1a</span><br><span class="line">   101b6:   a5078593     addi    a1,a5,-1456 # 19a50 &lt;__clzdi2+0x3c&gt;</span><br><span class="line">   101ba:   67e9         lui a5,0x1a</span><br><span class="line">   101bc:   a5878513     addi    a0,a5,-1448 # 19a58 &lt;__clzdi2+0x44&gt;</span><br><span class="line">   101c0:   1cc000ef     jal ra,1038c &lt;printf&gt;</span><br><span class="line">   101c4:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101c8:   d027f753     fcvt.s.l    fa4,a5</span><br><span class="line">   101cc:   fe442787     flw fa5,-28(s0)</span><br><span class="line">   101d0:   10f777d3     fmul.s  fa5,fa4,fa5</span><br><span class="line">   101d4:   c02797d3     fcvt.l.s    a5,fa5,rtz</span><br><span class="line">   101d8:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101dc:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101e0:   2781         sext.w  a5,a5</span><br><span class="line">   101e2:   853e         mv  a0,a5</span><br><span class="line">   101e4:   60e2         ld  ra,24(sp)</span><br><span class="line">   101e6:   6442         ld  s0,16(sp)</span><br><span class="line">   101e8:   6105         addi    sp,sp,32</span><br><span class="line">   101ea:   8082         ret         </span><br><span class="line">   ....</span><br><span class="line">   ...</span><br></pre></td></tr></table></figure></p>
+<h3 id="gdb-查看CPU寄存器"><a href="#gdb-查看CPU寄存器" class="headerlink" title="gdb 查看CPU寄存器"></a>gdb 查看CPU寄存器</h3><p>-print $x0<br>-p $x0<br>-p $pc<br>-info reg<br>-display $x0     ;每跑一步都会显示寄存器<br>-ni              ;next inst</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/ipc_msg_communication.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/electric1.jpg" alt="IPC进程通信、消息队列">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-19T16:00:00.000Z">2018-11-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 455 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/ipc_msg_communication.html">IPC进程通信、消息队列</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="计算机进程通信原理、IPC、消息队列，"><a href="#计算机进程通信原理、IPC、消息队列，" class="headerlink" title="计算机进程通信原理、IPC、消息队列，"></a>计算机进程通信原理、IPC、消息队列，</h3><p>常见的方法</p>
+<ul>
+<li>共享内存模式</li>
+<li>消息传递模式</li>
+<li>共享文件模式</li>
+</ul>
+<p>主要使用的是前两种方法</p>
+<h3 id="多处理器之间通信"><a href="#多处理器之间通信" class="headerlink" title="多处理器之间通信"></a>多处理器之间通信</h3><p>处理器之间不能通过消息传递模式通信，只能共享内存<br>处理器本身是异步执行的，消息队列没办法实现（接受消息和消耗消息有可能会冲突）<br>而共享内存的方法也有可能会导致冲突，可以为不同处理器划分不同地址空间来避免冲突</p>
+<p><img src="http://source.jijing.site/ipc_msg/share_mem.png" alt="01"></p>
+<h3 id="单处理器进程通信"><a href="#单处理器进程通信" class="headerlink" title="单处理器进程通信"></a>单处理器进程通信</h3><p>进程之间的通信最常见最安全的方法就是消息队列。<br>每个进程会维护一个消息队列（常见的是FIFO队列，也有带优先级的队列本文不做讨论）  </p>
+<p><img src="http://source.jijing.site/ipc_msg/msg.svg" alt="02">  </p>
+<p>进程A给进程B发消息，首先获取进程B消息队列（链表）的地址，将消息插入到链表后面。<br>当进程B执行是会去取消息队列最前面的消息然后执行。<br>由于进程A进程B是在同一处理器上占不同的时间片（跟操作系统进程的调度算法有关），<br>同一时刻消息队列不可能即recive 又 consume，所以不存在队列读写冲突的问题。  </p>
+<p>消息可以是简单的数据编码标志，也可以携带数据（数据起始地址以及长度），或者其他数据结构体格式  </p>
+<p><img src="http://source.jijing.site/ipc_msg/msg_info.png" alt="03"></p>
+<p>scala 的Actor的消息传递也是用此方式实现。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/riscv/20181120_riscv_c_dev_setp.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/ai1.jpg" alt="RISCV C开发调试笔记">
         </a>
@@ -262,75 +716,6 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/others/terminal_FAQ.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/dog.jpg" alt="Terminal配置常见问题">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/others/">others</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 52 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/others/terminal_FAQ.html">Terminal配置常见问题</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="Teriminal-配置常见问题"><a href="#Teriminal-配置常见问题" class="headerlink" title="Teriminal 配置常见问题"></a>Teriminal 配置常见问题</h3><ul>
-<li><ol>
-<li><p><code>ls</code>后文件名包含引号,例如 <code>&#39;Program file&#39;</code></p>
-<p> 在 ~/.zshrc 里面配置</p>
-</li>
-</ol>
-</li>
-<li><ol start="2">
-<li><p>MACOS <code>ls</code> 目录后没有颜色显示，</p>
-<p><code>&#39;alias ls =/bin/ls -G&#39;</code> , 一定要指到<code>/bin/ls</code></p>
-</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>其他</li>
-</ol>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
         <a href="/eda/timing_analysis.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/led1.jpg" alt="综合时序分析回顾">
         </a>
@@ -388,330 +773,6 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/eda/20181130_sy_QA.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/wb2.jpg" alt="SBT 版本问题">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 487 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/eda/20181130_sy_QA.html">SBT 版本问题</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h2><ul>
-<li><ol>
-<li>sbt 指向 “java -Dsbt.ivy.home=/nishome/jijing/ivy2 -jar  /DATA/jijing/rocket-chip/sbt-launch.jar” </li>
-</ol>
-</li>
-</ul>
-<p><strong>现象</strong><br>ivy2 也是最新的，包含 <code>org.scala-lang#scala-library;2.11.12</code> 正确的版本号  </p>
-<p>依然会报错！！</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	::          UNRESOLVED DEPENDENCIES         ::</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	:: org.scala-lang#scala-library;2.11.12: public: unable to get resource for org/scala-lang#scala-library;2.11.12: res=https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.12/scala-library-2.11.12.pom: java.net.UnknownHostException: repo1.maven.org: Temporary failure in name resolution</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br></pre></td></tr></table></figure>
-<p><strong>原因</strong></p>
-<p>~/.sbt 目录可能存在旧的版本，导致问题， </p>
-<p><strong>解决</strong></p>
-<p>删除 ~/.sbt 目录，如果联网，直接重新sbt run ，会自动下载更新，否则copy 别的机子上正确的 .sbt 到home 目录下。</p>
-<ul>
-<li><ol start="2">
-<li>IDEA，rochi-chip:sync failed ，但在terminal下正常编译 ，也是~/.sbt导致的</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>C 程序编译好的.out文件不能再 rocket-chip/emulator 目录下运行，而 run-asm-isa-test 则会没有问题</li>
-</ol>
-</li>
-</ul>
-<p>这是由于直接用rvgcc 编译的文件，并没有按照处理器的格式做link，因此想要正确的在处理器上运行，需要正确的link</p>
-<p>可以参见 bootrom/link.lds 文件 ：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 1 SECTIONS </span><br><span class="line"> 2 &#123;</span><br><span class="line"> 3     ROM_BASE = 0x10000; /* ... but actually position independent */</span><br><span class="line"> 4 </span><br><span class="line"> 5     . = ROM_BASE;</span><br><span class="line"> 6     .text.start : &#123; *(.text.start) &#125;</span><br><span class="line"> 7     . = ROM_BASE + 0x40;</span><br><span class="line"> 8     .text.hang : &#123; *(.text.hang) &#125;</span><br><span class="line"> 9     . = ROM_BASE + 0x80;</span><br><span class="line">10     .rodata.dtb : &#123; *(.rodata.dtb) &#125;</span><br><span class="line">11 &#125;</span><br></pre></td></tr></table></figure>
-<p><code>rvgcc -T link.ld bootrom.S -nostdlib -static -wl,--no-gc-section -o bootrom.img</code></p>
-<p>同理C代码编译的时候也需要使用正确的linkfile 文件 。</p>
-<h2 id="如何编译指定CPU的可执行文件"><a href="#如何编译指定CPU的可执行文件" class="headerlink" title="如何编译指定CPU的可执行文件"></a>如何编译指定CPU的可执行文件</h2><p>必要信息：</p>
-<ul>
-<li>$(CC) 需要默认的target (例如intel x86,  AMD64, MIPS 等等， 如果RISCV， 需要支持的指定指令集 (例如 rv32imc rv64g,rv32imdfc 等等)</li>
-<li>link 脚本，如果不指定，会有导入默认的脚本，否则需要显示指定，尤其是自己设计的处理器，需要显式的指定堆栈起始地址，程序默认存放地址，这些信息响应的也会体现在CPU硬件设计当中。需要正确match</li>
-</ul>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/others/lsb_hsb.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="综合时序分析回顾">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/others/">others</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 125 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/others/lsb_hsb.html">综合时序分析回顾</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="关于计算机大小端"><a href="#关于计算机大小端" class="headerlink" title="关于计算机大小端"></a>关于计算机大小端</h3><p>一般计算机所讲的大小端指的是字节序的大小端，比特序一般默认都是小端无论字节序为大端还是小端</p>
-<h4 id="字节序大小端"><a href="#字节序大小端" class="headerlink" title="字节序大小端"></a>字节序大小端</h4><p>HSB(大端格式):<br>按字节从大到小排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte0,byte1,byte2,byte3</span><br><span class="line">byte4,byte5,byte6,byte7</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>LSB(小端格式):<br>按字节从小到大排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte3,byte2,byte1,byte0</span><br><span class="line">byte7,byte6,byte5,byte4</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<h4 id="比特序大小端"><a href="#比特序大小端" class="headerlink" title="比特序大小端"></a>比特序大小端</h4><p>bit大端 =[01234567]<br>bit小端 =[76543210]<br>一般常见的都是bit小端 </p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/eda/eda_option.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord2.jpg" alt="VCS仿真option">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-01T16:00:00.000Z">2018-11-02</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 303 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/eda/eda_option.html">VCS仿真option</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="VCS、verdi的命令的配置"><a href="#VCS、verdi的命令的配置" class="headerlink" title="VCS、verdi的命令的配置"></a>VCS、verdi的命令的配置</h2><p>该Makefile可作为仿真工作脚本，参考了开源处理器蜂鸟e200的仿真环境</p>
-<p><a href="https://github.com/SI-RISCV/e200_opensource/blob/master/vsim/bin/run.makefile" target="_blank" rel="noopener">https://github.com/SI-RISCV/e200_opensource/blob/master/vsim/bin/run.makefile</a></p>
-<figure class="highlight makefile hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">RUN_DIR      := $&#123;PWD&#125;</span><br><span class="line"></span><br><span class="line">TESTCASE     := 00</span><br><span class="line">DUMPWAVE     := 1</span><br><span class="line"></span><br><span class="line">VSRC_DIR     := $&#123;RUN_DIR&#125;/../rtl</span><br><span class="line">VTB_DIR      := $&#123;RUN_DIR&#125;/../tb</span><br><span class="line">INC_DIR      := $&#123;RUN_DIR&#125;/../rtl/dir_inc_defines1</span><br><span class="line">INC_DIR      += $&#123;RUN_DIR&#125;/../rtl/dir_inc_defines2</span><br><span class="line"><span class="hljs-comment"># TESTNAME     := $(notdir $(patsubst %.dump,%,$&#123;TESTCASE&#125;.dump))</span></span><br><span class="line">TESTNAME     := case$&#123;TESTNAME&#125;</span><br><span class="line">TEST_RUNDIR  := $&#123;TESTNAME&#125;</span><br><span class="line"></span><br><span class="line">RTL_V_FILES  := <span class="hljs-variable">$(<span class="hljs-built_in">wildcard</span> $&#123;VSRC_DIR&#125;/*/*.v)</span></span><br><span class="line">TB_V_FILES   := <span class="hljs-variable">$(<span class="hljs-built_in">wildcard</span> $&#123;VTB_DIR&#125;/*.v)</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># The following portion is depending on the EDA tools you are using, Please add them by yourself according to your EDA vendors</span></span><br><span class="line">SIM_TOOL     := vcs <span class="hljs-comment"># this is a free solution here to use iverilog to compile the code</span></span><br><span class="line">SIM_OPTIONS  := -sverilog -debug_all +incdir+$&#123;INC_DIR&#125; -timescale=1ns/100ps +notimingcheck +nospecify +v2k +memcbk -fsdb -l com.log </span><br><span class="line">SIM_EXEC     := $&#123;RUN_DIR&#125;/simv -l sim.log +notimingcheck +nospecify +loopreport +memcbk +novopt</span><br><span class="line"></span><br><span class="line">WAV_TOOL     := verdi <span class="hljs-comment">#To-ADD: to add the waveform tool</span></span><br><span class="line">WAV_OPTIONS  := -timescale=1ns/100ps +notimingcheck +nospecify <span class="hljs-comment">#To-ADD: to add the waveform tool options </span></span><br><span class="line">WAV_PFIX     := <span class="hljs-comment">#To-ADD: to add the waveform file postfix</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-section">all: run</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-section">compile.flg: $&#123;RTL_V_FILES&#125; $&#123;TB_V_FILES&#125;</span></span><br><span class="line">    @-rm -rf compile.flg</span><br><span class="line">    $&#123;SIM_TOOL&#125; $&#123;SIM_OPTIONS&#125; $&#123;RTL_V_FILES&#125; $&#123;TB_V_FILES&#125; ;</span><br><span class="line">    touch compile.flg</span><br><span class="line"></span><br><span class="line"><span class="hljs-section">compile: compile.flg </span></span><br><span class="line"></span><br><span class="line"><span class="hljs-section">wave: </span></span><br><span class="line">    <span class="hljs-comment"># gvim -p $&#123;TESTCASE&#125;.spike.log $&#123;TESTCASE&#125;.dump &amp;</span></span><br><span class="line">    $&#123;WAV_TOOL&#125; $&#123;WAV_OPTIONS&#125; $&#123;RTL_V_FILES&#125; $&#123;TB_V_FILES&#125; &amp; </span><br><span class="line"></span><br><span class="line"><span class="hljs-section">run: compile</span></span><br><span class="line">    rm -rf $&#123;TEST_RUNDIR&#125;</span><br><span class="line">    mkdir $&#123;TEST_RUNDIR&#125;</span><br><span class="line">    cd $&#123;TEST_RUNDIR&#125;; $&#123;SIM_EXEC&#125; +DUMPWAVE=$&#123;DUMPWAVE&#125; +TESTCASE=$&#123;TESTCASE&#125; |&amp; tee $&#123;TESTNAME&#125;.log; cd $&#123;RUN_DIR&#125;; </span><br><span class="line"></span><br><span class="line"><span class="hljs-meta"><span class="hljs-meta-keyword">.PHONY</span>: run clean all</span></span><br></pre></td></tr></table></figure>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/others/crystals-pll-vco.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/book4.jpg" alt="晶振，PLL, VCO介绍">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-07-04T16:00:00.000Z">2018-07-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/others/">others</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    11 分钟 读完 (大约 1591 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/others/crystals-pll-vco.html">晶振，PLL, VCO介绍</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="晶振，vco区别"><a href="#晶振，vco区别" class="headerlink" title="晶振，vco区别"></a>晶振，vco区别</h3><p>晶振分有源晶振和无源晶振，一般会产生1～200Mhz时钟频率<br>vco亚控振荡器，可以产生比较高的频率比如2Ghz，但是不稳定</p>
-<h3 id="为什么既要晶振还要vco？"><a href="#为什么既要晶振还要vco？" class="headerlink" title="为什么既要晶振还要vco？"></a>为什么既要晶振还要vco？</h3><p>就是为了能够产生稳定的高频时钟信号，就需要用到PLL, PLL内部会有<br>一个VCO 产生高频时钟，通过分频器假设得到10分频的时钟2，再拿这个时钟2<br>和晶振产生的100mhz基用鉴相器做比较，输出一个比较的波形后经过低通滤波，<br>用输出电压控制VCO的输出, 那么就能是vco输出的高频时钟得到稳定的频率，达到了<br>倍频的效果。</p>
-<p>20Mhz一下的晶振基本上都是基频的器件，稳定度好，20mhz以上的晶振大多是谐波(如3次，5次谐波)<br>稳定度差，因此强烈建议使用低频的器件，毕竟倍频器用的pll电路需要的周边配置主要是电容，<br>电阻，电感，其稳定度和价格方面要远远浩宇晶体晶振器件。  </p>
-<p>如果只需要一个20mhz以内的时钟频率，完全可以不用pll，直接接晶振就够了</p>
-<h3 id="晶振一般有哪些参数"><a href="#晶振一般有哪些参数" class="headerlink" title="晶振一般有哪些参数"></a>晶振一般有哪些参数</h3><p>晶振有几个重要参数：</p>
-<p>1，晶体元件规格书中所指定的频率，也是工程师在电路设计和元件选购时首要关注的参数。晶振常用标称频率在1～200MHz之间，比如32768Hz、8MHz、12MHz、24MHz、125MHz等，更高的输出频率也常用PLL（锁相环）将低频进行倍频至1GHz以上。我们称之为标称频率。</p>
-<p>2，输出信号的频率不可避免会有一定的偏差，我们用频率误差（Frequency Tolerance）或频率稳定度（Frequency Stability），用单位ppm来表示，即百万分之一（parts per million）（1/106），是相对标称频率的变化量，此值越小表示精度越高。比如，12MHz晶振偏差为±20ppm，表示它的频率偏差为12×20Hz=±240Hz，即频率范围是（11999760～12000240Hz）</p>
-<p>3，还有一个温度频差（Frequency Stability vs Temp）表示在特定温度范围内，工作频率相对于基准温度时工作频率的允许偏离，它的单位也是ppm。</p>
-<p>4，另外，负载电容CL（Load capacitance），它是电路中跨接晶体两端的总的有效电容（不是晶振外接的匹配电容），主要影响负载谐振频率和等效负载谐振电阻，与晶体一起决定振荡器电路的工作频率，通过调整负载电容，就可以将振荡器的工作频率微调到标称值。更准确而言，无源晶体的负载电容是一项非常重要的参数，因为无源晶体属于被动元器件，所谓的被动元器件即是自身不能工作，需要外部元器件协助工作，无源晶体即是！</p>
-<p>其中：</p>
-<p>CS为晶体两个管脚之间的寄生电容（又名晶振静态电容或Shunt Capacitance），在晶体的规格书上可以找到具体值，一般0.2pF~8pF不等。如图二是某32.768KHz的电气参数，其寄生电容典型值是0.85pF（在表格中采用的是Co）。</p>
-<p>CG指的是晶体振荡电路输入管脚到GND的总电容，其容值为以下三个部分的和。</p>
-<ul>
-<li>需加外晶振主芯片管脚芯到GND的寄生电容 Ci</li>
-<li>晶体震荡电路PCB走线到到GND的寄生电容CPCB</li>
-<li>电路上外增加的并联到GND的外匹配电容 CL1<br>CD指的是晶体振荡电路输入管脚到GND的总电容。容值为以下三个部分的和。</li>
-<li>需加外晶振主芯片管脚芯到GND的寄生电容, Co</li>
-<li>晶体震荡电路PCB走线到到gnd的寄生电容，CPCB</li>
-<li>电路上外增加的并联到GND的外匹配电容, CL2</li>
-</ul>
-<p>既然晶振的负载电容是一个非常重要的参数，如果此项参数与外部电容匹配不正确会导致什么样的现象？晶振两端的等效电容与晶振标称的负载电容匹配不正确，晶振输出的谐振频率将与标称工作的工作频率会产生一定偏差（又称之为频偏），负载电容（load capacitance）主要影响负载谐振频率和等效负载谐振电阻，它与石英谐振器一起决定振荡器的工作频率，通过调整负载电容，一般可以将振荡器的工作频率调到标称值。应用时我们一般外接电容，便是为了使晶振两端的等效电容等于或接近负载电容，对于要求高的场合还要考虑ic输入端的对地电容，这样便可以使得晶振工作的频率达到标称频率。所以合理匹配合适的外加电容使晶振两端的等效电容等于或接近负载电容显得十分重要。</p>
-<p>负载电容常用的标准值有12.5 pF，16 pF，20 pF，30pF,负载电容和谐振频率之间的关系不是线性的，负载电容变小时，频率偏差量变大；负载电容提高时，频率偏差减小。图3是一个晶体的负载电容和频率的误差的关系图。</p>
-<p>例外情况：</p>
-<p>现在有很多芯片内部已经增加了补偿电容（internal capacitance），所以在设计的时候，只需要选按照芯片datasheet推荐的负载电容值的选择晶体即可，不需要额外再加电容。但是因为实际设计的寄生电路的不确定性，最好还是预留CL1/CL2的位置。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/eda/verilog_simu_0delay.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack1.jpg" alt="Verilog仿真不打拍分析">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2014-02-23T16:00:00.000Z">2014-02-24</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 573 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/eda/verilog_simu_0delay.html">Verilog仿真不打拍分析</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h4><p>例如：<br><img src="http://source.jijing.site/verilogsimu0delay/1.png" alt="1"><br>出现：<br><img src="http://source.jijing.site/verilogsimu0delay/2.png" alt="2"></p>
-<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>这是由于采样的时钟tx_gen_symbol_clk 和数据信号subframe_start之间存在竞争关系导致的。<br>我们的设计意图是时钟tx_gen_symbol_clk应该采到subframe_start信号的后沿<br><img src="http://source.jijing.site/verilogsimu0delay/3.png" alt="3"><br>有人可能会说在代码中加入延迟#1来解决，实际上不推荐这样做，还会存在两个#1的信号同样还会存在竞争。</p>
-<h4 id="仿真模型原理分析"><a href="#仿真模型原理分析" class="headerlink" title="仿真模型原理分析"></a>仿真模型原理分析</h4><p>要搞清楚产生这种问题的原因首先要了解仿真器对于时序仿真的模型。<br><img src="http://source.jijing.site/verilogsimu0delay/4.png" alt="4"><br>第4级的时钟不能正常采到第3级输出的数据，但是第2级的时钟能采到第二级时钟打出来的数据（D3），<br>原因就是，仿真器会在寄存器输出的时候添加一个虚拟的延迟δ，虽然这个虚拟延迟我们是看不到的，<br>在仿真器上都是0，但是对于仿真器工作的时候，到遇到always采样事件时先要判断这个δ延迟，决定触发器的采样输出。<br>（当延迟相等时，clk延迟的优先级会比data延迟的优先级高，即clk1能采到D1的前沿， 也就是我们看到的数据不打拍，这跟我们的预期是不一致的，<br>而clk1能采不到D2的前沿，但能采到D2的后沿，这跟我们的预期一样的。这些讨论仅限于前仿，<br>实际器件上我们必须有时序约束来保证建立保持时间，也不会存在这样的问题。<br>但是硬件设计就是要保证仿真和物理器件一致。因此我们要注意这个现象。<br><img src="http://source.jijing.site/verilogsimu0delay/5.png" alt="5"></p>
-<h4 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h4><p>  在你的TB里时钟都由一个单独的模块产生送给DUT，不管产生多少个时钟，这些时钟保证都经历了n级分频下来的然后送入DUT，这样数据就不会出现不delay的现象。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -719,7 +780,7 @@
         <div class="pagination-previous">
             <a class="is-flex-grow has-text-black-ter" href="/page/4/">上一页</a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
+        <div class="pagination-next">
             <a class="is-flex-grow has-text-black-ter" href="/page/6/">下一页</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
@@ -731,6 +792,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/page/4/">4</a></li>
             
             <li><a class="pagination-link is-current" href="/page/5/">5</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/6/">6</a></li>
             
         </ul>
     </nav>
@@ -805,7 +868,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -814,6 +877,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/spinal/">
+            <span class="level-start">
+                <span class="level-item">spinal</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
             </span>
         </a></li>
             </ul>
@@ -831,6 +902,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200221_maven_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Maven Windows 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-19T16:00:00.000Z">2020-02-20</time></div>
+                    <a href="/scala/20200221_maven_windows.html" class="has-link-black-ter is-size-6">Maven Windows 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -891,37 +981,18 @@
         
         <article class="media">
             
-            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
+            <a href="/spinal/spinal7.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/dirty2.jpg" alt="SpinalHDL(七):逢山开路-寄存器接口">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
-                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-04T16:00:00.000Z">2019-12-05</time></div>
+                    <a href="/spinal/spinal7.html" class="has-link-black-ter is-size-6">SpinalHDL(七):逢山开路-寄存器接口</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/thought/why-simple-so-complex.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
-                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
-                    <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
                     </p>
                 </div>
             </div>
@@ -944,6 +1015,17 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2020/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2020</span>
@@ -955,12 +1037,23 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2019/11/">
                 <span class="level-start">
                     <span class="level-item">十一月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -971,7 +1064,7 @@
                     <span class="level-item">十月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1103,6 +1196,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/SpinalHDL-Scala/">
+                        <span class="tag">SpinalHDL  Scala</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -1126,7 +1226,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1147,7 +1247,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">15</span>
+                        <span class="tag is-grey">16</span>
                     </a>
                 </div>
                 
@@ -1183,6 +1283,71 @@
         </div>
     </div>
 </div>
+            
+        
+    
+        
+            
+                
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            推荐链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="http://www.sharetechnote.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">通信笔记</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.sharetechnote.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.lihaoyi.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Scala大神Lihaoyi</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.lihaoyi.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://bellard.org/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">FabriceBellard你懂得</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bellard.org</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kalasearch.cn" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">卡拉搜索</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kalasearch.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
             
         
     

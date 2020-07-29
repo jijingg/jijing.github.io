@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="5NJSOR3owM">
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+    <meta charset="utf-8">
+<title>马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="马車同学">
+<meta property="og:url" content="https://jijingg.github.io/page/6/index.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://jijingg.github.io/images/og_image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="马車同学">
+<meta name="twitter:image" content="https://jijingg.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="马車同学" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main/">目录</a>
+                
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
+                <a class="navbar-item" href="/topic/">主题</a>
+                
+                <a class="navbar-item" href="/categories/">分类</a>
+                
+                <a class="navbar-item" href="/tags/">标签</a>
+                
+                <a class="navbar-item" href="/archives/">时间轴</a>
+                
+                <a class="navbar-item" href="/about/">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main">
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/eda/20181130_sy_QA.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/wb2.jpg" alt="SBT 版本问题">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 487 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/eda/20181130_sy_QA.html">SBT 版本问题</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h2><ul>
+<li><ol>
+<li>sbt 指向 “java -Dsbt.ivy.home=/nishome/jijing/ivy2 -jar  /DATA/jijing/rocket-chip/sbt-launch.jar” </li>
+</ol>
+</li>
+</ul>
+<p><strong>现象</strong><br>ivy2 也是最新的，包含 <code>org.scala-lang#scala-library;2.11.12</code> 正确的版本号  </p>
+<p>依然会报错！！</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	::          UNRESOLVED DEPENDENCIES         ::</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	:: org.scala-lang#scala-library;2.11.12: public: unable to get resource for org/scala-lang#scala-library;2.11.12: res=https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.12/scala-library-2.11.12.pom: java.net.UnknownHostException: repo1.maven.org: Temporary failure in name resolution</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br></pre></td></tr></table></figure>
+<p><strong>原因</strong></p>
+<p>~/.sbt 目录可能存在旧的版本，导致问题， </p>
+<p><strong>解决</strong></p>
+<p>删除 ~/.sbt 目录，如果联网，直接重新sbt run ，会自动下载更新，否则copy 别的机子上正确的 .sbt 到home 目录下。</p>
+<ul>
+<li><ol start="2">
+<li>IDEA，rochi-chip:sync failed ，但在terminal下正常编译 ，也是~/.sbt导致的</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>C 程序编译好的.out文件不能再 rocket-chip/emulator 目录下运行，而 run-asm-isa-test 则会没有问题</li>
+</ol>
+</li>
+</ul>
+<p>这是由于直接用rvgcc 编译的文件，并没有按照处理器的格式做link，因此想要正确的在处理器上运行，需要正确的link</p>
+<p>可以参见 bootrom/link.lds 文件 ：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 1 SECTIONS </span><br><span class="line"> 2 &#123;</span><br><span class="line"> 3     ROM_BASE = 0x10000; /* ... but actually position independent */</span><br><span class="line"> 4 </span><br><span class="line"> 5     . = ROM_BASE;</span><br><span class="line"> 6     .text.start : &#123; *(.text.start) &#125;</span><br><span class="line"> 7     . = ROM_BASE + 0x40;</span><br><span class="line"> 8     .text.hang : &#123; *(.text.hang) &#125;</span><br><span class="line"> 9     . = ROM_BASE + 0x80;</span><br><span class="line">10     .rodata.dtb : &#123; *(.rodata.dtb) &#125;</span><br><span class="line">11 &#125;</span><br></pre></td></tr></table></figure>
+<p><code>rvgcc -T link.ld bootrom.S -nostdlib -static -wl,--no-gc-section -o bootrom.img</code></p>
+<p>同理C代码编译的时候也需要使用正确的linkfile 文件 。</p>
+<h2 id="如何编译指定CPU的可执行文件"><a href="#如何编译指定CPU的可执行文件" class="headerlink" title="如何编译指定CPU的可执行文件"></a>如何编译指定CPU的可执行文件</h2><p>必要信息：</p>
+<ul>
+<li>$(CC) 需要默认的target (例如intel x86,  AMD64, MIPS 等等， 如果RISCV， 需要支持的指定指令集 (例如 rv32imc rv64g,rv32imdfc 等等)</li>
+<li>link 脚本，如果不指定，会有导入默认的脚本，否则需要显示指定，尤其是自己设计的处理器，需要显式的指定堆栈起始地址，程序默认存放地址，这些信息响应的也会体现在CPU硬件设计当中。需要正确match</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/others/terminal_FAQ.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/dog.jpg" alt="Terminal配置常见问题">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 52 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/terminal_FAQ.html">Terminal配置常见问题</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="Teriminal-配置常见问题"><a href="#Teriminal-配置常见问题" class="headerlink" title="Teriminal 配置常见问题"></a>Teriminal 配置常见问题</h3><ul>
+<li><ol>
+<li><p><code>ls</code>后文件名包含引号,例如 <code>&#39;Program file&#39;</code></p>
+<p> 在 ~/.zshrc 里面配置</p>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><p>MACOS <code>ls</code> 目录后没有颜色显示，</p>
+<p><code>&#39;alias ls =/bin/ls -G&#39;</code> , 一定要指到<code>/bin/ls</code></p>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>其他</li>
+</ol>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/others/lsb_hsb.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="综合时序分析回顾">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 125 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/lsb_hsb.html">综合时序分析回顾</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="关于计算机大小端"><a href="#关于计算机大小端" class="headerlink" title="关于计算机大小端"></a>关于计算机大小端</h3><p>一般计算机所讲的大小端指的是字节序的大小端，比特序一般默认都是小端无论字节序为大端还是小端</p>
+<h4 id="字节序大小端"><a href="#字节序大小端" class="headerlink" title="字节序大小端"></a>字节序大小端</h4><p>HSB(大端格式):<br>按字节从大到小排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte0,byte1,byte2,byte3</span><br><span class="line">byte4,byte5,byte6,byte7</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>LSB(小端格式):<br>按字节从小到大排布<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte3,byte2,byte1,byte0</span><br><span class="line">byte7,byte6,byte5,byte4</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h4 id="比特序大小端"><a href="#比特序大小端" class="headerlink" title="比特序大小端"></a>比特序大小端</h4><p>bit大端 =[01234567]<br>bit小端 =[76543210]<br>一般常见的都是bit小端 </p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/eda/eda_option.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord2.jpg" alt="VCS仿真option">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-01T16:00:00.000Z">2018-11-02</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 303 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/eda/eda_option.html">VCS仿真option</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="VCS、verdi的命令的配置"><a href="#VCS、verdi的命令的配置" class="headerlink" title="VCS、verdi的命令的配置"></a>VCS、verdi的命令的配置</h2><p>该Makefile可作为仿真工作脚本，参考了开源处理器蜂鸟e200的仿真环境</p>
+<p><a href="https://github.com/SI-RISCV/e200_opensource/blob/master/vsim/bin/run.makefile" target="_blank" rel="noopener">https://github.com/SI-RISCV/e200_opensource/blob/master/vsim/bin/run.makefile</a></p>
+<figure class="highlight makefile hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">RUN_DIR      := $&#123;PWD&#125;</span><br><span class="line"></span><br><span class="line">TESTCASE     := 00</span><br><span class="line">DUMPWAVE     := 1</span><br><span class="line"></span><br><span class="line">VSRC_DIR     := $&#123;RUN_DIR&#125;/../rtl</span><br><span class="line">VTB_DIR      := $&#123;RUN_DIR&#125;/../tb</span><br><span class="line">INC_DIR      := $&#123;RUN_DIR&#125;/../rtl/dir_inc_defines1</span><br><span class="line">INC_DIR      += $&#123;RUN_DIR&#125;/../rtl/dir_inc_defines2</span><br><span class="line"><span class="hljs-comment"># TESTNAME     := $(notdir $(patsubst %.dump,%,$&#123;TESTCASE&#125;.dump))</span></span><br><span class="line">TESTNAME     := case$&#123;TESTNAME&#125;</span><br><span class="line">TEST_RUNDIR  := $&#123;TESTNAME&#125;</span><br><span class="line"></span><br><span class="line">RTL_V_FILES  := <span class="hljs-variable">$(<span class="hljs-built_in">wildcard</span> $&#123;VSRC_DIR&#125;/*/*.v)</span></span><br><span class="line">TB_V_FILES   := <span class="hljs-variable">$(<span class="hljs-built_in">wildcard</span> $&#123;VTB_DIR&#125;/*.v)</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># The following portion is depending on the EDA tools you are using, Please add them by yourself according to your EDA vendors</span></span><br><span class="line">SIM_TOOL     := vcs <span class="hljs-comment"># this is a free solution here to use iverilog to compile the code</span></span><br><span class="line">SIM_OPTIONS  := -sverilog -debug_all +incdir+$&#123;INC_DIR&#125; -timescale=1ns/100ps +notimingcheck +nospecify +v2k +memcbk -fsdb -l com.log </span><br><span class="line">SIM_EXEC     := $&#123;RUN_DIR&#125;/simv -l sim.log +notimingcheck +nospecify +loopreport +memcbk +novopt</span><br><span class="line"></span><br><span class="line">WAV_TOOL     := verdi <span class="hljs-comment">#To-ADD: to add the waveform tool</span></span><br><span class="line">WAV_OPTIONS  := -timescale=1ns/100ps +notimingcheck +nospecify <span class="hljs-comment">#To-ADD: to add the waveform tool options </span></span><br><span class="line">WAV_PFIX     := <span class="hljs-comment">#To-ADD: to add the waveform file postfix</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-section">all: run</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-section">compile.flg: $&#123;RTL_V_FILES&#125; $&#123;TB_V_FILES&#125;</span></span><br><span class="line">    @-rm -rf compile.flg</span><br><span class="line">    $&#123;SIM_TOOL&#125; $&#123;SIM_OPTIONS&#125; $&#123;RTL_V_FILES&#125; $&#123;TB_V_FILES&#125; ;</span><br><span class="line">    touch compile.flg</span><br><span class="line"></span><br><span class="line"><span class="hljs-section">compile: compile.flg </span></span><br><span class="line"></span><br><span class="line"><span class="hljs-section">wave: </span></span><br><span class="line">    <span class="hljs-comment"># gvim -p $&#123;TESTCASE&#125;.spike.log $&#123;TESTCASE&#125;.dump &amp;</span></span><br><span class="line">    $&#123;WAV_TOOL&#125; $&#123;WAV_OPTIONS&#125; $&#123;RTL_V_FILES&#125; $&#123;TB_V_FILES&#125; &amp; </span><br><span class="line"></span><br><span class="line"><span class="hljs-section">run: compile</span></span><br><span class="line">    rm -rf $&#123;TEST_RUNDIR&#125;</span><br><span class="line">    mkdir $&#123;TEST_RUNDIR&#125;</span><br><span class="line">    cd $&#123;TEST_RUNDIR&#125;; $&#123;SIM_EXEC&#125; +DUMPWAVE=$&#123;DUMPWAVE&#125; +TESTCASE=$&#123;TESTCASE&#125; |&amp; tee $&#123;TESTNAME&#125;.log; cd $&#123;RUN_DIR&#125;; </span><br><span class="line"></span><br><span class="line"><span class="hljs-meta"><span class="hljs-meta-keyword">.PHONY</span>: run clean all</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/others/crystals-pll-vco.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/book4.jpg" alt="晶振，PLL, VCO介绍">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-07-04T16:00:00.000Z">2018-07-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1591 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/crystals-pll-vco.html">晶振，PLL, VCO介绍</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="晶振，vco区别"><a href="#晶振，vco区别" class="headerlink" title="晶振，vco区别"></a>晶振，vco区别</h3><p>晶振分有源晶振和无源晶振，一般会产生1～200Mhz时钟频率<br>vco亚控振荡器，可以产生比较高的频率比如2Ghz，但是不稳定</p>
+<h3 id="为什么既要晶振还要vco？"><a href="#为什么既要晶振还要vco？" class="headerlink" title="为什么既要晶振还要vco？"></a>为什么既要晶振还要vco？</h3><p>就是为了能够产生稳定的高频时钟信号，就需要用到PLL, PLL内部会有<br>一个VCO 产生高频时钟，通过分频器假设得到10分频的时钟2，再拿这个时钟2<br>和晶振产生的100mhz基用鉴相器做比较，输出一个比较的波形后经过低通滤波，<br>用输出电压控制VCO的输出, 那么就能是vco输出的高频时钟得到稳定的频率，达到了<br>倍频的效果。</p>
+<p>20Mhz一下的晶振基本上都是基频的器件，稳定度好，20mhz以上的晶振大多是谐波(如3次，5次谐波)<br>稳定度差，因此强烈建议使用低频的器件，毕竟倍频器用的pll电路需要的周边配置主要是电容，<br>电阻，电感，其稳定度和价格方面要远远浩宇晶体晶振器件。  </p>
+<p>如果只需要一个20mhz以内的时钟频率，完全可以不用pll，直接接晶振就够了</p>
+<h3 id="晶振一般有哪些参数"><a href="#晶振一般有哪些参数" class="headerlink" title="晶振一般有哪些参数"></a>晶振一般有哪些参数</h3><p>晶振有几个重要参数：</p>
+<p>1，晶体元件规格书中所指定的频率，也是工程师在电路设计和元件选购时首要关注的参数。晶振常用标称频率在1～200MHz之间，比如32768Hz、8MHz、12MHz、24MHz、125MHz等，更高的输出频率也常用PLL（锁相环）将低频进行倍频至1GHz以上。我们称之为标称频率。</p>
+<p>2，输出信号的频率不可避免会有一定的偏差，我们用频率误差（Frequency Tolerance）或频率稳定度（Frequency Stability），用单位ppm来表示，即百万分之一（parts per million）（1/106），是相对标称频率的变化量，此值越小表示精度越高。比如，12MHz晶振偏差为±20ppm，表示它的频率偏差为12×20Hz=±240Hz，即频率范围是（11999760～12000240Hz）</p>
+<p>3，还有一个温度频差（Frequency Stability vs Temp）表示在特定温度范围内，工作频率相对于基准温度时工作频率的允许偏离，它的单位也是ppm。</p>
+<p>4，另外，负载电容CL（Load capacitance），它是电路中跨接晶体两端的总的有效电容（不是晶振外接的匹配电容），主要影响负载谐振频率和等效负载谐振电阻，与晶体一起决定振荡器电路的工作频率，通过调整负载电容，就可以将振荡器的工作频率微调到标称值。更准确而言，无源晶体的负载电容是一项非常重要的参数，因为无源晶体属于被动元器件，所谓的被动元器件即是自身不能工作，需要外部元器件协助工作，无源晶体即是！</p>
+<p>其中：</p>
+<p>CS为晶体两个管脚之间的寄生电容（又名晶振静态电容或Shunt Capacitance），在晶体的规格书上可以找到具体值，一般0.2pF~8pF不等。如图二是某32.768KHz的电气参数，其寄生电容典型值是0.85pF（在表格中采用的是Co）。</p>
+<p>CG指的是晶体振荡电路输入管脚到GND的总电容，其容值为以下三个部分的和。</p>
+<ul>
+<li>需加外晶振主芯片管脚芯到GND的寄生电容 Ci</li>
+<li>晶体震荡电路PCB走线到到GND的寄生电容CPCB</li>
+<li>电路上外增加的并联到GND的外匹配电容 CL1<br>CD指的是晶体振荡电路输入管脚到GND的总电容。容值为以下三个部分的和。</li>
+<li>需加外晶振主芯片管脚芯到GND的寄生电容, Co</li>
+<li>晶体震荡电路PCB走线到到gnd的寄生电容，CPCB</li>
+<li>电路上外增加的并联到GND的外匹配电容, CL2</li>
+</ul>
+<p>既然晶振的负载电容是一个非常重要的参数，如果此项参数与外部电容匹配不正确会导致什么样的现象？晶振两端的等效电容与晶振标称的负载电容匹配不正确，晶振输出的谐振频率将与标称工作的工作频率会产生一定偏差（又称之为频偏），负载电容（load capacitance）主要影响负载谐振频率和等效负载谐振电阻，它与石英谐振器一起决定振荡器的工作频率，通过调整负载电容，一般可以将振荡器的工作频率调到标称值。应用时我们一般外接电容，便是为了使晶振两端的等效电容等于或接近负载电容，对于要求高的场合还要考虑ic输入端的对地电容，这样便可以使得晶振工作的频率达到标称频率。所以合理匹配合适的外加电容使晶振两端的等效电容等于或接近负载电容显得十分重要。</p>
+<p>负载电容常用的标准值有12.5 pF，16 pF，20 pF，30pF,负载电容和谐振频率之间的关系不是线性的，负载电容变小时，频率偏差量变大；负载电容提高时，频率偏差减小。图3是一个晶体的负载电容和频率的误差的关系图。</p>
+<p>例外情况：</p>
+<p>现在有很多芯片内部已经增加了补偿电容（internal capacitance），所以在设计的时候，只需要选按照芯片datasheet推荐的负载电容值的选择晶体即可，不需要额外再加电容。但是因为实际设计的寄生电路的不确定性，最好还是预留CL1/CL2的位置。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/eda/verilog_simu_0delay.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack1.jpg" alt="Verilog仿真不打拍分析">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2014-02-23T16:00:00.000Z">2014-02-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 573 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/eda/verilog_simu_0delay.html">Verilog仿真不打拍分析</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h4><p>例如：<br><img src="http://source.jijing.site/verilogsimu0delay/1.png" alt="1"><br>出现：<br><img src="http://source.jijing.site/verilogsimu0delay/2.png" alt="2"></p>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>这是由于采样的时钟tx_gen_symbol_clk 和数据信号subframe_start之间存在竞争关系导致的。<br>我们的设计意图是时钟tx_gen_symbol_clk应该采到subframe_start信号的后沿<br><img src="http://source.jijing.site/verilogsimu0delay/3.png" alt="3"><br>有人可能会说在代码中加入延迟#1来解决，实际上不推荐这样做，还会存在两个#1的信号同样还会存在竞争。</p>
+<h4 id="仿真模型原理分析"><a href="#仿真模型原理分析" class="headerlink" title="仿真模型原理分析"></a>仿真模型原理分析</h4><p>要搞清楚产生这种问题的原因首先要了解仿真器对于时序仿真的模型。<br><img src="http://source.jijing.site/verilogsimu0delay/4.png" alt="4"><br>第4级的时钟不能正常采到第3级输出的数据，但是第2级的时钟能采到第二级时钟打出来的数据（D3），<br>原因就是，仿真器会在寄存器输出的时候添加一个虚拟的延迟δ，虽然这个虚拟延迟我们是看不到的，<br>在仿真器上都是0，但是对于仿真器工作的时候，到遇到always采样事件时先要判断这个δ延迟，决定触发器的采样输出。<br>（当延迟相等时，clk延迟的优先级会比data延迟的优先级高，即clk1能采到D1的前沿， 也就是我们看到的数据不打拍，这跟我们的预期是不一致的，<br>而clk1能采不到D2的前沿，但能采到D2的后沿，这跟我们的预期一样的。这些讨论仅限于前仿，<br>实际器件上我们必须有时序约束来保证建立保持时间，也不会存在这样的问题。<br>但是硬件设计就是要保证仿真和物理器件一致。因此我们要注意这个现象。<br><img src="http://source.jijing.site/verilogsimu0delay/5.png" alt="5"></p>
+<h4 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h4><p>  在你的TB里时钟都由一个单独的模块产生送给DUT，不管产生多少个时钟，这些时钟保证都经历了n级分频下来的然后送入DUT，这样数据就不会出现不delay的现象。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous">
+            <a class="is-flex-grow has-text-black-ter" href="/page/5/">上一页</a>
+        </div>
+        <div class="pagination-next is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/page/7/">下一页</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link has-text-black-ter" href="/">1</a></li>
+            
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/5/">5</a></li>
+            
+            <li><a class="pagination-link is-current" href="/page/6/">6</a></li>
+            
+        </ul>
+    </nav>
+</div>
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/spinal/">
+            <span class="level-start">
+                <span class="level-item">spinal</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200221_maven_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Maven Windows 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-19T16:00:00.000Z">2020-02-20</time></div>
+                    <a href="/scala/20200221_maven_windows.html" class="has-link-black-ter is-size-6">Maven Windows 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/others/float_trap.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/spinal/spinal7.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/dirty2.jpg" alt="SpinalHDL(七):逢山开路-寄存器接口">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-04T16:00:00.000Z">2019-12-05</time></div>
+                    <a href="/spinal/spinal7.html" class="has-link-black-ter is-size-6">SpinalHDL(七):逢山开路-寄存器接口</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">17</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SpinalHDL-Scala/">
+                        <span class="tag">SpinalHDL  Scala</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">16</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            推荐链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="http://www.sharetechnote.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">通信笔记</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.sharetechnote.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.lihaoyi.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Scala大神Lihaoyi</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.lihaoyi.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://bellard.org/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">FabriceBellard你懂得</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bellard.org</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kalasearch.cn" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">卡拉搜索</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kalasearch.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="马車同学" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="5NJSOR3owM">
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+    <meta charset="utf-8">
+<title>SpinalHDL(一):此CHISEL非彼Chisel - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  Chisel特指  伯克利大学发布的Chisel硬件开发语言 我们文章中大CHISEL为泛指， 小Chisel为特指。 Verilog不够用吗?需要一门新的语言吗? VHDL诞生于1982年 ,Verilog诞生于1981年, 起初">
+<meta name="keywords" content="SpinalHDL  Scala">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpinalHDL(一):此CHISEL非彼Chisel">
+<meta property="og:url" content="https://jijingg.github.io/spinal/spinal1.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  Chisel特指  伯克利大学发布的Chisel硬件开发语言 我们文章中大CHISEL为泛指， 小Chisel为特指。 Verilog不够用吗?需要一门新的语言吗? VHDL诞生于1982年 ,Verilog诞生于1981年, 起初">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://source.jijing.site/thumbnails/cocola.jpg">
+<meta property="og:updated_time" content="2020-07-29T13:55:42.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpinalHDL(一):此CHISEL非彼Chisel">
+<meta name="twitter:description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  Chisel特指  伯克利大学发布的Chisel硬件开发语言 我们文章中大CHISEL为泛指， 小Chisel为特指。 Verilog不够用吗?需要一门新的语言吗? VHDL诞生于1982年 ,Verilog诞生于1981年, 起初">
+<meta name="twitter:image" content="http://source.jijing.site/thumbnails/cocola.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="SpinalHDL(一):此CHISEL非彼Chisel" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main/">目录</a>
+                
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
+                <a class="navbar-item" href="/topic/">主题</a>
+                
+                <a class="navbar-item" href="/categories/">分类</a>
+                
+                <a class="navbar-item" href="/tags/">标签</a>
+                
+                <a class="navbar-item" href="/archives/">时间轴</a>
+                
+                <a class="navbar-item" href="/about/">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/cocola.jpg" alt="SpinalHDL(一):此CHISEL非彼Chisel">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-19T16:00:00.000Z">2019-10-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    16 分钟 读完 (大约 2359 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                SpinalHDL(一):此CHISEL非彼Chisel
+            
+        </h1>
+        <div class="content">
+            <p>这里有两个概念</p>
+<ul>
+<li><strong>CHISEL泛指</strong></li>
+</ul>
+<p>基于Scala的硬件构筑语言(Constructing Hardware In Scala Embedded<br>Language)</p>
+<ul>
+<li><strong>Chisel特指</strong></li>
+</ul>
+<p>伯克利大学发布的Chisel硬件开发语言</p>
+<p>我们文章中大CHISEL为泛指， 小Chisel为特指。</p>
+<h3 id="Verilog不够用吗"><a href="#Verilog不够用吗" class="headerlink" title="Verilog不够用吗?"></a>Verilog不够用吗?</h3><p>需要一门新的语言吗?</p>
+<p>VHDL诞生于1982年 ,Verilog诞生于1981年, 起初是用来电路存档描述,<br>都是硬件描述语言, 是用来描述数字电路的结构,行为,功能和接口的语言。</p>
+<p>虽然Verilog/VHDL简单易用，在一定的历史时期确实是一个效率的巨大提升,<br>但是目前来看，槽点依然很多,<br>已经有点落伍时代。即便是SystermVerilog一定程度上改善了它 存在的问题,<br>并没有完全解决Verilog的问题，况且EDA工具对SV的支持并不是很积极，所以依然是尴尬的存在。</p>
+<ul>
+<li><p><strong>例化不方便</strong></p>
+<p>有人会说，有辅助插件帮你完成 (确实有很多好的插件，emacs verilog-mode<br>, vim 的autoinst) 即便这样，但是对带参数的模块例化,<br>一对多例化同样需要手动处理，非常不方便</p>
+</li>
+<li><p><strong>大量的重复声明</strong></p>
+<p>无休止的变量声明，无休止的位宽声明，容易出错,<br>作为一门上古时期的语言，对编译器不能要求太高</p>
+</li>
+<li><p><strong>函数不能带参数</strong></p>
+<p>verilog中函数的使用只能是零零星星，哪怕是一个位宽的变化都要重写函数,<br>作为一门语言函数不能广泛使用，实为鸡肋</p>
+</li>
+<li><p><strong>参数化实在是笨拙</strong></p>
+<p>虽然支持参数化，parameter 也只能做一些简单的加减左移操作,<br>没有基本math包。</p>
+<p>利用宏做参数化，对于变量比较多的设计，非常复杂，并且也不好维护<br>目前我也看到</p>
+</li>
+<li><p><strong>错误检测很弱</strong></p>
+<p>编译工具对错误的处理比较保守,<br>这种保守可能也源于语言本身，以及编译器的能力不及。</p>
+<ul>
+<li>位宽不匹配，</li>
+<li>input/output端口写反</li>
+<li>饱和截位弄错，</li>
+<li>跨时钟域问题</li>
+<li>锁存器检查</li>
+<li>组合逻辑环自己查</li>
+<li>….</li>
+</ul>
+<p>基于前仿的编译，还会遗漏大量的错误，必须要Lint, 综合检查,<br>费时费力又费钱。</p>
+</li>
+<li><p><strong>重构、增减信号,Bist/DFT逻辑插入麻烦</strong></p>
+<p>需要手动插入, 编写脚本, 即便是脚本也不通用</p>
+</li>
+</ul>
+<p>等等…</p>
+<p>所以现在写Verilog纯粹就是体力活，verilog工程师大概就是这个样子：<br><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
+<p>笔者本人写过一个手机芯片小区搜索的IP，python算法代码不到500行，Verilog整整写了2W多行<br>绝大多数时间不是在处理功能逻辑问题，而是消耗在一些位宽错误,<br>模块集成，端口连接，信号声明，重复基础cell等低级问题的处理上。</p>
+<p>反而编译器倒落了个清闲，编译器的状况大概就是这个样子：<br><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
+<h3 id="五连任性追问？"><a href="#五连任性追问？" class="headerlink" title="五连任性追问？"></a>五连任性追问？</h3><ul>
+<li><p>能不能愉悦的开发？</p>
+<p>不想干重复的脏活</p>
+</li>
+<li><p>能不能参数化设计？</p>
+<p>想一劳永逸</p>
+</li>
+<li><p>能不能方便的复用？</p>
+<p>我懒</p>
+</li>
+<li><p>能不能检查错误？</p>
+<p>我粗心</p>
+</li>
+<li><p>能不能扩展它？</p>
+<p>emm。。这个，老板肯定会问</p>
+</li>
+</ul>
+<h3 id="为什么是Scala"><a href="#为什么是Scala" class="headerlink" title="为什么是Scala?"></a>为什么是Scala?</h3><p>软件领域的技术革新变化很快，而IC开发领域几乎被verilog/VHDL包办了40年，不管是语言还是Flow都事实标准化了。<br>在IC领域想要技术方法大的更新，需要EDA工具厂家的支持，IC公司的认可(流程庞大变化迟钝)，工程师技能更多的是面向IC领域，缺乏软件工具造血能力。<br>所以让变革发生在行业内部可能性极低。</p>
+<p>虽然抽象能力参数化能力更好的SystemVerilog, E,<br>SystemC等语言相继的诞生，但并没有根本上解决<br>这些问题，主要原因是EDA工具厂家对这些特性支持不积极,更多的是用在验证建模领域。</p>
+<p>同时IC设计也出现了另外一个方向HLS(High Level Synthsis),<br>HDL语言是需要明确的电路信息的注入。<br>而HLS是描述算法，对电路没有明确的描述，所以一般就会导致生成的电路资源冗余，时序冗余,<br>HLS每年每家EDA都拿出来炒，真正使用HLS开发IP的公司还是非常少见。</p>
+<p>除了传统的这些对verilog的扩展语言外或者另辟蹊径走HLS的语言之外，基于不同语言平台的DSL多如牛毛-><a href="https://github.com/drom/awesome-hdl" target="_blank" rel="noopener">HDL语言列表</a>,<br>其中也不乏有超强的参数化能力以及面向对象的特性, 但是都没能流行起来。</p>
+<p>他们的问题除了完全不会有EDA工具的主动支持以外，主要有两个原因:</p>
+<ul>
+<li>缺乏杀手级的特性(类型推导，函数式特性)</li>
+<li>缺乏杀手级的项目(像Chisel的rocket, Spinal的Pinsec,Vexriscv )</li>
+</ul>
+<p>能担当此任的HDL一定是基于像Rust、Scala这类现代编程语言上的DSL, 虽然lisp,<br>haskell本身也具备这样的能力，但是基于圆括号的代码风格不太容易被主流接受,<br>另外纯函数式有点不点不见人间烟火，虽然Scala经常被吐槽<br>函数式编程不纯粹，但是混合面向对象的特性，在管理数据构建程序结构而言面向对象还是相当方便.</p>
+<p>我认为不太太可能出现在python，ruby，java这类语言,<br>参数化能力很容易办到，但是缺乏函数式特性，类型推导惰性求值特性。一言以蔽之，这些不适合做DSL。</p>
+<h3 id="Scala能为我们做什么"><a href="#Scala能为我们做什么" class="headerlink" title="Scala能为我们做什么?"></a>Scala能为我们做什么?</h3><p>目前较为流行的Scala<br>HDL框架有两个Chisel和SpinalHDL，Chisel出生伯克利自带流量，借着RISCV这两年算是出尽风头.<br>反观SpinalHDL那可低调的 多，导致很多人都没有认真去了解过它,<br>不清楚作者Charles<br>Papon是不会宣传还是不屑宣传，github上的头像都是默认的图标。</p>
+<p>我本人起初对这种新的开发方法也持怀疑态度，是骂骂咧咧着上了Chisel的贼船，也在公司的项目上用过Chisel,<br>尝到了甜头也隐隐觉的有些别扭，直到<br>一次偶然的机会我重新阅读SpinalHDL的源码，我才意识到问题出在哪儿,<br>别扭源于哪里。后面章节我会讲到我为什么坚定的从Chisel切换到SpinalHDL，<br>在比较两者的区别之前我来罗列一下他们的共同点，也是所谓的泛CHISEL特性</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8796b80bac350ed366df1ca4075090ca_hd.png" alt="Scala-hdl"></p>
+<ol>
+<li><p>能做到什么</p>
+<ul>
+<li>非常好用的位宽推断（甚至跨模块边界）</li>
+<li>错误检查能力（Lint, CDC, timing评估， more）</li>
+<li>彻底的参数化能力</li>
+<li>大量的基础组件以及可重用IP</li>
+<li>至少一个完整的Soc框架(Chisel的RokectChip, SpinalHDL的PineSec)</li>
+<li>继承Scala平台所有强大的语言特性</li>
+</ul>
+<p>在这里引入一个插曲，有些人会说rocket和Chisel不同一个项目，不能拿Rocket来当chisel做比较，<br>不过我觉的脱离SOC和lib来讲CHISEL实在没什么可讲的，当年入学时煞有架势抱一本书在啃Verilog，我们的导师问的一句<br>让我记忆犹新”Verilog只需要两个小时就学会的语言，为什么要抱一本书？你现在需要的编写代码”。所以不管是Chisel还是Spinal电路级的语法我也认为只需要2个小时就够了，更多的时间要花在编写代码更学习如何构建SOC或者lib上。<br>现在网上看似有很多Chisel的资料，结果发现翻来覆去都在讲电路语法，而真正介绍RocketChiP，总线，时钟域，构建Lib的资料少之又少。所以学习Chisel或者Spinal最快的方法就是尽快上手去写代码。最好是实际的项目。</p>
+</li>
+<li><p>期望效果</p>
+<ul>
+<li>解放工程师，避免重复琐碎，避免低级错误</li>
+<li>加快开发周期，开发周期和模块大小不再是线性，有望指数</li>
+</ul>
+<p>目前用Scala编写HDL代码，状况大有改观,<br>工程师完全可以从些低级重复的工作中解放出来,<br>把那些重复容易犯错的事情交给编译器，他会做的比人更好。</p>
+<p>现在的你：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
+<p>为什么不让编译器多干点呢？</p>
+<p><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
+</li>
+</ol>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpinalHDL-Scala/">SpinalHDL  Scala</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/spinal/spinal4.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">SpinalHDL(四) 一窥总线四两拨千斤</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/others/revealjs2pdf.html">
+                <span class="level-item">slides(revealjs 导出PDF)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: 'be5649f4acf34b85d207f03c28c86439',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Verilog不够用吗">
+        <span class="has-mr-6">1</span>
+        <span>Verilog不够用吗?</span>
+        </a></li><li>
+        <a class="is-flex" href="#五连任性追问？">
+        <span class="has-mr-6">2</span>
+        <span>五连任性追问？</span>
+        </a></li><li>
+        <a class="is-flex" href="#为什么是Scala">
+        <span class="has-mr-6">3</span>
+        <span>为什么是Scala?</span>
+        </a></li><li>
+        <a class="is-flex" href="#Scala能为我们做什么">
+        <span class="has-mr-6">4</span>
+        <span>Scala能为我们做什么?</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/spinal/">
+            <span class="level-start">
+                <span class="level-item">spinal</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200221_maven_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Maven Windows 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-19T16:00:00.000Z">2020-02-20</time></div>
+                    <a href="/scala/20200221_maven_windows.html" class="has-link-black-ter is-size-6">Maven Windows 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/others/float_trap.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
+                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/others/">others</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/spinal/spinal7.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/dirty2.jpg" alt="SpinalHDL(七):逢山开路-寄存器接口">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-04T16:00:00.000Z">2019-12-05</time></div>
+                    <a href="/spinal/spinal7.html" class="has-link-black-ter is-size-6">SpinalHDL(七):逢山开路-寄存器接口</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">17</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SpinalHDL-Scala/">
+                        <span class="tag">SpinalHDL  Scala</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">16</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            推荐链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="http://www.sharetechnote.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">通信笔记</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.sharetechnote.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.lihaoyi.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Scala大神Lihaoyi</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.lihaoyi.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://bellard.org/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">FabriceBellard你懂得</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bellard.org</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kalasearch.cn" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">卡拉搜索</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kalasearch.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="SpinalHDL(一):此CHISEL非彼Chisel" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

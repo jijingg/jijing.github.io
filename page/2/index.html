@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head><meta name="generator" content="Hexo 3.8.0">
-    <meta name="baidu-site-verification" content="5NJSOR3owM">
-    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+<html  lang="zh">
+<head>
+    <meta name="baidu-site-verification" content="5NJSOR3owM" />
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6" />
     <meta charset="utf-8">
 <title>马車同学</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -142,8 +142,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/riscv/20190428_function_call.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+        <a href="/sicp/20191025_the-root-of-lisp.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/sicp.jpg" alt="Lisp之根">
         </a>
     </div>
     
@@ -151,17 +151,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time>
+                <time class="level-item has-text-grey" datetime="2019-10-24T16:00:00.000Z">2019-10-25</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1035 个字)
+                    13 分钟 读完 (大约 1924 个字)
                 </span>
                 
                 
@@ -170,18 +170,496 @@
         
         <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/riscv/20190428_function_call.html">C函数调用和汇编代码分析</a>
+                <a class="has-link-black-ter" href="/sicp/20191025_the-root-of-lisp.html">Lisp之根</a>
             
         </h1>
         <div class="content">
-            <h4 id="risc-v-C函数调用反汇编示例"><a href="#risc-v-C函数调用反汇编示例" class="headerlink" title="risc-v C函数调用反汇编示例"></a>risc-v C函数调用反汇编示例</h4><p>首先有一段C程序，其中main函数调用子函数add<br><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//main.c </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> a + b ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <h2 id="The-Root-of-List"><a href="#The-Root-of-List" class="headerlink" title="The Root of List"></a>The Root of List</h2><p>约翰麦卡锡于1960年发表了一篇非凡的论文,他在这篇论文中对编程的贡献有如 欧几里德对几何的贡献.1 他向我们展示了,在只给定几个简单的操作符和一个 表示函数的记号的基础上, 如何构造出一个完整的编程语言. 麦卡锡称这种语 言为Lisp, 意为List Processing, 因为他的主要思想之一是用一种简单的数据 结构表(list)来代表代码和数据.    </p>
+<p>值得注意的是,麦卡锡所作的发现,不仅是计算机史上划时代的大事, 而且是一种 在我们这个时代编程越来越趋向的模式.我认为目前为止只有两种真正干净利落, 始终如一的编程模式:C语言模式和Lisp语言模式.此二者就象两座高地, 在它们 中间是尤如沼泽的低地.随着计算机变得越来越强大,新开发的语言一直在坚定地 趋向于Lisp模式. 二十年来,开发新编程语言的一个流行的秘决是,取C语言的计 算模式,逐渐地往上加Lisp模式的特性,例如运行时类型和无用单元收集.   </p>
+<p>在这篇文章中我尽可能用最简单的术语来解释约翰麦卡锡所做的发现. 关键是我 们不仅要学习某个人四十年前得出的有趣理论结果, 而且展示编程语言的发展方 向. Lisp的不同寻常之处–也就是它优质的定义–是它能够自己来编写自己. 为了理解约翰麦卡锡所表述的这个特点,我们将追溯他的步伐,并将他的数学标记 转换成能够运行的Common Lisp代码.<br></p>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/riscv/20190428_function_call.html#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/sicp/20191025_the-root-of-lisp.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/spinal/spinal4.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building1.jpg" alt="SpinalHDL(四) 一窥总线四两拨千斤">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-21T16:00:00.000Z">2019-10-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1054 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/spinal/spinal4.html">SpinalHDL(四) 一窥总线四两拨千斤</a>
+            
+        </h1>
+        <div class="content">
+            <p>Spinal的lib.bus除了AMBA总线，并且还支持AvalonMM，当然你也很容易扩展自定义的总线。</p>
+<h3 id="Apb3总线例化"><a href="#Apb3总线例化" class="headerlink" title="Apb3总线例化"></a>Apb3总线例化</h3><p>一个简单的Apb3总线接口例化示例</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import spinal.lib.bus.amba3.apb._</span><br><span class="line">class T2 extends Component&#123;</span><br><span class="line">    val busin  = slave(Apb3(Apb3Config(12,32)))    </span><br><span class="line">    val busout = master(Apb3(Apb3Config(12,32)))</span><br><span class="line">    busout &lt;&gt; busin</span><br><span class="line">&#125;</span><br><span class="line">SpinalVerilog(new T2)</span><br></pre></td></tr></table></figure>
+<p>总线的例化也非方便简单，`Apb3`<br>传入Apb3Config(addrWidth=12,dataWidth=32)即可生成一个总线，关键字slave，master设计非常漂亮，可以瞬间<br>指定总线内部的接口方向，除此之外，`\&lt;>`<br>操作符为SpinalHDL定义的总线自动互联函数，不用你手动一个一个连。像这类操作符SpinalHDL有很多，像\”>>\”<br>\”>-/->\”, \”\&lt;/\&lt;\”<br>等等，不用害怕，这些只不过是定义的一个恰巧叫这个符号的函数而已，本质上跟你定义的autoConnect名字的函数并无二致，但是它要比文字函数要形象的多，并且假装操作符也是那么的自然。除了spinalHDL定义的操作符以外，你自己也可以定义各种各样简便的符号帮助你完成复杂琐碎的事情。<br><a href="https://pic1.zhimg.com/80/v2-a7d40b2e009eb85a0683edf2bfbbfa96_hd.png" target="_blank" rel="noopener">41</a><br>可以看到生成的Verilog总线已经完全连上了。</p>
+<h3 id="Apb3总线译码"><a href="#Apb3总线译码" class="headerlink" title="Apb3总线译码"></a>Apb3总线译码</h3><p>Apb3Decoder是一个工厂函数，它支持多种参数的传入</p>
+<ul>
+<li>一：传入总线配置，和地址Mapping</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Apb3Decoder(Apb3Config(16,32),</span><br><span class="line">            List((0x0000,2 KiB),</span><br><span class="line">                 (0x1000,1 KiB),</span><br><span class="line">                 (0x5000,3 KiB))))</span><br></pre></td></tr></table></figure>
+<p>可以得到<br><a href="https://pic4.zhimg.com/80/v2-12a1cf7fc1b40dfba16cded076f1eaaa_hd.png" target="_blank" rel="noopener">42</a></p>
+<ul>
+<li>二：传入master实例，和slave映射实例</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Top extends Component&#123;</span><br><span class="line">    val m0  =  slave(Apb3(Apb3Config(16,32)))</span><br><span class="line">    val s1  = master(Apb3(Apb3Config( 8,32)))</span><br><span class="line">    val s2  = master(Apb3(Apb3Config(12,32)))</span><br><span class="line">    val s3  = master(Apb3(Apb3Config(12,32)))</span><br><span class="line">    val s4  = master(Apb3(Apb3Config( 2,32)))</span><br><span class="line"></span><br><span class="line">val mux = Apb3Decoder(master = m0, </span><br><span class="line">                      slaves = List(s1 -&gt;  (0x0000,  64 ),</span><br><span class="line">                                    s2 -&gt;  (0x1000,1 KiB),</span><br><span class="line">                                    s3 -&gt;  (0x2000,3 KiB),</span><br><span class="line">                                    s4 -&gt;  (0x3000,  32 )))</span><br></pre></td></tr></table></figure>
+<p>得到：</p>
+<p><a href="https://pic4.zhimg.com/80/v2-d619ec9c07eec44d04c14eef9b3631ca_hd.png" target="_blank" rel="noopener">43</a></p>
+<h3 id="Axi-crossbar"><a href="#Axi-crossbar" class="headerlink" title="Axi-crossbar"></a>Axi-crossbar</h3><p>Spinal pinsec的总线拓扑结构<br><a href="https://pic1.zhimg.com/80/v2-e123b5cc9f8e963fda27c624724d4065_hd.png" target="_blank" rel="noopener">44</a></p>
+<p>源码：<br><a href="https://pic2.zhimg.com/80/v2-646cd9d65a1cb829598b8b52e2672791_hd.png" target="_blank" rel="noopener">45</a></p>
+<p>这么复杂一个链接关系，在SpinalHDL上不到50行代码，相信一般的伪代码都做不到这么简洁。因此阅读Spinal的源码简直就是一种享受，有时候我在恍惚这是文档还是代码。</p>
+<p>想想一下，如果这个工作让你用Verilog实现，那是多么的操蛋。当然目前cross-bar都是由脚本或者ARM的工具来自动生成。但是对于外挂，互联，顶层的例化<br>还得要手动做，这同样是一件极其繁琐容易出错的工作。但是现在放在Scala上是一个极其简单的伪代码式的描述即可完成。除此之外还可以做一些高级的检查，<br>参数的协商，DAG(有向无环图)的检查都很容易办到。</p>
+<h3 id="总线转换"><a href="#总线转换" class="headerlink" title="总线转换"></a>总线转换</h3><p>AHB总线到APB总线的转换示例</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import spinal.lib.bus.amba3.apb._</span><br><span class="line">import spinal.lib.bus.amba3.ahblite._</span><br><span class="line"></span><br><span class="line">class Top(ahbConfig:AhbLite3Config, apbConfig:Apb3Config) extends Component&#123;</span><br><span class="line">    val ahb = slave(AhbLite3(ahbConfig))</span><br><span class="line">    val apb = master(Apb3(apbConfig))</span><br><span class="line">    val bridge = AhbLite3ToApb3Bridge(ahbConfig,apbConfig)</span><br><span class="line">    ahb &lt;&gt; bridge.io.ahb</span><br><span class="line">    apb &lt;&gt; bridge.io.apb</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AXI到APB3总线转换示例</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import spinal.lib.bus.amba3.apb._</span><br><span class="line">import spinal.lib.bus.amba4.axi._</span><br><span class="line"></span><br><span class="line">class Top(aw: Int,dw: Int,iw: Int) extends Component&#123;</span><br><span class="line">  val axi = slave(Axi4Shared(Axi4Config(aw,dw,iw)))</span><br><span class="line">  val apb = master(Apb3(Apb3Config(aw,dw,iw)))</span><br><span class="line">  val bridge = Axi4SharedToApb3Bridge(aw,dw,iw)</span><br><span class="line">  axi &lt;&gt; bridge.io.axi</span><br><span class="line">  apb &lt;&gt; bridge.io.apb</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是pinsec中的源码，创建一个AXI到APB3的桥，然后从桥可以互联到其他外围。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">val apbDecoder = Apb3Decoder(</span><br><span class="line">  master = apbBridge.io.apb,</span><br><span class="line">  slaves = List(</span><br><span class="line">    gpioACtrl.io.apb -&gt; (0x00000, 4 KiB),</span><br><span class="line">    gpioBCtrl.io.apb -&gt; (0x01000, 4 KiB),</span><br><span class="line">    uartCtrl.io.apb  -&gt; (0x10000, 4 KiB),</span><br><span class="line">    timerCtrl.io.apb -&gt; (0x20000, 4 KiB),</span><br><span class="line">    vgaCtrl.io.apb   -&gt; (0x30000, 4 KiB),</span><br><span class="line">    core.io.debugBus -&gt; (0xF0000, 4 KiB))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>可以非常方便的将这些外围连起来：<br><a href="https://pic4.zhimg.com/80/v2-655afd12a31552c3a05f1469aa2896da_hd.png" target="_blank" rel="noopener">46</a><br>以上的代码绝大多数都能直接运行起来，能用如此简单寥寥几行就将原来复杂繁琐的工作安全可靠的完成，还有什么理由不使用它。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/spinal/spinal3.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/busy3.jpg" alt="SpinalHDL(三) 一行代码生成Soc系统">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-21T16:00:00.000Z">2019-10-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 484 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/spinal/spinal3.html">SpinalHDL(三) 一行代码生成Soc系统</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="如何生成一个Soc系统"><a href="#如何生成一个Soc系统" class="headerlink" title="如何生成一个Soc系统"></a>如何生成一个Soc系统</h3><p>在Spinal生成一个Soc系统只需要一行代码</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import spinal.lib.soc.pinsec._</span><br><span class="line">SpinalVerilog(new Pinsec(500 MHz))</span><br></pre></td></tr></table></figure>
+<p>即可生成一个完整的SOC系统，其中一个RISCV的处理器VexRiscv, 和AXI总线路由<br>以及APB桥。<br><a href="https:/pic1.zhimg.com/80/v2-f6d33cb611b58eae43cfb6aea4138f14_hd.png" target="_blank" rel="noopener">pinsec-soc</a></p>
+<p>没了，就这么屌</p>
+<p><a href="https:/pic1.zhimg.com/80/v2-5d265c5eb923db5b5ec23fb53104da91_hd.gif" target="_blank" rel="noopener">trump-no-more</a></p>
+<p>如果需要定制，那么继续往下</p>
+<h3 id="如何定制Soc系统"><a href="#如何定制Soc系统" class="headerlink" title="如何定制Soc系统"></a>如何定制Soc系统</h3><p>定制CPU</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">val myCpuConfig = RiscvCoreConfig(</span><br><span class="line">        pcWidth = 32,</span><br><span class="line">        addrWidth = 32,</span><br><span class="line">        startAddress = 0x00000000,</span><br><span class="line">        regFileReadyKind = sync,</span><br><span class="line">        branchPrediction = dynamic,</span><br><span class="line">        bypassExecute0 = true,</span><br><span class="line">        bypassExecute1 = true,</span><br><span class="line">        bypassWriteBack = true,</span><br><span class="line">        bypassWriteBackBuffer = true,</span><br><span class="line">        collapseBubble = false,</span><br><span class="line">        fastFetchCmdPcCalculation = true,</span><br><span class="line">        dynamicBranchPredictorCacheSizeLog2 = 7</span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
+<p>插件式扩展CPU, 除了已有的扩展，你可以添加自己的扩展, 比如浮点，矢量处理</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">myCpuConfig.add(new MulExtension)</span><br><span class="line">myCpuConfig.add(new DivExtension)</span><br><span class="line">myCpuConfig.add(new BarrelShifterFullExtension)</span><br><span class="line">myCpuConfig.add(new MyFloatExtension)</span><br><span class="line">myCpuConfig.add(new MyVectorExtension)</span><br></pre></td></tr></table></figure>
+<p>iCache 配置</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">val myiCacheConfig = InstructionCacheConfig(</span><br><span class="line">        cacheSize    = 4096,</span><br><span class="line">        bytePerLine  = 32,</span><br><span class="line">        wayCount     = 1,  </span><br><span class="line">        wrappedMemAccess = true,</span><br><span class="line">        addressWidth = 32,</span><br><span class="line">        cpuDataWidth = 32,</span><br><span class="line">        memDataWidth = 32</span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
+<p>更新PinsecSOC配置</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val mySocConfig = PinsecConfig(</span><br><span class="line">    axiFrequency   = 100 MHz,</span><br><span class="line">    onChipRamSize  = 4 KiB,</span><br><span class="line">    sdramLayout    = IS42x320D.layout,</span><br><span class="line">    sdramTimings   = IS42x320D.timingGrade7,</span><br><span class="line">    cpu            = myCpuConfig,</span><br><span class="line">    iCache         = myiCacheConfig)</span><br><span class="line">        wrappedMemAccess = true,</span><br><span class="line">        addressWidth = 32,</span><br><span class="line">        cpuDataWidth = 32,</span><br><span class="line">        memDataWidth = 32</span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
+<p><a href="https:/pic1.zhimg.com/80/v2-67ea4d3014d589feb62b22b208714a33_hd.png" target="_blank" rel="noopener">resoc</a><br>重新生成, 得到全新定制的SOC系统</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SpinalVerilog(new Pinsec(mySocConfig))</span><br></pre></td></tr></table></figure>
+<p>这个一个完整的例子，可以看得出SpinalHDL的参数设计非常合理，层层设计，每一个功能模块有自己的参数伴侣，<br>所有的配置，模块的扩展，全部放在参数里。</p>
+<p>RocketChip隐式参数p恐怕要把你绕晕，这也是Chisel常备被吐槽的问题之一。<br>Spinal完全不存在这样的问题，即便是你第一次接触，也基本上不存在什么阅读障碍，<br>完整的Pinsec源码只有300行，能够完整的描述Soc顶层的互联信息，表达能力实属强大，源码参见<a href="https://github.com/SpinalHDL/SpinalHDL/blob/dev/lib/src/main/scala/spinal/lib/soc/pinsec/Pinsec.scala" target="_blank" rel="noopener">Pinsec.scala</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/spinal/spinal1.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/cocola.jpg" alt="SpinalHDL(一):此CHISEL非彼Chisel">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-19T16:00:00.000Z">2019-10-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    16 分钟 读完 (大约 2359 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/spinal/spinal1.html">SpinalHDL(一):此CHISEL非彼Chisel</a>
+            
+        </h1>
+        <div class="content">
+            <p>这里有两个概念</p>
+<ul>
+<li><strong>CHISEL泛指</strong></li>
+</ul>
+<p>基于Scala的硬件构筑语言(Constructing Hardware In Scala Embedded<br>Language)</p>
+<ul>
+<li><strong>Chisel特指</strong></li>
+</ul>
+<p>伯克利大学发布的Chisel硬件开发语言</p>
+<p>我们文章中大CHISEL为泛指， 小Chisel为特指。</p>
+<h3 id="Verilog不够用吗"><a href="#Verilog不够用吗" class="headerlink" title="Verilog不够用吗?"></a>Verilog不够用吗?</h3><p>需要一门新的语言吗?</p>
+<p>VHDL诞生于1982年 ,Verilog诞生于1981年, 起初是用来电路存档描述,<br>都是硬件描述语言, 是用来描述数字电路的结构,行为,功能和接口的语言。</p>
+<p>虽然Verilog/VHDL简单易用，在一定的历史时期确实是一个效率的巨大提升,<br>但是目前来看，槽点依然很多,<br>已经有点落伍时代。即便是SystermVerilog一定程度上改善了它 存在的问题,<br>并没有完全解决Verilog的问题，况且EDA工具对SV的支持并不是很积极，所以依然是尴尬的存在。</p>
+<ul>
+<li><p><strong>例化不方便</strong></p>
+<p>有人会说，有辅助插件帮你完成 (确实有很多好的插件，emacs verilog-mode<br>, vim 的autoinst) 即便这样，但是对带参数的模块例化,<br>一对多例化同样需要手动处理，非常不方便</p>
+</li>
+<li><p><strong>大量的重复声明</strong></p>
+<p>无休止的变量声明，无休止的位宽声明，容易出错,<br>作为一门上古时期的语言，对编译器不能要求太高</p>
+</li>
+<li><p><strong>函数不能带参数</strong></p>
+<p>verilog中函数的使用只能是零零星星，哪怕是一个位宽的变化都要重写函数,<br>作为一门语言函数不能广泛使用，实为鸡肋</p>
+</li>
+<li><p><strong>参数化实在是笨拙</strong></p>
+<p>虽然支持参数化，parameter 也只能做一些简单的加减左移操作,<br>没有基本math包。</p>
+<p>利用宏做参数化，对于变量比较多的设计，非常复杂，并且也不好维护<br>目前我也看到</p>
+</li>
+<li><p><strong>错误检测很弱</strong></p>
+<p>编译工具对错误的处理比较保守,<br>这种保守可能也源于语言本身，以及编译器的能力不及。</p>
+<ul>
+<li>位宽不匹配，</li>
+<li>input/output端口写反</li>
+<li>饱和截位弄错，</li>
+<li>跨时钟域问题</li>
+<li>锁存器检查</li>
+<li>组合逻辑环自己查</li>
+<li>….</li>
+</ul>
+<p>基于前仿的编译，还会遗漏大量的错误，必须要Lint, 综合检查,<br>费时费力又费钱。</p>
+</li>
+<li><p><strong>重构、增减信号,Bist/DFT逻辑插入麻烦</strong></p>
+<p>需要手动插入, 编写脚本, 即便是脚本也不通用</p>
+</li>
+</ul>
+<p>等等…</p>
+<p>所以现在写Verilog纯粹就是体力活，verilog工程师大概就是这个样子：<br><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
+<p>笔者本人写过一个手机芯片小区搜索的IP，python算法代码不到500行，Verilog整整写了2W多行<br>绝大多数时间不是在处理功能逻辑问题，而是消耗在一些位宽错误,<br>模块集成，端口连接，信号声明，重复基础cell等低级问题的处理上。</p>
+<p>反而编译器倒落了个清闲，编译器的状况大概就是这个样子：<br><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
+<h3 id="五连任性追问？"><a href="#五连任性追问？" class="headerlink" title="五连任性追问？"></a>五连任性追问？</h3><ul>
+<li><p>能不能愉悦的开发？</p>
+<p>不想干重复的脏活</p>
+</li>
+<li><p>能不能参数化设计？</p>
+<p>想一劳永逸</p>
+</li>
+<li><p>能不能方便的复用？</p>
+<p>我懒</p>
+</li>
+<li><p>能不能检查错误？</p>
+<p>我粗心</p>
+</li>
+<li><p>能不能扩展它？</p>
+<p>emm。。这个，老板肯定会问</p>
+</li>
+</ul>
+<h3 id="为什么是Scala"><a href="#为什么是Scala" class="headerlink" title="为什么是Scala?"></a>为什么是Scala?</h3><p>软件领域的技术革新变化很快，而IC开发领域几乎被verilog/VHDL包办了40年，不管是语言还是Flow都事实标准化了。<br>在IC领域想要技术方法大的更新，需要EDA工具厂家的支持，IC公司的认可(流程庞大变化迟钝)，工程师技能更多的是面向IC领域，缺乏软件工具造血能力。<br>所以让变革发生在行业内部可能性极低。</p>
+<p>虽然抽象能力参数化能力更好的SystemVerilog, E,<br>SystemC等语言相继的诞生，但并没有根本上解决<br>这些问题，主要原因是EDA工具厂家对这些特性支持不积极,更多的是用在验证建模领域。</p>
+<p>同时IC设计也出现了另外一个方向HLS(High Level Synthsis),<br>HDL语言是需要明确的电路信息的注入。<br>而HLS是描述算法，对电路没有明确的描述，所以一般就会导致生成的电路资源冗余，时序冗余,<br>HLS每年每家EDA都拿出来炒，真正使用HLS开发IP的公司还是非常少见。</p>
+<p>除了传统的这些对verilog的扩展语言外或者另辟蹊径走HLS的语言之外，基于不同语言平台的DSL多如牛毛-><a href="https://github.com/drom/awesome-hdl" target="_blank" rel="noopener">HDL语言列表</a>,<br>其中也不乏有超强的参数化能力以及面向对象的特性, 但是都没能流行起来。</p>
+<p>他们的问题除了完全不会有EDA工具的主动支持以外，主要有两个原因:</p>
+<ul>
+<li>缺乏杀手级的特性(类型推导，函数式特性)</li>
+<li>缺乏杀手级的项目(像Chisel的rocket, Spinal的Pinsec,Vexriscv )</li>
+</ul>
+<p>能担当此任的HDL一定是基于像Rust、Scala这类现代编程语言上的DSL, 虽然lisp,<br>haskell本身也具备这样的能力，但是基于圆括号的代码风格不太容易被主流接受,<br>另外纯函数式有点不点不见人间烟火，虽然Scala经常被吐槽<br>函数式编程不纯粹，但是混合面向对象的特性，在管理数据构建程序结构而言面向对象还是相当方便.</p>
+<p>我认为不太太可能出现在python，ruby，java这类语言,<br>参数化能力很容易办到，但是缺乏函数式特性，类型推导惰性求值特性。一言以蔽之，这些不适合做DSL。</p>
+<h3 id="Scala能为我们做什么"><a href="#Scala能为我们做什么" class="headerlink" title="Scala能为我们做什么?"></a>Scala能为我们做什么?</h3><p>目前较为流行的Scala<br>HDL框架有两个Chisel和SpinalHDL，Chisel出生伯克利自带流量，借着RISCV这两年算是出尽风头.<br>反观SpinalHDL那可低调的 多，导致很多人都没有认真去了解过它,<br>不清楚作者Charles<br>Papon是不会宣传还是不屑宣传，github上的头像都是默认的图标。</p>
+<p>我本人起初对这种新的开发方法也持怀疑态度，是骂骂咧咧着上了Chisel的贼船，也在公司的项目上用过Chisel,<br>尝到了甜头也隐隐觉的有些别扭，直到<br>一次偶然的机会我重新阅读SpinalHDL的源码，我才意识到问题出在哪儿,<br>别扭源于哪里。后面章节我会讲到我为什么坚定的从Chisel切换到SpinalHDL，<br>在比较两者的区别之前我来罗列一下他们的共同点，也是所谓的泛CHISEL特性</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8796b80bac350ed366df1ca4075090ca_hd.png" alt="Scala-hdl"></p>
+<ol>
+<li><p>能做到什么</p>
+<ul>
+<li>非常好用的位宽推断（甚至跨模块边界）</li>
+<li>错误检查能力（Lint, CDC, timing评估， more）</li>
+<li>彻底的参数化能力</li>
+<li>大量的基础组件以及可重用IP</li>
+<li>至少一个完整的Soc框架(Chisel的RokectChip, SpinalHDL的PineSec)</li>
+<li>继承Scala平台所有强大的语言特性</li>
+</ul>
+<p>在这里引入一个插曲，有些人会说rocket和Chisel不同一个项目，不能拿Rocket来当chisel做比较，<br>不过我觉的脱离SOC和lib来讲CHISEL实在没什么可讲的，当年入学时煞有架势抱一本书在啃Verilog，我们的导师问的一句<br>让我记忆犹新”Verilog只需要两个小时就学会的语言，为什么要抱一本书？你现在需要的编写代码”。所以不管是Chisel还是Spinal电路级的语法我也认为只需要2个小时就够了，更多的时间要花在编写代码更学习如何构建SOC或者lib上。<br>现在网上看似有很多Chisel的资料，结果发现翻来覆去都在讲电路语法，而真正介绍RocketChiP，总线，时钟域，构建Lib的资料少之又少。所以学习Chisel或者Spinal最快的方法就是尽快上手去写代码。最好是实际的项目。</p>
+</li>
+<li><p>期望效果</p>
+<ul>
+<li>解放工程师，避免重复琐碎，避免低级错误</li>
+<li>加快开发周期，开发周期和模块大小不再是线性，有望指数</li>
+</ul>
+<p>目前用Scala编写HDL代码，状况大有改观,<br>工程师完全可以从些低级重复的工作中解放出来,<br>把那些重复容易犯错的事情交给编译器，他会做的比人更好。</p>
+<p>现在的你：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
+<p>为什么不让编译器多干点呢？</p>
+<p><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
+</li>
+</ol>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/others/revealjs2pdf.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="slides(revealjs 导出PDF)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-31T16:00:00.000Z">2019-09-01</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/others/">others</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 176 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/others/revealjs2pdf.html">slides(revealjs 导出PDF)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="1-export-HTML-to-slides"><a href="#1-export-HTML-to-slides" class="headerlink" title="1. export HTML to slides"></a>1. export HTML to slides</h2><p>  $: unzip reveal.js.master.zip<br>  $: cd reveal.js.master </p>
+<h2 id="2-Edit-index-html"><a href="#2-Edit-index-html" class="headerlink" title="2. Edit index.html"></a>2. Edit index.html</h2><p>  Export to reveal.js from <a href="https://slides.com/yourname/yourslide/edit" target="_blank" rel="noopener">https://slides.com/yourname/yourslide/edit</a><br>  Presentation made with Slides are powered by the reveal.js open source presentation framework. This export lets you migrate your slide content to a fresh reveal.js install.<br>  a. Download a copy of the reveal.js framework and make the following edits to its index.html.<br>  b. In the <head><meta name="generator" content="Hexo 3.8.0">, replace the theme CSS <link> with:<br>  c. In the </head><body>, replace the <div class="reveal"> node with:<br>  d. In the Reveal.initialize call towards the bottom of your index.html, append these config values:</div></body></p>
+<h2 id="3-Edit-index-pdf-config"><a href="#3-Edit-index-pdf-config" class="headerlink" title="3. Edit index pdf config"></a>3. Edit index pdf config</h2><p>  a. edit index.html<br>  add. Reveal.Configure before Reveal.initialize<br>  <figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Reveal.configure(&#123; <span class="hljs-attr">pdfSeparateFragments</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">                   pdfMaxPagesPerSlide: <span class="hljs-number">1</span> &#125;);</span><br><span class="line">Reveal.initialize(&#123; ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-Export-pdf"><a href="#4-Export-pdf" class="headerlink" title="4.  Export pdf"></a>4.  Export pdf</h2><p>  open index.html by Chrome like <code>http://xxxx.index.html?print-pdf</code><br>  Ctrl-P(windows)  or COMMAND-P(Mac-OS)<br>  Save</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ol>
+<li>Save Fail(Preview Failure)<br>print range - full<br>I found Chrome export pdf raise Error when pages number bigger than 56<br>So you should export it twice 1-56, 57~64</li>
+</ol>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/20190505_fractal.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack2.jpg" alt="分型与混沌">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-04T16:00:00.000Z">2019-05-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 85 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/20190505_fractal.html">分型与混沌</a>
+            
+        </h1>
+        <div class="content">
+            <p>中文字体<br>abcdABCD</p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li><a href="https://www.bilibili.com/video/av18085977/" target="_blank" rel="noopener">费根鲍姆常数,种群数量分型混沌</a></li>
+<li><a href="https://github.com/mkrcah/fractal-generator" target="_blank" rel="noopener">SCALA Jullia/Mandelbrot绘制</a></li>
+<li><a href="https://www.bilibili.com/video/av12985635/?spm_id_from=trigger_reload" target="_blank" rel="noopener">惊叹的一维二维分形混沌联系</a>(不动点函数, 二叉图， 曼德博集合之联系绘与一图)</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/sicp/20190429_cps.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack6.jpg" alt="CPS变换">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-28T16:00:00.000Z">2019-04-29</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1333 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/sicp/20190429_cps.html">CPS变换</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="为什么函数调用需要保存状态？"><a href="#为什么函数调用需要保存状态？" class="headerlink" title="为什么函数调用需要保存状态？"></a>为什么函数调用需要保存状态？</h4><p>add(1,2) mul(3,4) 这种调用明显不需要保存状态<br>而add(1,mul(1,2)) 这种计算是需要保存1级函数add的变量,再计算2级函数mul返回值和保存相加最终返回</p>
+<p>得出一个结论：<strong>函数处在参数位置上，调用后需要返回的函数调用才需要保存状态</strong><br>而什么是尾调用？无需返回的函数调用<br>一个简单的判定原则 <strong>即函数不在参数位置上</strong><br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/sicp/20190429_cps.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -259,6 +737,65 @@
 
     <div class="card">
     
+    <div class="card-image">
+        <a href="/riscv/20190428_function_call.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1035 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20190428_function_call.html">C函数调用和汇编代码分析</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="risc-v-C函数调用反汇编示例"><a href="#risc-v-C函数调用反汇编示例" class="headerlink" title="risc-v C函数调用反汇编示例"></a>risc-v C函数调用反汇编示例</h4><p>首先有一段C程序，其中main函数调用子函数add<br><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//main.c </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> a + b ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20190428_function_call.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -312,430 +849,6 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/sicp/whyfp.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/happy1.jpg" alt="为什么函数式编程至关重要">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-21T12:34:36.000Z">2019-04-21</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    15 分钟 读完 (大约 2309 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/sicp/whyfp.html">为什么函数式编程至关重要</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="函数式程序的特点"><a href="#函数式程序的特点" class="headerlink" title="函数式程序的特点"></a>函数式程序的特点</h4><ol>
-<li>函数式编程不包含任何赋值语句（也就是没有变量），所有的值从一开始就确定了</li>
-<li>函数式编程不包含副作用，除了计数它本身的值以外不产生任何副作用，这一特性消灭了bug的一个主要来源</li>
-<li>函数式编程值是一定的，那么执行顺序就不在重要，所以它可以在任何时候被执行，这一过程将程序员从控制流中解放</li>
-<li>由于在任意时候求值，程序员可以随性所欲的用变量值来代替变量表达式，反之也可以用变量表达式代替变量的值。程序是引用透明，可以更容易的数学化控制</li>
-<li>函数是一等公民，函数式编程中努力用函数来表达所有的概念，完成所有的操作</li>
-<li>变量的不变性，赋值操作低人一等。简单将在scala函数是编程中只用val，不用var</li></ol>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/sicp/whyfp.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-19T12:48:53.000Z">2019-04-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/others/">others</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 228 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/others/favo_blog.html">博文收藏</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="博客收藏"><a href="#博客收藏" class="headerlink" title="博客收藏"></a>博客收藏</h4><ul>
-<li>道可叨<a href="http://zhuoqiang.me/" target="_blank" rel="noopener">http://zhuoqiang.me/</a></li>
-</ul>
-<h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h4><p><strong>什么是函数式编程</strong><br>函数式代码是对<strong>“映射的描述”</strong>，输入<code>x</code>和输出<code>y</code>的映射关系 <code>y=f(x)</code><br>函数式编程在 <strong>描述是什么</strong><br>命令式编程在 <strong>应该怎样做</strong></p>
-<ul>
-<li><a href="http://wudaijun.com/2018/05/understand-functional-programing/" target="_blank" rel="noopener">理解函数式编程</a></li>
-<li><a href="https://www.zhihu.com/question/26154999/answer/63140320" target="_blank" rel="noopener">为什么我们需要（or不需要）科里化</a></li>
-<li><a href="https://hcyue.me/2016/05/14/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" target="_blank" rel="noopener">什么是函数式编程思维？</a> / <a href="https://www.zhihu.com/question/28292740/answer/100284611" target="_blank" rel="noopener">知乎</a></li>
-<li><a href="http://zhuoqiang.me/what-is-monad.html" target="_blank" rel="noopener">Monad 最简介绍</a></li>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzIwMDgyNzUzNw==&amp;mid=2247483658&amp;idx=1&amp;sn=2dde89033d2fef0cba307db9b8b5489e&amp;scene=0#wechat_redirect" target="_blank" rel="noopener">符号: 抽象、语义(函数式表达最清晰的解释)</a></li>
-</ul>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
-<li><a href="http://zhuoqiang.me/how-program-find-self.html" target="_blank" rel="noopener">程序如何定位自己</a></li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/sicp/lambda_03_bool_branch.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building3.jpg" alt="lambda演算python实现[三]之Bool值和分支">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-19T12:34:36.000Z">2019-04-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 274 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/sicp/lambda_03_bool_branch.html">lambda演算python实现[三]之Bool值和分支</a>
-            
-        </h1>
-        <div class="content">
-            <p>原文出处：<a href="https://cgnail.github.io/academic/lambda-3/" target="_blank" rel="noopener">Lambda演算中的布尔值和选择</a></p>
-<h4 id="python实现"><a href="#python实现" class="headerlink" title="python实现"></a>python实现</h4><p>用python定义Bool值和bool运算如下<br></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/sicp/lambda_03_bool_branch.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/sicp/lambda_02_number.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building2.jpg" alt="lambda演算python实现[二]之数字">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-19T12:34:36.000Z">2019-04-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 515 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/sicp/lambda_02_number.html">lambda演算python实现[二]之数字</a>
-            
-        </h1>
-        <div class="content">
-            <p>原文出处：<a href="https://cgnail.github.io/academic/lambda-2/" target="_blank" rel="noopener">lambda演算中的数字</a></p>
-<h3 id="python实现"><a href="#python实现" class="headerlink" title="python实现"></a>python实现</h3><p>数字和加法的函数表示<br></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/sicp/lambda_02_number.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/scala/scala_FAQ.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/happy3.jpg" alt="Scala 避坑大法">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-15T16:00:00.000Z">2019-04-16</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 200 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/scala/scala_FAQ.html">Scala 避坑大法</a>
-            
-        </h1>
-        <div class="content">
-            <ul>
-<li><p>单引号双引号是有区别的<br>  单引号表示：char字符<br>  双引号表示：string字符 </p>
-</li>
-<li><p>scala 为什么不建议用return</p>
-<ol>
-<li>return是命令时语句，Scala鼓励函数式编程，函数式在描述关系，而不是高速计算机怎么做</li>
-<li>return会破坏Scala的类型推断，加上return 你得显式的声明返回类型</li>
-<li>return在有些情况下使返回含义模糊</li>
-<li>scala实际上并没有真正意义上的return语句，而是又抛出异常的语法糖包裹实现的</li>
-</ol>
-</li>
-<li><p>如何定义一个无限长的序列 Infinite Stream<br>  无限长的序列有什么用</p>
-</li>
-</ul>
-<h3 id="BugList"><a href="#BugList" class="headerlink" title="BugList"></a>BugList</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object fix&#123;</span><br><span class="line">  def on: Boolean = FixSwitch on</span><br><span class="line">  def off: Boolean = FixSwitch off</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fix on</span><br><span class="line"><span class="hljs-keyword">val</span> a = <span class="hljs-number">2</span> <span class="hljs-comment">// is Ok</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fix on</span><br><span class="line">println(<span class="hljs-string">"xxx"</span>) <span class="hljs-comment">// Compile error</span></span><br><span class="line"><span class="hljs-keyword">val</span> a = <span class="hljs-number">2</span></span><br></pre></td></tr></table></figure>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/chisel_QA.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/book5.jpg" alt="Chisel 常见问题">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-15T16:00:00.000Z">2019-04-16</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 2 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/chisel_QA.html">Chisel 常见问题</a>
-            
-        </h1>
-        <div class="content">
-            <ul>
-<li><p>Q1:</p>
-</li>
-<li><p>Q1:</p>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/sicp/20190414-fp-closure-iterator.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/wb2.jpg" alt="函数是编程的闭包和迭代器理解">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-14T05:48:12.000Z">2019-04-14</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1261 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/sicp/20190414-fp-closure-iterator.html">函数是编程的闭包和迭代器理解</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="什么是闭包？"><a href="#什么是闭包？" class="headerlink" title="什么是闭包？"></a>什么是闭包？</h3><p>闭包是一类特殊的函数。如果一个函数定义在另一个函数的作用域中，并且函数中引用了外部函数的局部变量，那么这个函数就是一个闭包。<br><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">lazy_sum</span><span class="hljs-params">(*args)</span>:</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sum</span><span class="hljs-params">()</span>:</span></span><br><span class="line">        ax = <span class="hljs-number">0</span></span><br><span class="line">        <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> args:</span><br><span class="line">            ax = ax + n</span><br><span class="line">        <span class="hljs-keyword">return</span> ax</span><br><span class="line">    <span class="hljs-keyword">return</span> sum</span><br><span class="line"></span><br><span class="line">$ lazy_sum(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>)</span><br><span class="line">&lt;function sum at <span class="hljs-number">0x10452f668</span>&gt;</span><br><span class="line">$ lazy_sum(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>)()</span><br><span class="line"><span class="hljs-number">15</span></span><br></pre></td></tr></table></figure></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/sicp/20190414-fp-closure-iterator.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -754,9 +867,9 @@
             
             <li><a class="pagination-link has-text-black-ter" href="/page/3/">3</a></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/4/">4</a></li>
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/5/">5</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/6/">6</a></li>
             
         </ul>
     </nav>
@@ -831,7 +944,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -840,6 +953,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/spinal/">
+            <span class="level-start">
+                <span class="level-item">spinal</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
             </span>
         </a></li>
             </ul>
@@ -857,6 +978,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200221_maven_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Maven Windows 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-19T16:00:00.000Z">2020-02-20</time></div>
+                    <a href="/scala/20200221_maven_windows.html" class="has-link-black-ter is-size-6">Maven Windows 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -917,37 +1057,18 @@
         
         <article class="media">
             
-            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
+            <a href="/spinal/spinal7.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/dirty2.jpg" alt="SpinalHDL(七):逢山开路-寄存器接口">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
-                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-04T16:00:00.000Z">2019-12-05</time></div>
+                    <a href="/spinal/spinal7.html" class="has-link-black-ter is-size-6">SpinalHDL(七):逢山开路-寄存器接口</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/thought/why-simple-so-complex.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
-                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
-                    <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
                     </p>
                 </div>
             </div>
@@ -970,6 +1091,17 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2020/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2020</span>
@@ -981,12 +1113,23 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2019/11/">
                 <span class="level-start">
                     <span class="level-item">十一月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -997,7 +1140,7 @@
                     <span class="level-item">十月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1129,6 +1272,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/SpinalHDL-Scala/">
+                        <span class="tag">SpinalHDL  Scala</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -1152,7 +1302,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1173,7 +1323,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">15</span>
+                        <span class="tag is-grey">16</span>
                     </a>
                 </div>
                 
@@ -1209,6 +1359,71 @@
         </div>
     </div>
 </div>
+            
+        
+    
+        
+            
+                
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            推荐链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="http://www.sharetechnote.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">通信笔记</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.sharetechnote.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.lihaoyi.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Scala大神Lihaoyi</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.lihaoyi.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://bellard.org/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">FabriceBellard你懂得</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bellard.org</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kalasearch.cn" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">卡拉搜索</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kalasearch.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
             
         
     

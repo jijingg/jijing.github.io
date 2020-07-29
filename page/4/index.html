@@ -142,6 +142,242 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/chisel/chisel_bugs.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/work2.jpg" alt="Chisel BugList">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 36 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/chisel_bugs.html">Chisel BugList</a>
+            
+        </h1>
+        <div class="content">
+            <ul>
+<li><p>[ ] BitPat length bugs<br>  <code>BitPat.pare(&quot;b1100_0000&quot;) = (192,255,9)</code> 实际8bit，返回9bit<br>  <code>BitPat.pare(&quot;b11000000&quot;)  = (192,255,8)</code></p>
+  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">35:     (bits, mask, x.length - 1) </span><br><span class="line">fix 剔除字符&apos;_&apos; 后统计长度</span><br><span class="line">35:     (bits, mask, x.filter(_!=&apos;_&apos;).length - 1)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>[ ] bug2</p>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/chisel/20190401_chisel_keep_name.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/chisel2.jpg" alt="Chiel Keep变量名">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-31T16:00:00.000Z">2019-04-01</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 608 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/20190401_chisel_keep_name.html">Chiel Keep变量名</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="how-to-keep-chisel-variable-name-when-generate-verilog"><a href="#how-to-keep-chisel-variable-name-when-generate-verilog" class="headerlink" title="how to keep chisel variable name when generate verilog"></a>how to keep chisel variable name when generate verilog</h3><p>There are several reasons why a name may be disappearing.</p>
+<p>Constant Propagation<br>For many reasons, including interoperability with existing CAD tools, performance, and Verilog debug-ability, Chisel (actually the FIRRTL compiler underneath Chisel) will propagate constants and direct wire connections. For example:</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/chisel/20190401_chisel_keep_name.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/chisel/20190322_chisel_module_confilict.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/cpu1.jpg" alt="Verilog 模块重名问题">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-21T16:00:00.000Z">2019-03-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 246 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/20190322_chisel_module_confilict.html">Verilog 模块重名问题</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="Chisel-不同开发生产的Verilog-模块名冲突"><a href="#Chisel-不同开发生产的Verilog-模块名冲突" class="headerlink" title="Chisel 不同开发生产的Verilog 模块名冲突"></a>Chisel 不同开发生产的Verilog 模块名冲突</h3><p>同学A 负责开发AP<br>同学B 负责开发CP<br>其中都会用到Queue，生产的AP_system_top.v  CP_system_top.v中可能都会包含一个<br><code>module Queue (</code><br>集成到SOC_top.v时会面临模块名冲突的问题，目前Chisel 本身没有提供解决该问题的方法。<br>只能依赖于原始verilog 的解决方法 </p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/chisel/20190322_chisel_module_confilict.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/chisel/20190321_chisel_comb_reg.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/led1.jpg" alt="Chisel组合逻辑时序逻辑">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-20T16:00:00.000Z">2019-03-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 357 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/20190321_chisel_comb_reg.html">Chisel组合逻辑时序逻辑</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="时序逻辑的声明和写法"><a href="#时序逻辑的声明和写法" class="headerlink" title="时序逻辑的声明和写法"></a>时序逻辑的声明和写法</h3><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">实例<span class="hljs-number">1</span></span><br><span class="line">  <span class="hljs-keyword">val</span> tiRomStartAddr = <span class="hljs-type">RegInit</span>(<span class="hljs-number">0.</span><span class="hljs-type">U</span>(<span class="hljs-number">6.</span><span class="hljs-type">W</span>))  <span class="hljs-comment">//显示的声明Reg</span></span><br><span class="line">  when      (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">40.</span><span class="hljs-type">U</span>  )&#123;tiRomStartAddr :=  <span class="hljs-number">25.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">159.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">21.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">200.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">35.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">481.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">15.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">530.</span><span class="hljs-type">U</span> )&#123;tiRomStartAddr :=  <span class="hljs-number">10.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .elsewhen (io.swif.<span class="hljs-type">K</span>&lt;<span class="hljs-number">2881.</span><span class="hljs-type">U</span>)&#123;tiRomStartAddr :=   <span class="hljs-number">5.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">  .otherwise                  &#123;tiRomStartAddr :=  <span class="hljs-number">25.</span><span class="hljs-type">U</span> &#125;</span><br><span class="line">实例<span class="hljs-number">2</span></span><br><span class="line">  <span class="hljs-keyword">val</span> <span class="hljs-type">RRomRdata</span> = <span class="hljs-type">RegInit</span>(<span class="hljs-number">0.</span><span class="hljs-type">U</span>(log2Up(pm.<span class="hljs-type">MaxR</span>).<span class="hljs-type">W</span>)) <span class="hljs-comment">//显示的声明Reg并初始化（switch语句不带default)</span></span><br><span class="line">  switch (io.<span class="hljs-type">RRomAddr</span>) &#123;</span><br><span class="line">    is (<span class="hljs-number">0.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">0</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">1.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">1</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">2.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">2</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">3.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">3</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">4.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">4</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">5.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">5</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">6.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">6</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">    is (<span class="hljs-number">7.</span><span class="hljs-type">U</span>) &#123;<span class="hljs-type">RRomRdata</span> := intraRowTi.<span class="hljs-type">RRomVal</span>(<span class="hljs-number">7</span>).<span class="hljs-type">U</span>&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/chisel/20190321_chisel_comb_reg.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/scala/20190308_scala_package.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/library1.jpg" alt="Scala 初探.二(package组织方式)">
         </a>
@@ -182,6 +418,187 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/scala/20190308_scala_package.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20190308_scala_main.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Scala 初探.一(main函数)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 749 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_main.html">Scala 初探.一(main函数)</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="SCALA-程序的几种运行方式"><a href="#SCALA-程序的几种运行方式" class="headerlink" title="SCALA 程序的几种运行方式"></a>SCALA 程序的几种运行方式</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>脚本式的使用，<code>scala a.scala</code> 可正常打印<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function">def <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>= &#123;</span><br><span class="line">  println(<span class="hljs-string">"Hello, Scala way1"</span>)</span><br><span class="line">&#125;</span><br><span class="line">main()</span><br></pre></td></tr></table></figure></p>
+<p>但这种写法不能被 <code>scalac a.scala</code>正确编译，可能JVM对象必须要有个main入口函数</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_main.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20190308_scala_sbt2.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/happy3.jpg" alt="Scala 初探.四(sbt组织scala代码2)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 586 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt2.html">Scala 初探.四(sbt组织scala代码2)</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="package-and-import"><a href="#package-and-import" class="headerlink" title="package and import"></a>package and import</h3><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── Interleave.scala</span><br><span class="line">            ├── utils.scala</span><br><span class="line">            └── config.scala</span><br></pre></td></tr></table></figure>
+<p>对于同一目录下的两个文件，可以不用import，默认在一个package内  </p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//Interleave.scala</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> a = <span class="hljs-keyword">new</span> <span class="hljs-type">ClassInUtils</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt2.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/scala/20190308_scala_sbt1.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/macbook2.jpg" alt="Scala 初探.三(sbt组织scala代码1)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 308 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt1.html">Scala 初探.三(sbt组织scala代码1)</a>
+            
+        </h1>
+        <div class="content">
+            <p>上一节我们用Makefile来组织scala代码，这里有更好的选择sbt来管理项目<br>sbt推荐将scala代码放在src路径，如下为标准的组织方式(代码还是原封使用第二节的样例代码)<br>总共3个文件      </p>
+<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── a.scala</span><br><span class="line">            ├── b.scala</span><br><span class="line">            └── c.scala</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt1.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -315,135 +732,6 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/eda/how_to_send_param2tb.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata1.jpg" alt="从Shell传递变量给verilog的两种方法">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 304 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/eda/how_to_send_param2tb.html">从Shell传递变量给verilog的两种方法</a>
-            
-        </h1>
-        <div class="content">
-            <ul>
-<li><h4 id="通过define宏传递"><a href="#通过define宏传递" class="headerlink" title="通过define宏传递"></a>通过define宏传递</h4><p>  首先在命令行中定义define</p>
-  <figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vcs -sverilog -debug_all +define%s+CASENAME=\<span class="hljs-string">"%s\" </span></span><br><span class="line"><span class="hljs-string">-timescale=1ns/100ps </span></span><br><span class="line"><span class="hljs-string">+notimingcheck </span></span><br><span class="line"><span class="hljs-string">+nospecify +v2k +memcbk </span></span><br><span class="line"><span class="hljs-string">-fsdb </span></span><br><span class="line"><span class="hljs-string">-l com.log </span></span><br><span class="line"><span class="hljs-string">-f top.f</span></span><br></pre></td></tr></table></figure>
-<p>  尤其要注意<code>CASENAME=\&quot;%s\&quot;</code>的转义“\”的应用，比如命令行被包含在python脚本内部，需要两次转义, 而shell可能只要一次</p>
-  <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span><span class="hljs-params">(case,defines=<span class="hljs-string">""</span>)</span>:</span></span><br><span class="line">    os.system(<span class="hljs-string">'vcs -sverilog -debug_all +define%s+CASENAME=\\"%s\\" -timescale=1ns/100ps +notimingcheck +nospecify +v2k +memcbk -fsdb -l com.log -f top.f'</span>%(defines,case))</span><br><span class="line">    os.system(<span class="hljs-string">'./simv -l sim.log +notimingcheck +nospecify +loopreport +memcbk +novopt'</span>)</span><br></pre></td></tr></table></figure>
-<p>  否则verilog文件是无法获取CASENAM的意思</p>
-<p>  然后在verilog中通过宏取出</p>
-  <figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fp_reg = <span class="hljs-built_in">$fopen</span>(&#123;<span class="hljs-string">"./case/"</span>,<span class="hljs-meta">`CASENAME,"/source_dpp.txt"&#125;,"r");</span></span><br></pre></td></tr></table></figure>
-<p>  这种方式比较繁琐，而且转义嵌套难以理解，另外一种方便的方法如下</p>
-</li>
-</ul>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/eda/how_to_send_param2tb.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/20190320_verilog_case_ifelse.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/electric1.jpg" alt="Chisel-Verilog查找表优先级问题讨论">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    11 分钟 读完 (大约 1627 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20190320_verilog_case_ifelse.html">Chisel-Verilog查找表优先级问题讨论</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="Chisel-查找表电路优先级问题"><a href="#Chisel-查找表电路优先级问题" class="headerlink" title="Chisel 查找表电路优先级问题"></a>Chisel 查找表电路优先级问题</h3><h4 id="verilog-ROM的两种写法及区别"><a href="#verilog-ROM的两种写法及区别" class="headerlink" title="verilog ROM的两种写法及区别"></a>verilog ROM的两种写法及区别</h4><figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">    <span class="hljs-keyword">case</span>(addr0)  </span><br><span class="line">        <span class="hljs-number">6'd0</span> :  data0 &lt;= <span class="hljs-number">8'd214</span>;</span><br><span class="line">        <span class="hljs-number">6'd1</span> :  data0 &lt;= <span class="hljs-number">8'd213</span>;</span><br><span class="line">        <span class="hljs-number">6'd2</span> :  data0 &lt;= <span class="hljs-number">8'd212</span>;</span><br><span class="line">        <span class="hljs-number">6'd3</span> :  data0 &lt;= <span class="hljs-number">8'd211</span>;</span><br><span class="line">        <span class="hljs-number">6'd4</span> :  data0 &lt;= <span class="hljs-number">8'd210</span>;</span><br><span class="line">        <span class="hljs-number">6'd5</span> :  data0 &lt;= <span class="hljs-number">8'd209</span>;</span><br><span class="line">        <span class="hljs-number">6'd6</span> :  data0 &lt;= <span class="hljs-number">8'd208</span>;</span><br><span class="line">        <span class="hljs-number">6'd7</span> :  data0 &lt;= <span class="hljs-number">8'd207</span>;   </span><br><span class="line">方法<span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd2</span> )  data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd5</span> )  data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br></pre></td></tr></table></figure>
-<p>方法2是不是带优先级？ 实际上是不带优先级<br>逻辑上if取的条件都是addr1的值，一定是互斥的，综合工具也能自动识别出这种if else<br>它有别于以下这种情况，这种情况下是真实带有优先级的电路，其中<code>another_cond_A,another_cond_B</code><br>是独立的两个输入条件，和addr1的取值可能同时发生，所以不能被综合器当做查找表来对待。<br></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20190320_verilog_case_ifelse.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
         <a href="/chisel/20181205_chisel_learning.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/book4.jpg" alt="Chisel 实例问题汇总">
         </a>
@@ -501,331 +789,6 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/riscv/20181130_idea_scala_config.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/city.jpg" alt="IDEA Scala开发环境配置">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-29T16:00:00.000Z">2018-11-30</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 280 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/riscv/20181130_idea_scala_config.html">IDEA Scala开发环境配置</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h2><ul>
-<li><ol>
-<li>下载社区版本是免费的，scala开发够用，专业版面向web部分是收费的</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>启动idea ，<code>import project</code>  按钮倒入 .sbt 文件 </li>
-</ol>
-</li>
-<li><ol start="3">
-<li><p>setting java JDK, <code>File&gt;&gt;Project Structure&gt;&gt;Project&gt;&gt;Project SDK</code>, 按new ,选择JAVA jdk.</p>
-<p>默认会自动识别，否则手动下载指定xxx/1.8.0-openjdk-amd64)(一般要求1.8版本)</p>
-</li>
-</ol>
-</li>
-</ul>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/riscv/20181130_idea_scala_config.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/riscv/20181128_makefile_acc.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack5.jpg" alt="Makefile 笔记">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-27T16:00:00.000Z">2018-11-28</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 1067 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/riscv/20181128_makefile_acc.html">Makefile 笔记</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><h3 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h3><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量定义的3种方式</p>
-<ul>
-<li><p>1  foo = bar (递归展开式变量)<br> 会在引用$(foo)地方原地替换，直到不能再替换，这种方式称之为递归展开式变量  </p>
- <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo = $(bar)</span><br><span class="line">bar = $(ugh)</span><br><span class="line">ugh = Huh?</span><br><span class="line">all @echo $(foo)</span><br></pre></td></tr></table></figure>
-<p> 以上例子会在@echo $(foo) 地方递归展开<br> 缺点一 ： 是当嵌套定义 <code>foo = $(foo) bar</code> 时讲进入死循环，导致Make失败<br> 其他例子<br> <code>x = $(y)</code><br> <code>y = $(x) $(z)</code><br> 同样会陷入死循环，所以这种定义方法只推荐在不引用变量的时候应用<br> 缺点二 这种定义中如果使用函数，只会在变量被引用时展开，而不是在定义时展开<br> 会使得Make的效率降低，另外有可能会在变量函数的引用会出现非预期结果，特别当变量<br> 定义引用到shell wildcard 函数的情况下，出现不可控的结果  </p>
- <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = foo</span><br><span class="line">y = $(x) bar  //$(x) 不会被立即替换，只有在$(y)被用到的地方才用x的值替换</span><br><span class="line">x = later     //将会覆盖 原来的 x , </span><br><span class="line">等价于</span><br><span class="line">y = later bar</span><br><span class="line">x = later</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/riscv/20181128_makefile_acc.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/riscv/20181127_riscv_link.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/riscv2.jpg" alt="RISCV 编译 Link探究">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-26T16:00:00.000Z">2018-11-27</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    14 分钟 读完 (大约 2131 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/riscv/20181127_riscv_link.html">RISCV 编译 Link探究</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="问题：-如何将代码编译到指定的mem地址？"><a href="#问题：-如何将代码编译到指定的mem地址？" class="headerlink" title="问题： 如何将代码编译到指定的mem地址？"></a>问题： 如何将代码编译到指定的mem地址？</h2><p>在用<code>$RISCV/bin/riscv64-unknown-elf-gcc hello.c</code>时生成的目标文件默认的都是从0x0000_1000地址开始，<br>如何自定义指定到从0x8000_0000地址开始？<br>那么就得熟悉连接器的原理</p>
-<h2 id="默认链接脚本"><a href="#默认链接脚本" class="headerlink" title="默认链接脚本"></a>默认链接脚本</h2><p>gcc在编译和链接的时候，如果不指定链接脚本，会指向默认的链接脚本<br>默认的链接脚本可以用 <code>$RISCV/bin/riscv64-unknown-elf-ld -verbose</code> 来查看</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/riscv/20181127_riscv_link.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/riscv/20181125_gdb_debug.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/hack5.jpg" alt="RISCV GDB debug调试">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-24T16:00:00.000Z">2018-11-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 526 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/riscv/20181125_gdb_debug.html">RISCV GDB debug调试</a>
-            
-        </h1>
-        <div class="content">
-            <p><a href="https://riscv.org/software-tools/risc-v-isa-simulator/" target="_blank" rel="noopener">RISCV-GDB启动步骤</a></p>
-<h3 id="hello-c"><a href="#hello-c" class="headerlink" title="hello.c"></a>hello.c</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">long</span> a = <span class="hljs-number">0x876543210</span> ;</span><br><span class="line">    <span class="hljs-keyword">float</span> pi = <span class="hljs-number">3.1415926</span> ;</span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello %s!\n"</span>,<span class="hljs-string">"World"</span>);</span><br><span class="line">    a = a*pi;</span><br><span class="line">    <span class="hljs-keyword">return</span> a ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="如何生成汇编代码"><a href="#如何生成汇编代码" class="headerlink" title="如何生成汇编代码"></a>如何生成汇编代码</h3><p><code>riscv64-unknown-elf-gcc -S hello.c</code> 只会生成汇编代码hello.s  不会生成.out文件</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">    .file   &quot;hello.c&quot;</span><br><span class="line">    .option nopic</span><br><span class="line">    .text</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC2:</span><br><span class="line">    .string &quot;World&quot;</span><br><span class="line">    .align  3</span><br><span class="line">.LC3:</span><br><span class="line">    .string &quot;Hello %s!\n&quot;</span><br><span class="line">    .text</span><br><span class="line">    .align  1</span><br><span class="line">    .globl  main</span><br><span class="line">    .type   main, @function</span><br><span class="line">main:</span><br><span class="line">    addi    sp,sp,-32</span><br><span class="line">    sd  ra,24(sp)</span><br><span class="line">    sd  s0,16(sp)</span><br><span class="line">    addi    s0,sp,32</span><br><span class="line">    lui a5,%hi(.LC0)</span><br><span class="line">    ld  a5,%lo(.LC0)(a5)</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    lui a5,%hi(.LC1)</span><br><span class="line">    flw fa5,%lo(.LC1)(a5)</span><br><span class="line">    fsw fa5,-28(s0)</span><br><span class="line">    lui a5,%hi(.LC2)</span><br><span class="line">    addi    a1,a5,%lo(.LC2)</span><br><span class="line">    lui a5,%hi(.LC3)</span><br><span class="line">    addi    a0,a5,%lo(.LC3)</span><br><span class="line">    call    printf</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    fcvt.s.l    fa4,a5</span><br><span class="line">    flw fa5,-28(s0)</span><br><span class="line">    fmul.s  fa5,fa4,fa5</span><br><span class="line">    fcvt.l.s a5,fa5,rtz</span><br><span class="line">    sd  a5,-24(s0)</span><br><span class="line">    ld  a5,-24(s0)</span><br><span class="line">    sext.w  a5,a5</span><br><span class="line">    mv  a0,a5</span><br><span class="line">    ld  ra,24(sp)</span><br><span class="line">    ld  s0,16(sp)</span><br><span class="line">    addi    sp,sp,32</span><br><span class="line">    jr  ra</span><br><span class="line">    .size   main, .-main</span><br><span class="line">    .section    .rodata</span><br><span class="line">    .align  3</span><br><span class="line">.LC0:</span><br><span class="line">    .dword  36344967696</span><br><span class="line">    .align  2</span><br><span class="line">.LC1:</span><br><span class="line">    .word   1078530010</span><br><span class="line">    .ident  &quot;GCC: (GNU) 8.1.0&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="如何反汇编-out文件"><a href="#如何反汇编-out文件" class="headerlink" title="如何反汇编.out文件"></a>如何反汇编.out文件</h3><p>首先生成.out文件<code>riscv64-unknown-elf-gcc -o hello.out hello.c</code></p>
-<p>然后反汇编 <code>riscv64-unknown-elf-objdump -d hello.out &gt; hello_disassemble.s</code></p>
-<p>即可查看反汇编代码,搜索main函数如下，当然也包括其他内置函数<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">hello.out:     file format elf64-littleriscv</span><br><span class="line">Disassembly of section .text:</span><br><span class="line">00000000000100b0 &lt;_start&gt;:</span><br><span class="line">   100b0:   0000d197            auipc   gp,0xd</span><br><span class="line">   100b4:   fd818193            addi    gp,gp,-40 # 1d088 &lt;__global_pointer$&gt;</span><br><span class="line">   100b8:   84818513            addi    a0,gp,-1976 # 1c8d0 &lt;_edata&gt;</span><br><span class="line">   100bc:   8d818613            addi    a2,gp,-1832 # 1c960 &lt;_end&gt;           </span><br><span class="line">   .....</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">000000000001038c &lt;printf&gt;:</span><br><span class="line">   1038c:   711d                    addi    sp,sp,-96</span><br><span class="line">   1038e:   f832                    sd  a2,48(sp)</span><br><span class="line">   10390:   fc36                    sd  a3,56(sp)        </span><br><span class="line">   ....</span><br><span class="line">   ..</span><br><span class="line"></span><br><span class="line">0000000000010198 &lt;main&gt;:</span><br><span class="line">   10198:   1101         addi    sp,sp,-32</span><br><span class="line">   1019a:   ec06         sd  ra,24(sp)</span><br><span class="line">   1019c:   e822         sd  s0,16(sp)</span><br><span class="line">   1019e:   1000         addi    s0,sp,32</span><br><span class="line">   101a0:   67e9         lui a5,0x1a</span><br><span class="line">   101a2:   a687b783     ld  a5,-1432(a5) # 19a68 &lt;__clzdi2+0x54&gt;</span><br><span class="line">   101a6:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101aa:   67e9         lui a5,0x1a</span><br><span class="line">   101ac:   a707a787     flw fa5,-1424(a5) # 19a70 &lt;__clzdi2+0x5c&gt;</span><br><span class="line">   101b0:   fef42227     fsw fa5,-28(s0)</span><br><span class="line">   101b4:   67e9         lui a5,0x1a</span><br><span class="line">   101b6:   a5078593     addi    a1,a5,-1456 # 19a50 &lt;__clzdi2+0x3c&gt;</span><br><span class="line">   101ba:   67e9         lui a5,0x1a</span><br><span class="line">   101bc:   a5878513     addi    a0,a5,-1448 # 19a58 &lt;__clzdi2+0x44&gt;</span><br><span class="line">   101c0:   1cc000ef     jal ra,1038c &lt;printf&gt;</span><br><span class="line">   101c4:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101c8:   d027f753     fcvt.s.l    fa4,a5</span><br><span class="line">   101cc:   fe442787     flw fa5,-28(s0)</span><br><span class="line">   101d0:   10f777d3     fmul.s  fa5,fa4,fa5</span><br><span class="line">   101d4:   c02797d3     fcvt.l.s    a5,fa5,rtz</span><br><span class="line">   101d8:   fef43423     sd  a5,-24(s0)</span><br><span class="line">   101dc:   fe843783     ld  a5,-24(s0)</span><br><span class="line">   101e0:   2781         sext.w  a5,a5</span><br><span class="line">   101e2:   853e         mv  a0,a5</span><br><span class="line">   101e4:   60e2         ld  ra,24(sp)</span><br><span class="line">   101e6:   6442         ld  s0,16(sp)</span><br><span class="line">   101e8:   6105         addi    sp,sp,32</span><br><span class="line">   101ea:   8082         ret         </span><br><span class="line">   ....</span><br><span class="line">   ...</span><br></pre></td></tr></table></figure></p>
-<h3 id="gdb-查看CPU寄存器"><a href="#gdb-查看CPU寄存器" class="headerlink" title="gdb 查看CPU寄存器"></a>gdb 查看CPU寄存器</h3><p>-print $x0<br>-p $x0<br>-p $pc<br>-info reg<br>-display $x0     ;每跑一步都会显示寄存器<br>-ni              ;next inst</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/sicp/ipc_msg_communication.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/electric1.jpg" alt="IPC进程通信、消息队列">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-19T16:00:00.000Z">2018-11-20</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/sicp/">sicp</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 455 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/sicp/ipc_msg_communication.html">IPC进程通信、消息队列</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="计算机进程通信原理、IPC、消息队列，"><a href="#计算机进程通信原理、IPC、消息队列，" class="headerlink" title="计算机进程通信原理、IPC、消息队列，"></a>计算机进程通信原理、IPC、消息队列，</h3><p>常见的方法</p>
-<ul>
-<li>共享内存模式</li>
-<li>消息传递模式</li>
-<li>共享文件模式</li>
-</ul>
-<p>主要使用的是前两种方法</p>
-<h3 id="多处理器之间通信"><a href="#多处理器之间通信" class="headerlink" title="多处理器之间通信"></a>多处理器之间通信</h3><p>处理器之间不能通过消息传递模式通信，只能共享内存<br>处理器本身是异步执行的，消息队列没办法实现（接受消息和消耗消息有可能会冲突）<br>而共享内存的方法也有可能会导致冲突，可以为不同处理器划分不同地址空间来避免冲突</p>
-<p><img src="http://source.jijing.site/ipc_msg/share_mem.png" alt="01"></p>
-<h3 id="单处理器进程通信"><a href="#单处理器进程通信" class="headerlink" title="单处理器进程通信"></a>单处理器进程通信</h3><p>进程之间的通信最常见最安全的方法就是消息队列。<br>每个进程会维护一个消息队列（常见的是FIFO队列，也有带优先级的队列本文不做讨论）  </p>
-<p><img src="http://source.jijing.site/ipc_msg/msg.svg" alt="02">  </p>
-<p>进程A给进程B发消息，首先获取进程B消息队列（链表）的地址，将消息插入到链表后面。<br>当进程B执行是会去取消息队列最前面的消息然后执行。<br>由于进程A进程B是在同一处理器上占不同的时间片（跟操作系统进程的调度算法有关），<br>同一时刻消息队列不可能即recive 又 consume，所以不存在队列读写冲突的问题。  </p>
-<p>消息可以是简单的数据编码标志，也可以携带数据（数据起始地址以及长度），或者其他数据结构体格式  </p>
-<p><img src="http://source.jijing.site/ipc_msg/msg_info.png" alt="03"></p>
-<p>scala 的Actor的消息传递也是用此方式实现。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -847,6 +810,8 @@
             <li><a class="pagination-link is-current" href="/page/4/">4</a></li>
             
             <li><a class="pagination-link has-text-black-ter" href="/page/5/">5</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/6/">6</a></li>
             
         </ul>
     </nav>
@@ -921,7 +886,7 @@
                 <span class="level-item">scala</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/sicp/">
@@ -930,6 +895,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/spinal/">
+            <span class="level-start">
+                <span class="level-item">spinal</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
             </span>
         </a></li>
             </ul>
@@ -947,6 +920,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/scala/20200221_maven_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Maven Windows 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-19T16:00:00.000Z">2020-02-20</time></div>
+                    <a href="/scala/20200221_maven_windows.html" class="has-link-black-ter is-size-6">Maven Windows 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1007,37 +999,18 @@
         
         <article class="media">
             
-            <a href="/scala/20191121_scala3_Tasty.html" class="media-left">
+            <a href="/spinal/spinal7.html" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/boxing1.jpg" alt="Scala3-Macro系统Tasty进展">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/dirty2.jpg" alt="SpinalHDL(七):逢山开路-寄存器接口">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T16:00:00.000Z">2019-11-21</time></div>
-                    <a href="/scala/20191121_scala3_Tasty.html" class="has-link-black-ter is-size-6">Scala3-Macro系统Tasty进展</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-04T16:00:00.000Z">2019-12-05</time></div>
+                    <a href="/spinal/spinal7.html" class="has-link-black-ter is-size-6">SpinalHDL(七):逢山开路-寄存器接口</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/thought/why-simple-so-complex.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time></div>
-                    <a href="/thought/why-simple-so-complex.html" class="has-link-black-ter is-size-6">为什么&#34;简单&#34;如此复杂</a>
-                    <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
                     </p>
                 </div>
             </div>
@@ -1060,6 +1033,17 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2020/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2020</span>
@@ -1071,12 +1055,23 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2019/11/">
                 <span class="level-start">
                     <span class="level-item">十一月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1087,7 +1082,7 @@
                     <span class="level-item">十月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1219,6 +1214,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/SpinalHDL-Scala/">
+                        <span class="tag">SpinalHDL  Scala</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/firrtl/">
                         <span class="tag">firrtl</span>
                         <span class="tag is-grey">3</span>
@@ -1242,7 +1244,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/scala/">
                         <span class="tag">scala</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1263,7 +1265,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/函数式编程/">
                         <span class="tag">函数式编程</span>
-                        <span class="tag is-grey">15</span>
+                        <span class="tag is-grey">16</span>
                     </a>
                 </div>
                 
@@ -1299,6 +1301,71 @@
         </div>
     </div>
 </div>
+            
+        
+    
+        
+            
+                
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            推荐链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="http://www.sharetechnote.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">通信笔记</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.sharetechnote.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.lihaoyi.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Scala大神Lihaoyi</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.lihaoyi.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://bellard.org/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">FabriceBellard你懂得</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bellard.org</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kalasearch.cn" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">卡拉搜索</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kalasearch.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
             
         
     
