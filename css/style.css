@@ -372,6 +372,16 @@ img.thumbnail {
 .content h5,
 .content h6 {
   font-weight: 400;
+  color: #222;
+/* font-family: "楷体" */
+}
+.content h1:before,
+.content h2:before,
+.content h3:before,
+.content h4:before,
+.content h5:before,
+.content h6:before {
+  content: "·";
 }
 .content h1 {
   font-size: 1.4em;
