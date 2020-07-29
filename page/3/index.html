@@ -141,6 +141,65 @@
                 <div class="column is-9 has-order-2 column-main">
     <div class="card">
     
+    <div class="card-image">
+        <a href="/riscv/20190428_function_call.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1035 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/riscv/20190428_function_call.html">C函数调用和汇编代码分析</a>
+            
+        </h1>
+        <div class="content">
+            <h4 id="risc-v-C函数调用反汇编示例"><a href="#risc-v-C函数调用反汇编示例" class="headerlink" title="risc-v C函数调用反汇编示例"></a>risc-v C函数调用反汇编示例</h4><p>首先有一段C程序，其中main函数调用子函数add<br><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//main.c </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> a + b ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/riscv/20190428_function_call.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -652,115 +711,6 @@
 <figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">render_drafts: true</span><br></pre></td></tr></table></figure>
 <p>或者，如下方式启动server：<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">$</span><span class="hljs-bash"> hexo server --drafts</span></span><br></pre></td></tr></table></figure></p>
 <p>下面这条命令可以把草稿变成文章，或者页面：<br><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">$</span><span class="hljs-bash"> hexo publish [layout] &lt;filename&gt;</span></span><br></pre></td></tr></table></figure></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-11T12:48:53.000Z">2019-04-11</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 640 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/top-index.html">索引置顶</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="SpinalHDL开发"><a href="#SpinalHDL开发" class="headerlink" title="SpinalHDL开发"></a>SpinalHDL开发</h4><ul>
-<li>2020-07-27: <a href="/spinal/spinal8.html">Spinal(九):不变应万变-Mem接口适配</a> </li>
-<li>2020-05-16: <a href="/spinal/spinal8.html">Spinal(八):开发仿真测试一条龙</a> </li>
-<li>2020-01-25: <a href="/spinal/spinal-single-object.html">Scala单例模式的几个有趣的应用</a> </li>
-<li>2020-01-01: <a href="/spinal/spinal-bootcamp.html">Spinal-BootCamp</a>   </li>
-<li>2020-12-05: <a href="/spinal/spinal7.html">Spinal(七):逢山开路-寄存器接口</a> </li>
-<li>2019-11-14: <a href="/spinal/spinal6.html">Spinal(六):定点化-饱和截位</a> </li>
-<li>2019-11-04: <a href="/spinal/spinal5.html">Spinal(五):时钟和时钟域</a> </li>
-<li>2019-10-31: <a href="/spinal/spinal4.html">Spinal(四):一窥总线四两拨千斤</a> </li>
-<li>2019-10-22: <a href="/spinal/spinal3.html">Spinal(三):一行代码生成SOC</a> </li>
-<li>2019-10-20: <a href="/spinal/spinal1.html">Spinal(一):此CHISEL非彼Chisel</a> </li>
-<li>2019-10-28: <a href="/spinalhdl/spinalhdl-ppt.html">SpinalHDL参数化设计</a> </li>
-</ul>
-<h4 id="Lambda演算python实现"><a href="#Lambda演算python实现" class="headerlink" title="Lambda演算python实现"></a>Lambda演算python实现</h4><ul>
-<li>2019-04-19: <a href="/sicp/lambda_02_number.html">lambda演算python实现.(二)之数字和运算</a></li>
-<li>2019-04-19: <a href="/sicp/lambda_03_bool_branch.html">lambda演算python实现.(三)之Bool值和逻辑运算</a></li>
-</ul>
-<h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h4><ul>
-<li>2019-10-25: <a href="/sicp/20191025_the-root-of-lisp.html">Lisp之根</a></li>
-<li>2019-04-29: <a href="/sicp/20190429_cps.html">CPS变化/尾调用/尾递归</a></li>
-<li>2019-04-21: <a href="/sicp/whyfp.html">为什么要FP</a></li>
-<li>2019-04-11: <a href="/sicp/python-fp.html">Python lambda Y组合子(Y算子)实现</a></li>
-</ul>
-<h4 id="Scala-笔记"><a href="#Scala-笔记" class="headerlink" title="Scala 笔记"></a>Scala 笔记</h4><ul>
-<li>2019-03-08: <a href="/scala/20190308_scala_main.html">SCALA 程序初探.一(main函数)</a></li>
-<li>2019-03-08: <a href="/scala/20190308_scala_package.html">SCALA 程序初探.二(package组织方式)</a></li>
-<li>2019-03-08: <a href="/scala/20190308_scala_sbt1.html">SCALA 程序初探.三(sbt组织scala代码1)</a></li>
-<li>2019-03-08: <a href="/scala/20190308_scala_sbt2.html">SCALA 程序初探.四(sbt组织scala代码2)</a></li>
-<li>2019-11-21: <a href="/scala/20191121_scala3_Tasty.html">Scala3 Macro系统Tasty进展</a></li>
-</ul>
-<h4 id="RISCV-开发调试"><a href="#RISCV-开发调试" class="headerlink" title="RISCV 开发调试"></a>RISCV 开发调试</h4><ul>
-<li>2018-11-28: <a href="/riscv/20181130_idea_scala_config.html">IDEA scala chisel环境配置</a></li>
-<li>2018-11-28: <a href="/riscv/20181128_makefile_acc.html">Makefile使用笔记</a></li>
-<li>2018-11-27: <a href="/riscv/20181127_riscv_link.html">RISC-V 编译链接脚本</a></li>
-<li>2018-11-20: <a href="/riscv/20181120_riscv_c_dev_setp.html">RISC-V C代码编译调试笔记</a></li>
-<li>2018-11-16: <a href="/riscv/20181116_RISCV_inst_test.html">RISC-V 汇编指令调试、立即数浅尝</a></li>
-<li>2018-11-15: <a href="/riscv/20181221_riscv_verctor.html">RISCV-Vector介绍</a></li>
-<li>2019-04-28: <a href="/riscv/20190428_function_call.html">C函数调用汇编代码分析</a></li>
-</ul>
-<h4 id="Chisel-笔记"><a href="#Chisel-笔记" class="headerlink" title="Chisel 笔记"></a>Chisel 笔记</h4><ul>
-<li>2018-12-05: <a href="/chisel/20181205_chisel_learning.html">Chisel 示例问题汇总</a></li>
-<li>2019-03-21: <a href="/chisel/20190321_chisel_comb_reg.html">chisel 组合逻辑，时序逻辑写法</a></li>
-<li>2019-04-01: <a href="/chisel/20190401_chisel_keep_name.html">chisel Keep变量名</a></li>
-<li>2019-04-11: <a href="/chisel/20190411_chisel_version.html">chisel 版本问题</a></li>
-<li>2019-03-20: <a href="/chisel/20190320_verilog_case_ifelse.html">Chisel-Verilog 查找表优先级问题讨论</a></li>
-</ul>
-<h4 id="EDA工具"><a href="#EDA工具" class="headerlink" title="EDA工具"></a>EDA工具</h4><ul>
-<li><a href="/eda/how_to_send_param2tb">如何从shell中传递变量给verilog文件</a></li>
-<li><a href="/eda/eda_option">EDA仿真环境Makefile配置(vcs,verdi)</a></li>
-<li><a href="/eda/timing_analysis">时序分析回顾</a></li>
-<li><a href="/chisel/20190322_chisel_module_confilict">Moudle名冲突解决办法</a></li>
-<li><a href="/eda/verilog_simu_0delay.html">仿真不打拍</a></li>
-</ul>
-<h4 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h4><ul>
-<li><a href="/tech_acc/rv_verctor">AGC调整</a></li>
-</ul>
-<h4 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h4><ul>
-<li><a href="/thought/why-simple-so-complex.html">为什么“简单”如此复杂</a>         </li>
-</ul>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
-<li><a href="/others/terminal_FAQ.html">Terminal Shell 常见配置问题</a></li>
-<li><a href="/others/RISCV_notes_todo.html">RISCV ISA todo list</a></li>
-<li><a href="/others/markdown_guid.html">Markdown 使用手册</a></li>
-<li><a href="/others/crystals-pll-vco.html">晶振,PLL,VCO初识</a></li>
-<li><a href="/others/lsb_hsb.html">计算机大小端详解</a></li>
-<li><a href="/sicp/ipc_msg_communication.html">进程通信，消息队列</a>         </li>
-<li><a href="/others/revealjs2pdf.html">revealjs导出PDF</a></li>
-</ul>
 
         </div>
         

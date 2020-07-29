@@ -18,7 +18,7 @@
 <meta property="og:description" content="如何生成一个Soc系统在Spinal生成一个Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的SOC系统，其中一个RISCV的处理器VexRiscv, 和AXI总线路由以及APB桥。pinsec-soc 没了，就这么屌 trump-no-more 如果需要定制，那么继续往">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://source.jijing.site/thumbnails/busy3.jpg">
-<meta property="og:updated_time" content="2020-07-29T15:49:11.574Z">
+<meta property="og:updated_time" content="2020-07-29T15:58:59.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpinalHDL(三) 一行代码生成Soc系统">
 <meta name="twitter:description" content="如何生成一个Soc系统在Spinal生成一个Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的SOC系统，其中一个RISCV的处理器VexRiscv, 和AXI总线路由以及APB桥。pinsec-soc 没了，就这么屌 trump-no-more 如果需要定制，那么继续往">
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 484 个字)
+                    3 分钟 读完 (大约 485 个字)
                 </span>
                 
                 
@@ -192,6 +192,7 @@
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myCpuConfig = <span class="hljs-type">RiscvCoreConfig</span>(</span><br><span class="line">        pcWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        addrWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        startAddress = <span class="hljs-number">0x00000000</span>,</span><br><span class="line">        regFileReadyKind = sync,</span><br><span class="line">        branchPrediction = dynamic,</span><br><span class="line">        bypassExecute0 = <span class="hljs-literal">true</span>,</span><br><span class="line">        bypassExecute1 = <span class="hljs-literal">true</span>,</span><br><span class="line">        bypassWriteBack = <span class="hljs-literal">true</span>,</span><br><span class="line">        bypassWriteBackBuffer = <span class="hljs-literal">true</span>,</span><br><span class="line">        collapseBubble = <span class="hljs-literal">false</span>,</span><br><span class="line">        fastFetchCmdPcCalculation = <span class="hljs-literal">true</span>,</span><br><span class="line">        dynamicBranchPredictorCacheSizeLog2 = <span class="hljs-number">7</span></span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
 <p>插件式扩展CPU, 除了已有的扩展，你可以添加自己的扩展, 比如浮点，矢量处理</p>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">MulExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">DivExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">BarrelShifterFullExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">MyFloatExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">MyVectorExtension</span>)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>iCache 配置</p>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myiCacheConfig = <span class="hljs-type">InstructionCacheConfig</span>(</span><br><span class="line">        cacheSize    = <span class="hljs-number">4096</span>,</span><br><span class="line">        bytePerLine  = <span class="hljs-number">32</span>,</span><br><span class="line">        wayCount     = <span class="hljs-number">1</span>,  </span><br><span class="line">        wrappedMemAccess = <span class="hljs-literal">true</span>,</span><br><span class="line">        addressWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        cpuDataWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        memDataWidth = <span class="hljs-number">32</span></span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
 <p>更新PinsecSOC配置</p>
@@ -229,16 +230,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/sicp/20191025_the-root-of-lisp.html">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/spinal/spinal4.html">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Lisp之根</span>
+                <span class="level-item">SpinalHDL(四) 一窥总线四两拨千斤</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/spinal/spinal4.html">
-                <span class="level-item">SpinalHDL(四) 一窥总线四两拨千斤</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/spinal/spinal1.html">
+                <span class="level-item">SpinalHDL(一):此CHISEL非彼Chisel</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>

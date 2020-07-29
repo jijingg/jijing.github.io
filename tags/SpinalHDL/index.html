@@ -190,11 +190,11 @@
 <p><strong>SpinalHDL就是这样的汉子，一次又一次的轻视它，但它又不时的给你惊喜。</strong></p>
 <ul>
 <li>不同于iotest的peak poke， 它的后台是verilator, verilator非常强大，性能比起商业软件VCS、NC毫不逊色。</li>
-<li>spinal.sim 通过包装verilator提供的VPI，能够很方便灵活，实时的跟dut交互通信, 加上Scala本身语言的灵活性，它能做的不比UVM少。<blockquote>
+<li>spinal.sim 通过包装verilator提供的VPI，能够很方便灵活，实时的跟dut交互通信, 加上Scala本身语言的灵活性，它能做的不比UVM少。</li>
+</ul>
+<blockquote>
 <p>今年chisel貌似后知后觉的回过神了，摒弃iotest，重新设计iotester2, iotester2和spinal.sim的思路很类似了, 后台是verilator, 有兴趣的可以自己试试</p>
 </blockquote>
-</li>
-</ul>
 <p>接下来我主要借助通信基带的两个模块来介绍一些如何使用SpinalHDL进行仿真测试，以及如何构建组织管理回归你的测试CASE。</p>
 <p>对于spinal.sim的基础操作和使用请浏览官方文档Spinal-sim，这里不再赘述。<br></p>
         </div>

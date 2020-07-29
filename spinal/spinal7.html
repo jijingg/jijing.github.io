@@ -18,7 +18,7 @@
 <meta property="og:description" content="目前大量存在手写寄存器接口的情况，对于几十个甚至几百个寄存器的IP，即便你有体力，也不能保证不犯错。 存在的问题 纯体力活,工作量繁重 容易引入错误，增加验证工作量 文档和代码不同步，增加软件调试工作量  在这类问题上耗费测试debug时间非常不值当，只要你手写寄存器必然会遇到这了问题，软件调了好半天，最后发现文档跟代码不一致，人是懒惰的，谁能完全保证代码更文档能同步更新，也肯定会犯错的，所以只能">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://source.jijing.site/thumbnails/dirty2.jpg">
-<meta property="og:updated_time" content="2020-07-29T15:49:11.584Z">
+<meta property="og:updated_time" content="2020-07-29T15:59:48.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpinalHDL(七):逢山开路-寄存器接口">
 <meta name="twitter:description" content="目前大量存在手写寄存器接口的情况，对于几十个甚至几百个寄存器的IP，即便你有体力，也不能保证不犯错。 存在的问题 纯体力活,工作量繁重 容易引入错误，增加验证工作量 文档和代码不同步，增加软件调试工作量  在这类问题上耗费测试debug时间非常不值当，只要你手写寄存器必然会遇到这了问题，软件调了好半天，最后发现文档跟代码不一致，人是懒惰的，谁能完全保证代码更文档能同步更新，也肯定会犯错的，所以只能">
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    10 分钟 读完 (大约 1546 个字)
+                    10 分钟 读完 (大约 1547 个字)
                 </span>
                 
                 
@@ -193,6 +193,7 @@
 <p>一张是某软件产品在各个阶段bug的成本<br><img src="https://pic3.zhimg.com/80/v2-079c46f56cc4b3f47ddea0a25b0ee9ae_hd.png" alt="71"></p>
 <p>另外一张是IC开发各个阶段bug的成本<br><img src="https://pic3.zhimg.com/80/v2-bdd64827d05a463690a4155bcf96f879_hd.png" alt="72"></p>
 <p>所以尽可能的在前期解决问题，第一次把事情做对，就是节约成本。</p>
+<a id="more"></a>
 <h3 id="如何优雅的生成寄存器接口"><a href="#如何优雅的生成寄存器接口" class="headerlink" title="如何优雅的生成寄存器接口"></a>如何优雅的生成寄存器接口</h3><ul>
 <li>唯一源头, 代码文档严格保存一致</li>
 <li>错误检查能力, 输出的代码一定是正确无误的。</li>

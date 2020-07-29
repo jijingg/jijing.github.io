@@ -142,6 +142,65 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/thought/why-simple-so-complex.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/keybord4.jpg" alt="为什么&#34;简单&#34;如此复杂">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-11-04T16:00:00.000Z">2019-11-05</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    25 分钟 读完 (大约 3775 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/thought/why-simple-so-complex.html">为什么&#34;简单&#34;如此复杂</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="软件工程中”简单”的复杂性"><a href="#软件工程中”简单”的复杂性" class="headerlink" title="软件工程中”简单”的复杂性"></a>软件工程中”简单”的复杂性</h2><p>简单可能比复杂更难：你必须努力使思维清晰才能简化它。但最终这一切都是值得的，因为它能使你翻越高山。<br>—— Steve Jobs</p>
+<p>我相信有两种设计软件的方式：一种是使软件足够简单而明显没有缺陷；另一种是使它如此的复杂，以至于没有明显的（可被轻易发现的）缺陷。</p>
+<p>—— Tony<br>Hoare（译者注：英国计算机科学家、图灵奖得主、快速排序算法的发明人、哲学家就餐问题的提出者……）</p>
+<p>简单，软件工程的圣杯。业界的前辈一直在驱策我们去追求它。</p>
+<p>（软件设计）是一门手艺……相对”复杂”而言，它赋予”简单”更高的价值<br>—— Barbara Liskov（译者注：2008年图灵奖得主）<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/thought/why-simple-so-complex.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/spinal/spinal5.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/brain1.jpg" alt="SpinalHDL(五):时钟和时钟域">
         </a>
@@ -161,7 +220,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1384 个字)
+                    9 分钟 读完 (大约 1385 个字)
                 </span>
                 
                 
@@ -180,61 +239,22 @@
 </ol>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Top</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> a = in <span class="hljs-type">Bits</span>(<span class="hljs-number">8</span> bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> b = <span class="hljs-type">RegNext</span>(a) init <span class="hljs-number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>默认会得到一个clk,reset时钟复位信号，并且SpinalHDL复位默认是上升沿</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">module Top (</span><br><span class="line">      input  [7:0] a,</span><br><span class="line">      input   clk,</span><br><span class="line">      input   reset);</span><br><span class="line">  reg [7:0] b;</span><br><span class="line">  always @ (posedge clk or posedge reset) begin</span><br><span class="line">    if (reset) begin</span><br><span class="line">      b &lt;= (8&apos;b00000000);</span><br><span class="line">    end else begin</span><br><span class="line">      b &lt;= a;</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">module</span> Top (</span><br><span class="line">      <span class="hljs-keyword">input</span>  [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] a,</span><br><span class="line">      <span class="hljs-keyword">input</span>   clk,</span><br><span class="line">      <span class="hljs-keyword">input</span>   reset);</span><br><span class="line">  <span class="hljs-keyword">reg</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] b;</span><br><span class="line">  <span class="hljs-keyword">always</span> @ (<span class="hljs-keyword">posedge</span> clk <span class="hljs-keyword">or</span> <span class="hljs-keyword">posedge</span> reset) <span class="hljs-keyword">begin</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (reset) <span class="hljs-keyword">begin</span></span><br><span class="line">      b &lt;= (<span class="hljs-number">8'b00000000</span>);</span><br><span class="line">    <span class="hljs-keyword">end</span> <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span></span><br><span class="line">      b &lt;= a;</span><br><span class="line">    <span class="hljs-keyword">end</span></span><br><span class="line">  <span class="hljs-keyword">end</span></span><br><span class="line"><span class="hljs-keyword">endmodule</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>自定义时钟源</li>
 </ol>
 <p>如果我们不喜欢默认是时钟复位名称，可以自己修改时钟信号名，通过ClockDomain来创建一个时钟域（其实spinal的Component里隐含了一个叫<br>clockDomain变量的默认domain）</p>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myclk,myrst = in <span class="hljs-type">Bool</span>()</span><br><span class="line"><span class="hljs-keyword">val</span> myClockDomain = <span class="hljs-type">ClockDomain</span>(myclk,myrst)</span><br><span class="line"><span class="hljs-keyword">new</span> <span class="hljs-type">ClockingArea</span>(myClockDomain)&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> reg0 = <span class="hljs-type">RegNext</span>(a) init <span class="hljs-number">0</span></span><br><span class="line">  b := reg0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果让寄存器生效，需要用clockingArea（myClockDomain）把寄存器包裹起来<br>便可得到如下verilog代码</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">module Top (</span><br><span class="line">      input   myclk,</span><br><span class="line">      input   myrst,</span><br><span class="line">      input  [7:0] a,</span><br><span class="line">      output [7:0] b);</span><br><span class="line">  reg [7:0] _zz_1_;</span><br><span class="line">  assign b = _zz_1_;</span><br><span class="line">  always @ (posedge myclk or posedge myrst) begin</span><br><span class="line">    if (myrst) begin</span><br><span class="line">      _zz_1_ &lt;= (8&apos;b00000000);</span><br><span class="line">    end else begin</span><br><span class="line">      _zz_1_ &lt;= a;</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
-<p>可以看到复位信号是posedege，如改为negedge,<br>只要在创建时钟域时按如下修改覆盖config即可</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myClockDomain = <span class="hljs-type">ClockDomain</span>(myclk,myrst,</span><br><span class="line">                                config = <span class="hljs-type">ClockDomainConfig</span>(</span><br><span class="line">                                       clockEdge        = <span class="hljs-type">RISING</span>,</span><br><span class="line">                                       resetKind        = <span class="hljs-type">ASYNC</span>,</span><br><span class="line">                                       resetActiveLevel = <span class="hljs-type">LOW</span></span><br><span class="line">))</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>覆盖子模块默认时钟</li>
-</ol>
-<p>每次用clockArea<br>来包裹代码块，非常啰嗦，我能不能在直接修改该模块的默认时钟域，目前呢需要在该模块的上一层用myclockdomain包裹模块例化即可</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Sub</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> a = in <span class="hljs-type">Bits</span>(<span class="hljs-number">8</span> bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> b = out(<span class="hljs-type">RegNext</span>(a) init <span class="hljs-number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Top</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">   <span class="hljs-keyword">val</span> myclk,myrst = in <span class="hljs-type">Bool</span>()</span><br><span class="line">   <span class="hljs-keyword">val</span> mycd = <span class="hljs-type">ClockDomain</span>(myclk,myrst) </span><br><span class="line">   <span class="hljs-keyword">val</span> u_sub0 = mycd(<span class="hljs-keyword">new</span> <span class="hljs-type">Sub</span>) <span class="hljs-comment">//mycd时钟包裹Sub模块的例化</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>生成的verilog可以看到，子模块的时钟复位信号都被修改过来了</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">module Sub (</span><br><span class="line">      input  [7:0] a,</span><br><span class="line">      output reg [7:0] b,</span><br><span class="line">      input   myclk,</span><br><span class="line">      input   myrst);</span><br><span class="line">  always @ (posedge myclk or negedge myrst) begin</span><br><span class="line">    if (!myrst) begin</span><br><span class="line">      b &lt;= (8&apos;b00000000);</span><br><span class="line">    end else begin</span><br><span class="line">      b &lt;= a;</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">endmodule</span><br><span class="line">module Top (</span><br><span class="line">...</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
-<h3 id="ClockDomain详解"><a href="#ClockDomain详解" class="headerlink" title="ClockDomain详解"></a>ClockDomain详解</h3><p>SpinalHDL的ClockDomain概念为一组时钟复位方案，并不单指一个时钟信号<br>完整的时钟域配置分两块</p>
-<ul>
-<li>ClockDomain</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">ClockDomain</span>(</span><br><span class="line">  clock: <span class="hljs-type">Bool</span></span><br><span class="line">  [,reset: <span class="hljs-type">Bool</span>]</span><br><span class="line">  [,softReset: <span class="hljs-type">Bool</span>]</span><br><span class="line">  [,clockEnable: <span class="hljs-type">Bool</span>]</span><br><span class="line">  [,frequency: <span class="hljs-type">IClockDomainFrequency</span>]</span><br><span class="line">  [,config: <span class="hljs-type">ClockDomainConfig</span>]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>ClockDomainConfig</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClockDomainConfig</span>(<span class="hljs-params">clockEdge: <span class="hljs-type">EdgeKind</span> = <span class="hljs-type">RISING</span>,</span></span></span><br><span class="line"><span class="hljs-class"><span class="hljs-params">                             resetKind: <span class="hljs-type">ResetKind</span> = <span class="hljs-type">ASYNC</span>,</span></span></span><br><span class="line"><span class="hljs-class"><span class="hljs-params">                             resetActiveLevel: <span class="hljs-type">Polarity</span> = <span class="hljs-type">HIGH</span>,</span></span></span><br><span class="line"><span class="hljs-class"><span class="hljs-params">                             softResetActiveLevel: <span class="hljs-type">Polarity</span> = <span class="hljs-type">HIGH</span>,</span></span></span><br><span class="line"><span class="hljs-class"><span class="hljs-params">                             clockEnableActiveLevel: <span class="hljs-type">Polarity</span> = <span class="hljs-type">HIGH</span></span>)</span></span><br></pre></td></tr></table></figure>
-<p>创建clockDomain有4种方法</p>
-<ul>
-<li>默认clockDomain<br>该时钟域又SpinalHDL默认创建，前面我们将如何替换默认时钟以外，我们还可以直接在SpinalConfig里面修改默认时钟域的配置</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">SpinalConfig</span>(mode = <span class="hljs-type">Verilog</span>,</span><br><span class="line">  defaultConfigForClockDomains = <span class="hljs-type">ClockDomainConfig</span>(resetKind = <span class="hljs-type">ASYNC</span>,</span><br><span class="line">    clockEdge = <span class="hljs-type">RISING</span>,</span><br><span class="line">    resetActiveLevel = <span class="hljs-type">LOW</span>),</span><br><span class="line">  targetDirectory=<span class="hljs-string">"tmp/"</span>)</span><br><span class="line">.generate(<span class="hljs-keyword">new</span> <span class="hljs-type">MyTop</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>从端口信号创建 前面已经提到过这种方法，很简单</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myclk,myrst = in <span class="hljs-type">Bool</span>()</span><br><span class="line"><span class="hljs-keyword">val</span> mycd = <span class="hljs-type">ClockDomain</span>(myclk,myrst)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>external函数<br>有时候我们在例化一个异步FIFO的时候可能一个时钟需要从顶层接进来，如果hierarchy很深，一级一级连进来相当麻烦，Spinal提供了一个external<br>函数，可以非常方便的创建一个时钟，并且接到顶层</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myClockDomain = <span class="hljs-type">ClockDomain</span>.external(<span class="hljs-string">"myClock"</span>)</span><br></pre></td></tr></table></figure>
-<p>得到的Verilog：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">module ExternalClockExample (</span><br><span class="line">    ....</span><br><span class="line">    input   myClockName_clk,</span><br><span class="line">    input   myClockName_reset);</span><br><span class="line">    ....</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
-<ul>
-<li>internal函数<br>一般SOC系统的时钟往往来自于一个时钟管理单元，由PLL产生，那么这时候，我们需要internal函数从内部创建clockDomain</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InternalClockWithPllExample</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> clk100M = in <span class="hljs-type">Bool</span></span><br><span class="line">    <span class="hljs-keyword">val</span> aReset  = in <span class="hljs-type">Bool</span></span><br><span class="line">    <span class="hljs-keyword">val</span> result  = out <span class="hljs-type">UInt</span> (<span class="hljs-number">4</span> bits)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="hljs-comment">// myClockDomain.clock will be named myClockName_clk</span></span><br><span class="line">  <span class="hljs-comment">// myClockDomain.reset will be named myClockName_reset</span></span><br><span class="line">  <span class="hljs-keyword">val</span> myClockDomain = <span class="hljs-type">ClockDomain</span>.internal(<span class="hljs-string">"myClockName"</span>)</span><br><span class="line">  <span class="hljs-comment">// Instanciate a PLL (probably a BlackBox)</span></span><br><span class="line">  <span class="hljs-keyword">val</span> pll = <span class="hljs-keyword">new</span> <span class="hljs-type">Pll</span>()</span><br><span class="line">  pll.io.clkIn := io.clk100M</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// Assign myClockDomain signals with something</span></span><br><span class="line">  myClockDomain.clock := pll.io.clockOut</span><br><span class="line">  myClockDomain.reset := io.aReset || !pll.io.</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// Do whatever you want with myClockDomain</span></span><br><span class="line">  <span class="hljs-keyword">val</span> myArea = <span class="hljs-keyword">new</span> <span class="hljs-type">ClockingArea</span>(myClockDomain)&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> myReg = <span class="hljs-type">Reg</span>(<span class="hljs-type">UInt</span>(<span class="hljs-number">4</span> bits)) init(<span class="hljs-number">7</span>)</span><br><span class="line">    myReg := myReg + <span class="hljs-number">1</span></span><br><span class="line"></span><br><span class="line">    io.result := myReg</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="时钟门控处理"><a href="#时钟门控处理" class="headerlink" title="时钟门控处理"></a>时钟门控处理</h3><p>目前Spinal在处理门控的时候还是需要手动例化，</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Top</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line">   <span class="hljs-keyword">val</span> u_cgCell0 = <span class="hljs-keyword">new</span> <span class="hljs-type">CG</span></span><br><span class="line">   <span class="hljs-keyword">val</span> u_cgCell1 = <span class="hljs-keyword">new</span> <span class="hljs-type">CG</span></span><br><span class="line">...</span><br><span class="line">   <span class="hljs-keyword">val</span> cgd0 = <span class="hljs-type">ClockDomain</span>(u_cgCell0.<span class="hljs-type">ECK</span>, clockDomain.readResetWire)</span><br><span class="line">   <span class="hljs-keyword">val</span> cgd1 = <span class="hljs-type">ClockDomain</span>(u_cgCell1.<span class="hljs-type">ECK</span>, clockDomain.readResetWire)</span><br></pre></td></tr></table></figure>
-<p>手动例化两个ClockDomain会存在一个问题，会将它们判定为两个异步时钟。目前Spinal提供一个函数setSyncWith，讲两个clockDomain的Family全部<br>设置为同步，这样在异步检查的时候就不会报错<br><img src="https://pic4.zhimg.com/80/v2-dcd0bbec9708d28c1365a78d0908d749_hd.png" alt="51"></p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   cgd0.setSyncWith(cgd1)</span><br><span class="line">   <span class="hljs-keyword">val</span> u_sub0 = cgd0(<span class="hljs-keyword">new</span> <span class="hljs-type">MySub</span>)</span><br><span class="line">   <span class="hljs-keyword">val</span> u_sub1 = cgd1(<span class="hljs-keyword">new</span> <span class="hljs-type">MySub</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="时钟工厂函数"><a href="#时钟工厂函数" class="headerlink" title="时钟工厂函数"></a>时钟工厂函数</h3><p>除了时钟门控，还有时钟分频也会涉及到这类问题.<br>对于同源同相幂次分频我们也会认为是同一个时钟域来处理。<br><img src="https://pic2.zhimg.com/80/v2-e4359107afb6b11703b68be39d773ed0_hd.png" alt="52"><br>所以一种更优雅的方式应该是，提供工厂函数，让Spinal自动处理<br><img src="https://pic2.zhimg.com/80/v2-647ce1dfe6aff1cffada3f5264aeb0a8_hd.png" alt="53"></p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> cgd0  = <span class="hljs-type">ClockDomain</span>.cgFrom(clockDomain,  cg_en)</span><br><span class="line"><span class="hljs-keyword">val</span> cgd1  = <span class="hljs-type">ClockDomain</span>.cgFrom(clockDomain,  cg_en)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">val</span> cdiv2 = <span class="hljs-type">ClockDomain</span>.divFrom(clockDomain, times=<span class="hljs-number">2</span>)   </span><br><span class="line"><span class="hljs-keyword">val</span> cdiv3 = <span class="hljs-type">ClockDomain</span>.divFrom(clockDomain, times=<span class="hljs-number">4</span>)</span><br></pre></td></tr></table></figure>
-<p><em>注：该方案还没有合入Spinal最新分支，会在1.3.7以后版本实现</em></p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/spinal/spinal5.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -331,7 +351,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 484 个字)
+                    3 分钟 读完 (大约 485 个字)
                 </span>
                 
                 
@@ -354,17 +374,16 @@
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myCpuConfig = <span class="hljs-type">RiscvCoreConfig</span>(</span><br><span class="line">        pcWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        addrWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        startAddress = <span class="hljs-number">0x00000000</span>,</span><br><span class="line">        regFileReadyKind = sync,</span><br><span class="line">        branchPrediction = dynamic,</span><br><span class="line">        bypassExecute0 = <span class="hljs-literal">true</span>,</span><br><span class="line">        bypassExecute1 = <span class="hljs-literal">true</span>,</span><br><span class="line">        bypassWriteBack = <span class="hljs-literal">true</span>,</span><br><span class="line">        bypassWriteBackBuffer = <span class="hljs-literal">true</span>,</span><br><span class="line">        collapseBubble = <span class="hljs-literal">false</span>,</span><br><span class="line">        fastFetchCmdPcCalculation = <span class="hljs-literal">true</span>,</span><br><span class="line">        dynamicBranchPredictorCacheSizeLog2 = <span class="hljs-number">7</span></span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
 <p>插件式扩展CPU, 除了已有的扩展，你可以添加自己的扩展, 比如浮点，矢量处理</p>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">MulExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">DivExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">BarrelShifterFullExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">MyFloatExtension</span>)</span><br><span class="line">myCpuConfig.add(<span class="hljs-keyword">new</span> <span class="hljs-type">MyVectorExtension</span>)</span><br></pre></td></tr></table></figure>
-<p>iCache 配置</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> myiCacheConfig = <span class="hljs-type">InstructionCacheConfig</span>(</span><br><span class="line">        cacheSize    = <span class="hljs-number">4096</span>,</span><br><span class="line">        bytePerLine  = <span class="hljs-number">32</span>,</span><br><span class="line">        wayCount     = <span class="hljs-number">1</span>,  </span><br><span class="line">        wrappedMemAccess = <span class="hljs-literal">true</span>,</span><br><span class="line">        addressWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        cpuDataWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        memDataWidth = <span class="hljs-number">32</span></span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
-<p>更新PinsecSOC配置</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> mySocConfig = <span class="hljs-type">PinsecConfig</span>(</span><br><span class="line">    axiFrequency   = <span class="hljs-number">100</span> <span class="hljs-type">MHz</span>,</span><br><span class="line">    onChipRamSize  = <span class="hljs-number">4</span> <span class="hljs-type">KiB</span>,</span><br><span class="line">    sdramLayout    = <span class="hljs-type">IS42x320D</span>.layout,</span><br><span class="line">    sdramTimings   = <span class="hljs-type">IS42x320D</span>.timingGrade7,</span><br><span class="line">    cpu            = myCpuConfig,</span><br><span class="line">    iCache         = myiCacheConfig)</span><br><span class="line">        wrappedMemAccess = <span class="hljs-literal">true</span>,</span><br><span class="line">        addressWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        cpuDataWidth = <span class="hljs-number">32</span>,</span><br><span class="line">        memDataWidth = <span class="hljs-number">32</span></span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
-<p><a href="https:/pic1.zhimg.com/80/v2-67ea4d3014d589feb62b22b208714a33_hd.png" target="_blank" rel="noopener">resoc</a><br>重新生成, 得到全新定制的SOC系统</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">SpinalVerilog</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">Pinsec</span>(mySocConfig))</span><br></pre></td></tr></table></figure>
-<p>这个一个完整的例子，可以看得出SpinalHDL的参数设计非常合理，层层设计，每一个功能模块有自己的参数伴侣，<br>所有的配置，模块的扩展，全部放在参数里。</p>
-<p>RocketChip隐式参数p恐怕要把你绕晕，这也是Chisel常备被吐槽的问题之一。<br>Spinal完全不存在这样的问题，即便是你第一次接触，也基本上不存在什么阅读障碍，<br>完整的Pinsec源码只有300行，能够完整的描述Soc顶层的互联信息，表达能力实属强大，源码参见<a href="https://github.com/SpinalHDL/SpinalHDL/blob/dev/lib/src/main/scala/spinal/lib/soc/pinsec/Pinsec.scala" target="_blank" rel="noopener">Pinsec.scala</a></p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/spinal/spinal3.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -400,7 +419,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1054 个字)
+                    7 分钟 读完 (大约 1055 个字)
                 </span>
                 
                 
@@ -423,26 +442,16 @@
 </ul>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">Apb3Decoder</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">16</span>,<span class="hljs-number">32</span>),</span><br><span class="line">            <span class="hljs-type">List</span>((<span class="hljs-number">0x0000</span>,<span class="hljs-number">2</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                 (<span class="hljs-number">0x1000</span>,<span class="hljs-number">1</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                 (<span class="hljs-number">0x5000</span>,<span class="hljs-number">3</span> <span class="hljs-type">KiB</span>))))</span><br></pre></td></tr></table></figure>
 <p>可以得到<br><a href="https://pic4.zhimg.com/80/v2-12a1cf7fc1b40dfba16cded076f1eaaa_hd.png" target="_blank" rel="noopener">42</a></p>
-<ul>
-<li>二：传入master实例，和slave映射实例</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Top</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> m0  =  slave(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">16</span>,<span class="hljs-number">32</span>)))</span><br><span class="line">    <span class="hljs-keyword">val</span> s1  = master(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>( <span class="hljs-number">8</span>,<span class="hljs-number">32</span>)))</span><br><span class="line">    <span class="hljs-keyword">val</span> s2  = master(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">12</span>,<span class="hljs-number">32</span>)))</span><br><span class="line">    <span class="hljs-keyword">val</span> s3  = master(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">12</span>,<span class="hljs-number">32</span>)))</span><br><span class="line">    <span class="hljs-keyword">val</span> s4  = master(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>( <span class="hljs-number">2</span>,<span class="hljs-number">32</span>)))</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">val</span> mux = <span class="hljs-type">Apb3Decoder</span>(master = m0, </span><br><span class="line">                      slaves = <span class="hljs-type">List</span>(s1 -&gt;  (<span class="hljs-number">0x0000</span>,  <span class="hljs-number">64</span> ),</span><br><span class="line">                                    s2 -&gt;  (<span class="hljs-number">0x1000</span>,<span class="hljs-number">1</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                                    s3 -&gt;  (<span class="hljs-number">0x2000</span>,<span class="hljs-number">3</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                                    s4 -&gt;  (<span class="hljs-number">0x3000</span>,  <span class="hljs-number">32</span> )))</span><br></pre></td></tr></table></figure>
-<p>得到：</p>
-<p><a href="https://pic4.zhimg.com/80/v2-d619ec9c07eec44d04c14eef9b3631ca_hd.png" target="_blank" rel="noopener">43</a></p>
-<h3 id="Axi-crossbar"><a href="#Axi-crossbar" class="headerlink" title="Axi-crossbar"></a>Axi-crossbar</h3><p>Spinal pinsec的总线拓扑结构<br><a href="https://pic1.zhimg.com/80/v2-e123b5cc9f8e963fda27c624724d4065_hd.png" target="_blank" rel="noopener">44</a></p>
-<p>源码：<br><a href="https://pic2.zhimg.com/80/v2-646cd9d65a1cb829598b8b52e2672791_hd.png" target="_blank" rel="noopener">45</a></p>
-<p>这么复杂一个链接关系，在SpinalHDL上不到50行代码，相信一般的伪代码都做不到这么简洁。因此阅读Spinal的源码简直就是一种享受，有时候我在恍惚这是文档还是代码。</p>
-<p>想想一下，如果这个工作让你用Verilog实现，那是多么的操蛋。当然目前cross-bar都是由脚本或者ARM的工具来自动生成。但是对于外挂，互联，顶层的例化<br>还得要手动做，这同样是一件极其繁琐容易出错的工作。但是现在放在Scala上是一个极其简单的伪代码式的描述即可完成。除此之外还可以做一些高级的检查，<br>参数的协商，DAG(有向无环图)的检查都很容易办到。</p>
-<h3 id="总线转换"><a href="#总线转换" class="headerlink" title="总线转换"></a>总线转换</h3><p>AHB总线到APB总线的转换示例</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> spinal.lib.bus.amba3.apb._</span><br><span class="line"><span class="hljs-keyword">import</span> spinal.lib.bus.amba3.ahblite._</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Top</span>(<span class="hljs-params">ahbConfig:<span class="hljs-type">AhbLite3Config</span>, apbConfig:<span class="hljs-type">Apb3Config</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> ahb = slave(<span class="hljs-type">AhbLite3</span>(ahbConfig))</span><br><span class="line">    <span class="hljs-keyword">val</span> apb = master(<span class="hljs-type">Apb3</span>(apbConfig))</span><br><span class="line">    <span class="hljs-keyword">val</span> bridge = <span class="hljs-type">AhbLite3ToApb3Bridge</span>(ahbConfig,apbConfig)</span><br><span class="line">    ahb &lt;&gt; bridge.io.ahb</span><br><span class="line">    apb &lt;&gt; bridge.io.apb</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>AXI到APB3总线转换示例</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> spinal.lib.bus.amba3.apb._</span><br><span class="line"><span class="hljs-keyword">import</span> spinal.lib.bus.amba4.axi._</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Top</span>(<span class="hljs-params">aw: <span class="hljs-type">Int</span>,dw: <span class="hljs-type">Int</span>,iw: <span class="hljs-type">Int</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> axi = slave(<span class="hljs-type">Axi4Shared</span>(<span class="hljs-type">Axi4Config</span>(aw,dw,iw)))</span><br><span class="line">  <span class="hljs-keyword">val</span> apb = master(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(aw,dw,iw)))</span><br><span class="line">  <span class="hljs-keyword">val</span> bridge = <span class="hljs-type">Axi4SharedToApb3Bridge</span>(aw,dw,iw)</span><br><span class="line">  axi &lt;&gt; bridge.io.axi</span><br><span class="line">  apb &lt;&gt; bridge.io.apb</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以下是pinsec中的源码，创建一个AXI到APB3的桥，然后从桥可以互联到其他外围。</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> apbDecoder = <span class="hljs-type">Apb3Decoder</span>(</span><br><span class="line">  master = apbBridge.io.apb,</span><br><span class="line">  slaves = <span class="hljs-type">List</span>(</span><br><span class="line">    gpioACtrl.io.apb -&gt; (<span class="hljs-number">0x00000</span>, <span class="hljs-number">4</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">    gpioBCtrl.io.apb -&gt; (<span class="hljs-number">0x01000</span>, <span class="hljs-number">4</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">    uartCtrl.io.apb  -&gt; (<span class="hljs-number">0x10000</span>, <span class="hljs-number">4</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">    timerCtrl.io.apb -&gt; (<span class="hljs-number">0x20000</span>, <span class="hljs-number">4</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">    vgaCtrl.io.apb   -&gt; (<span class="hljs-number">0x30000</span>, <span class="hljs-number">4</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">    core.io.debugBus -&gt; (<span class="hljs-number">0xF0000</span>, <span class="hljs-number">4</span> <span class="hljs-type">KiB</span>))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>可以非常方便的将这些外围连起来：<br><a href="https://pic4.zhimg.com/80/v2-655afd12a31552c3a05f1469aa2896da_hd.png" target="_blank" rel="noopener">46</a><br>以上的代码绝大多数都能直接运行起来，能用如此简单寥寥几行就将原来复杂繁琐的工作安全可靠的完成，还有什么理由不使用它。</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/spinal/spinal4.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -478,7 +487,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    16 分钟 读完 (大约 2359 个字)
+                    16 分钟 读完 (大约 2447 个字)
                 </span>
                 
                 
@@ -496,6 +505,8 @@
 <li><strong>CHISEL泛指</strong></li>
 </ul>
 <p>基于Scala的硬件构筑语言(Constructing Hardware In Scala Embedded<br>Language)</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8796b80bac350ed366df1ca4075090ca_hd.png" alt="Scala-hdl"></p>
+<p>包括chisel和SpinalHDL, 所以标题中为什么需要CHISEL是指为什么需要一个基于Scala的HDL语言，实际上chisel和SpinalHDL称为HDL框架更为合适，因为除了一些电路语法外，绝大多数都是在运用Scala的语言功能，一切强大都源于Scala语法。</p>
 <ul>
 <li><strong>Chisel特指</strong></li>
 </ul>
@@ -535,68 +546,17 @@
 <p>需要手动插入, 编写脚本, 即便是脚本也不通用</p>
 </li>
 </ul>
-<p>等等…</p>
-<p>所以现在写Verilog纯粹就是体力活，verilog工程师大概就是这个样子：<br><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
-<p>笔者本人写过一个手机芯片小区搜索的IP，python算法代码不到500行，Verilog整整写了2W多行<br>绝大多数时间不是在处理功能逻辑问题，而是消耗在一些位宽错误,<br>模块集成，端口连接，信号声明，重复基础cell等低级问题的处理上。</p>
-<p>反而编译器倒落了个清闲，编译器的状况大概就是这个样子：<br><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
-<h3 id="五连任性追问？"><a href="#五连任性追问？" class="headerlink" title="五连任性追问？"></a>五连任性追问？</h3><ul>
-<li><p>能不能愉悦的开发？</p>
-<p>不想干重复的脏活</p>
-</li>
-<li><p>能不能参数化设计？</p>
-<p>想一劳永逸</p>
-</li>
-<li><p>能不能方便的复用？</p>
-<p>我懒</p>
-</li>
-<li><p>能不能检查错误？</p>
-<p>我粗心</p>
-</li>
-<li><p>能不能扩展它？</p>
-<p>emm。。这个，老板肯定会问</p>
-</li>
-</ul>
-<h3 id="为什么是Scala"><a href="#为什么是Scala" class="headerlink" title="为什么是Scala?"></a>为什么是Scala?</h3><p>软件领域的技术革新变化很快，而IC开发领域几乎被verilog/VHDL包办了40年，不管是语言还是Flow都事实标准化了。<br>在IC领域想要技术方法大的更新，需要EDA工具厂家的支持，IC公司的认可(流程庞大变化迟钝)，工程师技能更多的是面向IC领域，缺乏软件工具造血能力。<br>所以让变革发生在行业内部可能性极低。</p>
-<p>虽然抽象能力参数化能力更好的SystemVerilog, E,<br>SystemC等语言相继的诞生，但并没有根本上解决<br>这些问题，主要原因是EDA工具厂家对这些特性支持不积极,更多的是用在验证建模领域。</p>
-<p>同时IC设计也出现了另外一个方向HLS(High Level Synthsis),<br>HDL语言是需要明确的电路信息的注入。<br>而HLS是描述算法，对电路没有明确的描述，所以一般就会导致生成的电路资源冗余，时序冗余,<br>HLS每年每家EDA都拿出来炒，真正使用HLS开发IP的公司还是非常少见。</p>
-<p>除了传统的这些对verilog的扩展语言外或者另辟蹊径走HLS的语言之外，基于不同语言平台的DSL多如牛毛-><a href="https://github.com/drom/awesome-hdl" target="_blank" rel="noopener">HDL语言列表</a>,<br>其中也不乏有超强的参数化能力以及面向对象的特性, 但是都没能流行起来。</p>
-<p>他们的问题除了完全不会有EDA工具的主动支持以外，主要有两个原因:</p>
-<ul>
-<li>缺乏杀手级的特性(类型推导，函数式特性)</li>
-<li>缺乏杀手级的项目(像Chisel的rocket, Spinal的Pinsec,Vexriscv )</li>
-</ul>
-<p>能担当此任的HDL一定是基于像Rust、Scala这类现代编程语言上的DSL, 虽然lisp,<br>haskell本身也具备这样的能力，但是基于圆括号的代码风格不太容易被主流接受,<br>另外纯函数式有点不点不见人间烟火，虽然Scala经常被吐槽<br>函数式编程不纯粹，但是混合面向对象的特性，在管理数据构建程序结构而言面向对象还是相当方便.</p>
-<p>我认为不太太可能出现在python，ruby，java这类语言,<br>参数化能力很容易办到，但是缺乏函数式特性，类型推导惰性求值特性。一言以蔽之，这些不适合做DSL。</p>
-<h3 id="Scala能为我们做什么"><a href="#Scala能为我们做什么" class="headerlink" title="Scala能为我们做什么?"></a>Scala能为我们做什么?</h3><p>目前较为流行的Scala<br>HDL框架有两个Chisel和SpinalHDL，Chisel出生伯克利自带流量，借着RISCV这两年算是出尽风头.<br>反观SpinalHDL那可低调的 多，导致很多人都没有认真去了解过它,<br>不清楚作者Charles<br>Papon是不会宣传还是不屑宣传，github上的头像都是默认的图标。</p>
-<p>我本人起初对这种新的开发方法也持怀疑态度，是骂骂咧咧着上了Chisel的贼船，也在公司的项目上用过Chisel,<br>尝到了甜头也隐隐觉的有些别扭，直到<br>一次偶然的机会我重新阅读SpinalHDL的源码，我才意识到问题出在哪儿,<br>别扭源于哪里。后面章节我会讲到我为什么坚定的从Chisel切换到SpinalHDL，<br>在比较两者的区别之前我来罗列一下他们的共同点，也是所谓的泛CHISEL特性</p>
-<p><img src="https://pic1.zhimg.com/80/v2-8796b80bac350ed366df1ca4075090ca_hd.png" alt="Scala-hdl"></p>
-<ol>
-<li><p>能做到什么</p>
-<ul>
-<li>非常好用的位宽推断（甚至跨模块边界）</li>
-<li>错误检查能力（Lint, CDC, timing评估， more）</li>
-<li>彻底的参数化能力</li>
-<li>大量的基础组件以及可重用IP</li>
-<li>至少一个完整的Soc框架(Chisel的RokectChip, SpinalHDL的PineSec)</li>
-<li>继承Scala平台所有强大的语言特性</li>
-</ul>
-<p>在这里引入一个插曲，有些人会说rocket和Chisel不同一个项目，不能拿Rocket来当chisel做比较，<br>不过我觉的脱离SOC和lib来讲CHISEL实在没什么可讲的，当年入学时煞有架势抱一本书在啃Verilog，我们的导师问的一句<br>让我记忆犹新”Verilog只需要两个小时就学会的语言，为什么要抱一本书？你现在需要的编写代码”。所以不管是Chisel还是Spinal电路级的语法我也认为只需要2个小时就够了，更多的时间要花在编写代码更学习如何构建SOC或者lib上。<br>现在网上看似有很多Chisel的资料，结果发现翻来覆去都在讲电路语法，而真正介绍RocketChiP，总线，时钟域，构建Lib的资料少之又少。所以学习Chisel或者Spinal最快的方法就是尽快上手去写代码。最好是实际的项目。</p>
-</li>
-<li><p>期望效果</p>
-<ul>
-<li>解放工程师，避免重复琐碎，避免低级错误</li>
-<li>加快开发周期，开发周期和模块大小不再是线性，有望指数</li>
-</ul>
-<p>目前用Scala编写HDL代码，状况大有改观,<br>工程师完全可以从些低级重复的工作中解放出来,<br>把那些重复容易犯错的事情交给编译器，他会做的比人更好。</p>
-<p>现在的你：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
-<p>为什么不让编译器多干点呢？</p>
-<p><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
-</li>
-</ol>
-
+<p>等等…<br></p>
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/spinal/spinal1.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -828,65 +788,6 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/riscv/20190418_c_point.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/riscv/20190428_function_call.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/bigdata2.jpg" alt="C函数调用和汇编代码分析">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-27T16:00:00.000Z">2019-04-28</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/riscv/">riscv</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 1035 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/riscv/20190428_function_call.html">C函数调用和汇编代码分析</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="risc-v-C函数调用反汇编示例"><a href="#risc-v-C函数调用反汇编示例" class="headerlink" title="risc-v C函数调用反汇编示例"></a>risc-v C函数调用反汇编示例</h4><p>首先有一段C程序，其中main函数调用子函数add<br><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//main.c </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> a + b ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/riscv/20190428_function_call.html#more">阅读更多</a>
                 </div>
             </div>
         </div>

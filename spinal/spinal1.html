@@ -9,19 +9,19 @@
 
 
 
-    <meta name="description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  Chisel特指  伯克利大学发布的Chisel硬件开发语言 我们文章中大CHISEL为泛指， 小Chisel为特指。 Verilog不够用吗?需要一门新的语言吗? VHDL诞生于1982年 ,Verilog诞生于1981年, 起初">
+    <meta name="description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  包括chisel和SpinalHDL, 所以标题中为什么需要CHISEL是指为什么需要一个基于Scala的HDL语言，实际上chisel和SpinalHDL称为HDL框架更为合适，因为除了一些电路语法外，绝大多数都是在运用Scala">
 <meta name="keywords" content="SpinalHDL  Scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpinalHDL(一):此CHISEL非彼Chisel">
 <meta property="og:url" content="https://jijingg.github.io/spinal/spinal1.html">
 <meta property="og:site_name" content="马車同学">
-<meta property="og:description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  Chisel特指  伯克利大学发布的Chisel硬件开发语言 我们文章中大CHISEL为泛指， 小Chisel为特指。 Verilog不够用吗?需要一门新的语言吗? VHDL诞生于1982年 ,Verilog诞生于1981年, 起初">
+<meta property="og:description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  包括chisel和SpinalHDL, 所以标题中为什么需要CHISEL是指为什么需要一个基于Scala的HDL语言，实际上chisel和SpinalHDL称为HDL框架更为合适，因为除了一些电路语法外，绝大多数都是在运用Scala">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://source.jijing.site/thumbnails/cocola.jpg">
-<meta property="og:updated_time" content="2020-07-29T15:49:11.571Z">
+<meta property="og:updated_time" content="2020-07-29T15:58:13.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpinalHDL(一):此CHISEL非彼Chisel">
-<meta name="twitter:description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  Chisel特指  伯克利大学发布的Chisel硬件开发语言 我们文章中大CHISEL为泛指， 小Chisel为特指。 Verilog不够用吗?需要一门新的语言吗? VHDL诞生于1982年 ,Verilog诞生于1981年, 起初">
+<meta name="twitter:description" content="这里有两个概念  CHISEL泛指  基于Scala的硬件构筑语言(Constructing Hardware In Scala EmbeddedLanguage)  包括chisel和SpinalHDL, 所以标题中为什么需要CHISEL是指为什么需要一个基于Scala的HDL语言，实际上chisel和SpinalHDL称为HDL框架更为合适，因为除了一些电路语法外，绝大多数都是在运用Scala">
 <meta name="twitter:image" content="http://source.jijing.site/thumbnails/cocola.jpg">
 
 
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    16 分钟 读完 (大约 2359 个字)
+                    16 分钟 读完 (大约 2447 个字)
                 </span>
                 
                 
@@ -187,6 +187,8 @@
 <li><strong>CHISEL泛指</strong></li>
 </ul>
 <p>基于Scala的硬件构筑语言(Constructing Hardware In Scala Embedded<br>Language)</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8796b80bac350ed366df1ca4075090ca_hd.png" alt="Scala-hdl"></p>
+<p>包括chisel和SpinalHDL, 所以标题中为什么需要CHISEL是指为什么需要一个基于Scala的HDL语言，实际上chisel和SpinalHDL称为HDL框架更为合适，因为除了一些电路语法外，绝大多数都是在运用Scala的语言功能，一切强大都源于Scala语法。</p>
 <ul>
 <li><strong>Chisel特指</strong></li>
 </ul>
@@ -226,7 +228,7 @@
 <p>需要手动插入, 编写脚本, 即便是脚本也不通用</p>
 </li>
 </ul>
-<p>等等…</p>
+<p>等等…<br><a id="more"></a></p>
 <p>所以现在写Verilog纯粹就是体力活，verilog工程师大概就是这个样子：<br><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
 <p>笔者本人写过一个手机芯片小区搜索的IP，python算法代码不到500行，Verilog整整写了2W多行<br>绝大多数时间不是在处理功能逻辑问题，而是消耗在一些位宽错误,<br>模块集成，端口连接，信号声明，重复基础cell等低级问题的处理上。</p>
 <p>反而编译器倒落了个清闲，编译器的状况大概就是这个样子：<br><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
@@ -260,9 +262,7 @@
 <p>我认为不太太可能出现在python，ruby，java这类语言,<br>参数化能力很容易办到，但是缺乏函数式特性，类型推导惰性求值特性。一言以蔽之，这些不适合做DSL。</p>
 <h3 id="Scala能为我们做什么"><a href="#Scala能为我们做什么" class="headerlink" title="Scala能为我们做什么?"></a>Scala能为我们做什么?</h3><p>目前较为流行的Scala<br>HDL框架有两个Chisel和SpinalHDL，Chisel出生伯克利自带流量，借着RISCV这两年算是出尽风头.<br>反观SpinalHDL那可低调的 多，导致很多人都没有认真去了解过它,<br>不清楚作者Charles<br>Papon是不会宣传还是不屑宣传，github上的头像都是默认的图标。</p>
 <p>我本人起初对这种新的开发方法也持怀疑态度，是骂骂咧咧着上了Chisel的贼船，也在公司的项目上用过Chisel,<br>尝到了甜头也隐隐觉的有些别扭，直到<br>一次偶然的机会我重新阅读SpinalHDL的源码，我才意识到问题出在哪儿,<br>别扭源于哪里。后面章节我会讲到我为什么坚定的从Chisel切换到SpinalHDL，<br>在比较两者的区别之前我来罗列一下他们的共同点，也是所谓的泛CHISEL特性</p>
-<p><img src="https://pic1.zhimg.com/80/v2-8796b80bac350ed366df1ca4075090ca_hd.png" alt="Scala-hdl"></p>
-<ol>
-<li><p>能做到什么</p>
+<p><strong>泛Chisel特性</strong> </p>
 <ul>
 <li>非常好用的位宽推断（甚至跨模块边界）</li>
 <li>错误检查能力（Lint, CDC, timing评估， more）</li>
@@ -272,8 +272,7 @@
 <li>继承Scala平台所有强大的语言特性</li>
 </ul>
 <p>在这里引入一个插曲，有些人会说rocket和Chisel不同一个项目，不能拿Rocket来当chisel做比较，<br>不过我觉的脱离SOC和lib来讲CHISEL实在没什么可讲的，当年入学时煞有架势抱一本书在啃Verilog，我们的导师问的一句<br>让我记忆犹新”Verilog只需要两个小时就学会的语言，为什么要抱一本书？你现在需要的编写代码”。所以不管是Chisel还是Spinal电路级的语法我也认为只需要2个小时就够了，更多的时间要花在编写代码更学习如何构建SOC或者lib上。<br>现在网上看似有很多Chisel的资料，结果发现翻来覆去都在讲电路语法，而真正介绍RocketChiP，总线，时钟域，构建Lib的资料少之又少。所以学习Chisel或者Spinal最快的方法就是尽快上手去写代码。最好是实际的项目。</p>
-</li>
-<li><p>期望效果</p>
+<p><strong>期望效果</strong> </p>
 <ul>
 <li>解放工程师，避免重复琐碎，避免低级错误</li>
 <li>加快开发周期，开发周期和模块大小不再是线性，有望指数</li>
@@ -283,8 +282,6 @@
 <p><img src="https://pic4.zhimg.com/80/v2-57d083db9568e3aeb44db835de8bfded_hd.gif" alt="heihei"></p>
 <p>为什么不让编译器多干点呢？</p>
 <p><img src="https://pic3.zhimg.com/80/v2-520d64f2bb356b3073b3c6409db1d92d_hd.png" alt="haha"></p>
-</li>
-</ol>
 
         </div>
         
@@ -314,9 +311,9 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/spinal/spinal4.html">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/spinal/spinal3.html">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">SpinalHDL(四) 一窥总线四两拨千斤</span>
+                <span class="level-item">SpinalHDL(三) 一行代码生成Soc系统</span>
             </a>
         </div>
         

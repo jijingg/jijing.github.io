@@ -18,7 +18,7 @@
 <meta property="og:description" content="首先为什么要定点化？在性能可接受的范围内尽可能的的压缩数据bit位宽以便节省资源一个扰码识别的定点流程灰色的全精度蓝色是定点截位以后的位宽,对于这个算法，定点以后在大大节省资源的情况下性能几乎没有任何损失。我们在定点的时候不是说每一个节点都需要压缩bit，而是在关键的节点尽可能压缩位宽才能做到事半功倍，比如以上例子中的求平方，和最后的累计和输出，这两个点对硬件来说非常敏感，一个是乘法器，另外一个是">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://source.jijing.site/thumbnails/boxing4.jpg">
-<meta property="og:updated_time" content="2020-07-29T15:49:11.583Z">
+<meta property="og:updated_time" content="2020-07-29T15:59:37.624Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpinalHDL(六):定点化-饱和截位">
 <meta name="twitter:description" content="首先为什么要定点化？在性能可接受的范围内尽可能的的压缩数据bit位宽以便节省资源一个扰码识别的定点流程灰色的全精度蓝色是定点截位以后的位宽,对于这个算法，定点以后在大大节省资源的情况下性能几乎没有任何损失。我们在定点的时候不是说每一个节点都需要压缩bit，而是在关键的节点尽可能压缩位宽才能做到事半功倍，比如以上例子中的求平方，和最后的累计和输出，这两个点对硬件来说非常敏感，一个是乘法器，另外一个是">
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1319 个字)
+                    9 分钟 读完 (大约 1320 个字)
                 </span>
                 
                 
@@ -188,6 +188,7 @@
 <li>低位Round操作</li>
 </ol>
 <p><img src="https://pic3.zhimg.com/80/v2-42dc28366b53b180a14c0b74208263b7_hd.png" alt="62"><br>低位的Round操作有非常多类型。参见<br><a href="https://en.wikipedia.org/wiki/Rounding" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Rounding</a></p>
+<a id="more"></a>
 <p><img src="https://pic2.zhimg.com/80/v2-b4e3fba8092d3282c9ea23fde0a20bee_hd.png" alt="6t1"></p>
 <p>其实 <strong>RoundHalfUp, RoundHalfDown, RoundHalfToZero,<br>RoundHalfToInf, RoundHalfToEven, RounHalfToOdd</strong> 非常接近,<br>RoundToInf,最为常见。其中”RoundToeven,RoundToOdd”比较特别，这种Round比RoundToInf还要公平一些，但是相对稍微复杂一下，一般用在打数据统计中对精度非常敏感的场景。<br>SpinalHDL目前不支持这两种类型，<br>不同语言的round函数实际用的Round类型其实也各有不同，SpinalHDL为了保持通用，默认round采用RoundToInf，<br>但是我们在一般的硬件设计当中<br>推荐大家使用RoundToUp，这种方式选择器更少，时序面积更好，性能几乎没有太大损失。</p>
 <p><img src="https://pic2.zhimg.com/80/v2-4d33ee5880c10cf2e43a9fa338f03ea0_hd.png" alt="6t2"></p>
@@ -197,7 +198,7 @@
 <p><img src="https://pic4.zhimg.com/80/v2-e5c20a5a3ec40f8b7c58d0b2e032214a_hd.png" alt="63"><br>主要是饱和操作，但是有时候直接截掉的需求，高位直接截掉没有数学意义，我不清楚具体用在什么地方。<br>除此之外，高位还有一个对称操作，比如8bit的有符号数表示范围为（-128<br>~ 127）如果不对称取反的话会出现+128 如果有符号数表示就得扩展为9bit<br>为了避免这种情况，又是需要将(-128 ~127) 对称到（-127 ~ 127）,<br>这样在取反的时候就不用扩展1bit，性能损失几乎忽略不计，在硬件设计当中非常常见。</p>
 <p><img src="https://pic2.zhimg.com/80/v2-4570af3ba6b7f1dbb84cb25e7050fb50_hd.png" alt="6t4"></p>
 <h3 id="Verilog是怎么做的？"><a href="#Verilog是怎么做的？" class="headerlink" title="Verilog是怎么做的？"></a>Verilog是怎么做的？</h3><p>手动书写定点电路 封装fixpoint代码<br>我们用Verilog来实现定点饱和截位时，起初都是手写饱和截位电路，包括现在我看很多人还是直接手写<br><img src="https://pic1.zhimg.com/80/v2-0bccd36cf1cd0d313998b2e1be1cfed1_hd.png" alt="64"><br>这个是极其容易出错，也是我们和算法debug追问题的高发地带。我想很多人都会遇到跟算法比对数据是遇到<br>差1bit对不上（实际上就是+-1），追了半天发现定点方式理解不一致，或者电路里面写错了。这种问题反反复复的发生，非常耗时耗力，很没必要。<br>后来出现了一种相对稳定一点的方式： <strong>封装为饱和截位</strong><br>这个可能是在verilog上能做到的最好的方式了，但是不够完美 使用方式：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fixpoint (15,11,4,1,1) u_add1_fix (.din(fixin),.dout(fixout));</span><br><span class="line">fixpoint (15,10,4,1,1) u_add2_fix (.din(fixin),.dout(fixout));</span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fixpoint (<span class="hljs-number">15</span>,<span class="hljs-number">11</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) u_add1_fix (<span class="hljs-variable">.din</span>(fixin),<span class="hljs-variable">.dout</span>(fixout));</span><br><span class="line">fixpoint (<span class="hljs-number">15</span>,<span class="hljs-number">10</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) u_add2_fix (<span class="hljs-variable">.din</span>(fixin),<span class="hljs-variable">.dout</span>(fixout));</span><br></pre></td></tr></table></figure>
 <p>源码<br><img src="https://pic2.zhimg.com/80/v2-56bb4aff5cec2f832189cbdde76f2248_hd.png" alt="65"><br>实际上这里面也就才实现了Floor,RoundToInf,RoundUp<br>三种Round方式，不得不用verilog generator配合一些宏，<br>代码看上去已经是灾难了，调试到稳定也是非常痛苦。</p>
 <h3 id="SpinalHDL定点如何操作"><a href="#SpinalHDL定点如何操作" class="headerlink" title="SpinalHDL定点如何操作"></a>SpinalHDL定点如何操作</h3><p>这一切到SpinalHDL上一句话就能搞定</p>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">val</span> <span class="hljs-type">A</span>  = <span class="hljs-type">SInt</span>(<span class="hljs-number">10</span> bit)</span><br><span class="line"><span class="hljs-keyword">val</span> <span class="hljs-type">B</span>  = <span class="hljs-type">A</span>.fixTo(<span class="hljs-number">7</span> downto <span class="hljs-number">3</span>) <span class="hljs-comment">//定点化</span></span><br></pre></td></tr></table></figure>
