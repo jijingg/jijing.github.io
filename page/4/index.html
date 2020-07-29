@@ -204,6 +204,64 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/chisel/chisel_bugs.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/work2.jpg" alt="Chisel BugList">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 36 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/chisel_bugs.html">Chisel BugList</a>
+            
+        </h1>
+        <div class="content">
+            <ul>
+<li><p>[ ] BitPat length bugs<br>  <code>BitPat.pare(&quot;b1100_0000&quot;) = (192,255,9)</code> 实际8bit，返回9bit<br>  <code>BitPat.pare(&quot;b11000000&quot;)  = (192,255,8)</code></p>
+  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">35:     (bits, mask, x.length - 1) </span><br><span class="line">fix 剔除字符&apos;_&apos; 后统计长度</span><br><span class="line">35:     (bits, mask, x.filter(_!=&apos;_&apos;).length - 1)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>[ ] bug2</p>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/chisel/20190411_chisel_version.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/chisel1.jpg" alt="Chisel版本">
         </a>
@@ -247,64 +305,6 @@
                 </div>
             </div>
         </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/chisel/chisel_bugs.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/work2.jpg" alt="Chisel BugList">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-04-10T16:00:00.000Z">2019-04-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 36 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/chisel_bugs.html">Chisel BugList</a>
-            
-        </h1>
-        <div class="content">
-            <ul>
-<li><p>[ ] BitPat length bugs<br>  <code>BitPat.pare(&quot;b1100_0000&quot;) = (192,255,9)</code> 实际8bit，返回9bit<br>  <code>BitPat.pare(&quot;b11000000&quot;)  = (192,255,8)</code></p>
-  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">35:     (bits, mask, x.length - 1) </span><br><span class="line">fix 剔除字符&apos;_&apos; 后统计长度</span><br><span class="line">35:     (bits, mask, x.filter(_!=&apos;_&apos;).length - 1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>[ ] bug2</p>
-</li>
-</ul>
-
-        </div>
-        
         
         
     </div>
@@ -499,6 +499,66 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/scala/20190308_scala_main.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Scala 初探.一(main函数)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 749 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/scala/20190308_scala_main.html">Scala 初探.一(main函数)</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="SCALA-程序的几种运行方式"><a href="#SCALA-程序的几种运行方式" class="headerlink" title="SCALA 程序的几种运行方式"></a>SCALA 程序的几种运行方式</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>脚本式的使用，<code>scala a.scala</code> 可正常打印<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function">def <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>= &#123;</span><br><span class="line">  println(<span class="hljs-string">"Hello, Scala way1"</span>)</span><br><span class="line">&#125;</span><br><span class="line">main()</span><br></pre></td></tr></table></figure></p>
+<p>但这种写法不能被 <code>scalac a.scala</code>正确编译，可能JVM对象必须要有个main入口函数</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_main.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/scala/20190308_scala_package.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/library1.jpg" alt="Scala 初探.二(package组织方式)">
         </a>
@@ -558,8 +618,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/scala/20190308_scala_main.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Scala 初探.一(main函数)">
+        <a href="/scala/20190308_scala_sbt1.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/macbook2.jpg" alt="Scala 初探.三(sbt组织scala代码1)">
         </a>
     </div>
     
@@ -577,7 +637,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 749 个字)
+                    2 分钟 读完 (大约 308 个字)
                 </span>
                 
                 
@@ -586,19 +646,19 @@
         
         <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/scala/20190308_scala_main.html">Scala 初探.一(main函数)</a>
+                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt1.html">Scala 初探.三(sbt组织scala代码1)</a>
             
         </h1>
         <div class="content">
-            <h3 id="SCALA-程序的几种运行方式"><a href="#SCALA-程序的几种运行方式" class="headerlink" title="SCALA 程序的几种运行方式"></a>SCALA 程序的几种运行方式</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>脚本式的使用，<code>scala a.scala</code> 可正常打印<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function">def <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>= &#123;</span><br><span class="line">  println(<span class="hljs-string">"Hello, Scala way1"</span>)</span><br><span class="line">&#125;</span><br><span class="line">main()</span><br></pre></td></tr></table></figure></p>
-<p>但这种写法不能被 <code>scalac a.scala</code>正确编译，可能JVM对象必须要有个main入口函数</p>
+            <p>上一节我们用Makefile来组织scala代码，这里有更好的选择sbt来管理项目<br>sbt推荐将scala代码放在src路径，如下为标准的组织方式(代码还是原封使用第二节的样例代码)<br>总共3个文件      </p>
+<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── a.scala</span><br><span class="line">            ├── b.scala</span><br><span class="line">            └── c.scala</span><br></pre></td></tr></table></figure>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/scala/20190308_scala_main.html#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt1.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -660,66 +720,6 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt2.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/scala/20190308_scala_sbt1.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/macbook2.jpg" alt="Scala 初探.三(sbt组织scala代码1)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-03-07T16:00:00.000Z">2019-03-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/scala/">scala</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 308 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/scala/20190308_scala_sbt1.html">Scala 初探.三(sbt组织scala代码1)</a>
-            
-        </h1>
-        <div class="content">
-            <p>上一节我们用Makefile来组织scala代码，这里有更好的选择sbt来管理项目<br>sbt推荐将scala代码放在src路径，如下为标准的组织方式(代码还是原封使用第二节的样例代码)<br>总共3个文件      </p>
-<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── build.sbt</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        └── scala</span><br><span class="line">            ├── a.scala</span><br><span class="line">            ├── b.scala</span><br><span class="line">            └── c.scala</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/scala/20190308_scala_sbt1.html#more">阅读更多</a>
                 </div>
             </div>
         </div>

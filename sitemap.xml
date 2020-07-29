@@ -4,7 +4,7 @@
   <url>
     <loc>https://jijingg.github.io/spinal/spinal8.html</loc>
     
-    <lastmod>2020-07-29T15:31:56.101Z</lastmod>
+    <lastmod>2020-07-29T15:35:37.102Z</lastmod>
     
   </url>
   
@@ -163,7 +163,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
     
     <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
@@ -184,14 +184,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/sicp/20190429_cps.html</loc>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
     
     <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
+    <loc>https://jijingg.github.io/sicp/20190429_cps.html</loc>
     
     <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
@@ -219,7 +219,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/riscv/20190428_function_call.html</loc>
+    <loc>https://jijingg.github.io/riscv/20181120_riscv_c_dev_setp.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
@@ -233,14 +233,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_main.html</loc>
+    <loc>https://jijingg.github.io/scala/20190308_scala_package.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/riscv/20190418_c_point.html</loc>
+    <loc>https://jijingg.github.io/riscv/20190428_function_call.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
@@ -282,14 +282,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_package.html</loc>
+    <loc>https://jijingg.github.io/scala/20190308_scala_main.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/riscv/20181120_riscv_c_dev_setp.html</loc>
+    <loc>https://jijingg.github.io/riscv/20190418_c_point.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
@@ -303,14 +303,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/others/terminal_FAQ.html</loc>
+    <loc>https://jijingg.github.io/others/lsb_hsb.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/others/lsb_hsb.html</loc>
+    <loc>https://jijingg.github.io/others/terminal_FAQ.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
@@ -352,14 +352,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/20190411_chisel_version.html</loc>
+    <loc>https://jijingg.github.io/chisel/20181205_chisel_learning.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/20181205_chisel_learning.html</loc>
+    <loc>https://jijingg.github.io/chisel/chisel_bugs.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     
@@ -380,7 +380,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/chisel_bugs.html</loc>
+    <loc>https://jijingg.github.io/chisel/20190411_chisel_version.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     
