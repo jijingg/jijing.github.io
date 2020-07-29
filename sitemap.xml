@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jijingg.github.io/spinal/spinal8.html</loc>
+    
+    <lastmod>2020-07-29T15:27:07.841Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jijingg.github.io/spinal/spinal-bootcamp.html</loc>
     
     <lastmod>2020-07-29T14:47:01.540Z</lastmod>
@@ -135,28 +142,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/about/index.html</loc>
-    
-    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jijingg.github.io/sicp/ipc_msg_communication.html</loc>
-    
-    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jijingg.github.io/sicp/whyfp.html</loc>
-    
-    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
+    <loc>https://jijingg.github.io/sicp/lambda_03_bool_branch.html</loc>
     
     <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
@@ -170,14 +156,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/sicp/lambda_03_bool_branch.html</loc>
-    
-    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jijingg.github.io/sicp/20190505_fractal.html</loc>
+    <loc>https://jijingg.github.io/sicp/whyfp.html</loc>
     
     <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
@@ -191,14 +170,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/sicp/20190414-fp-closure-iterator.html</loc>
-    
-    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
+    <loc>https://jijingg.github.io/about/index.html</loc>
     
     <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
@@ -212,28 +184,56 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/riscv/20181120_riscv_c_dev_setp.html</loc>
+    <loc>https://jijingg.github.io/sicp/ipc_msg_communication.html</loc>
     
-    <lastmod>2019-10-11T07:33:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jijingg.github.io/riscv/20181127_riscv_link.html</loc>
-    
-    <lastmod>2019-10-11T07:33:35.000Z</lastmod>
+    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_package.html</loc>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt2.html</loc>
     
-    <lastmod>2019-10-11T07:33:35.000Z</lastmod>
+    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jijingg.github.io/sicp/20190505_fractal.html</loc>
+    
+    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jijingg.github.io/scala/20190308_scala_sbt1.html</loc>
+    
+    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jijingg.github.io/sicp/20190414-fp-closure-iterator.html</loc>
+    
+    <lastmod>2019-10-11T07:33:36.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://jijingg.github.io/riscv/20190428_function_call.html</loc>
+    
+    <lastmod>2019-10-11T07:33:35.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jijingg.github.io/riscv/20190418_c_point.html</loc>
+    
+    <lastmod>2019-10-11T07:33:35.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jijingg.github.io/eda/verilog_simu_0delay.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
@@ -268,6 +268,13 @@
   </url>
   
   <url>
+    <loc>https://jijingg.github.io/riscv/20181127_riscv_link.html</loc>
+    
+    <lastmod>2019-10-11T07:33:35.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jijingg.github.io/riscv/20181125_gdb_debug.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
@@ -275,14 +282,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/scala/20190308_scala_main.html</loc>
+    <loc>https://jijingg.github.io/riscv/20181120_riscv_c_dev_setp.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/riscv/20190418_c_point.html</loc>
+    <loc>https://jijingg.github.io/scala/20190308_scala_main.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
@@ -310,7 +317,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/eda/verilog_simu_0delay.html</loc>
+    <loc>https://jijingg.github.io/scala/20190308_scala_package.html</loc>
     
     <lastmod>2019-10-11T07:33:35.000Z</lastmod>
     
@@ -345,7 +352,7 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/chisel_QA.html</loc>
+    <loc>https://jijingg.github.io/chisel/20190321_chisel_comb_reg.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     
@@ -359,14 +366,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/chisel_bugs.html</loc>
+    <loc>https://jijingg.github.io/chisel/chisel_QA.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/20190401_chisel_keep_name.html</loc>
+    <loc>https://jijingg.github.io/chisel/chisel_bugs.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     
@@ -380,14 +387,14 @@
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/20190322_chisel_module_confilict.html</loc>
+    <loc>https://jijingg.github.io/chisel/20190401_chisel_keep_name.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jijingg.github.io/chisel/20190321_chisel_comb_reg.html</loc>
+    <loc>https://jijingg.github.io/chisel/20190322_chisel_module_confilict.html</loc>
     
     <lastmod>2019-10-11T07:27:21.000Z</lastmod>
     

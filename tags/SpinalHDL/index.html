@@ -152,6 +152,77 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/spinal/spinal8.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/dirty2.jpg" alt="SpinalHDL(八):开发仿真测试一条龙">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-15T16:00:00.000Z">2020-05-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    27 分钟 读完 (大约 4021 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/spinal/spinal8.html">SpinalHDL(八):开发仿真测试一条龙</a>
+            
+        </h1>
+        <div class="content">
+            <p>鉴于被chisel的peek poke test愚弄以后，我一度对Scala上的仿真环境不是特别有信心，当看到spinal.sim的时候觉得可能只是一个能work的demo而已，并没有足够重视。</p>
+<p>我用Spinal开发的前几个模块依然走的传统的验证流程，先生成Verilog，然后再用scala生成激励，最后打包丢到Linux服务器上, 用Verilog/SV编写tesbech， 搭建测试比对环境，仿真工具不是VCS就是NcSim这些老牌商业软件。</p>
+<p>直到一个偶然的机会，有一些很零碎的模块需要测试，不想再为此搭建一整套仿真环境，我想干脆用spinal.sim 简单做个测试，不测不知道，一测一发不可收拾。</p>
+<p><strong>SpinalHDL就是这样的汉子，一次又一次的轻视它，但它又不时的给你惊喜。</strong></p>
+<ul>
+<li>不同于iotest的peak poke， 它的后台是verilator, verilator非常强大，性能比起商业软件VCS、NC毫不逊色。</li>
+<li>spinal.sim 通过包装verilator提供的VPI，能够很方便灵活，实时的跟dut交互通信, 加上Scala本身语言的灵活性，它能做的不比UVM少。<blockquote>
+<p>今年chisel貌似后知后觉的回过神了，摒弃iotest，重新设计iotester2, iotester2和spinal.sim的思路很类似了, 后台是verilator, 有兴趣的可以自己试试</p>
+</blockquote>
+</li>
+</ul>
+<p>接下来我主要借助通信基带的两个模块来介绍一些如何使用SpinalHDL进行仿真测试，以及如何构建组织管理回归你的测试CASE。</p>
+<p>对于spinal.sim的基础操作和使用请浏览官方文档Spinal-sim，这里不再赘述。<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/spinal/spinal8.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/spinal/spinal-bootcamp.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/book1.jpg" alt="Spinal-Bootcamp 在线新手教程">
         </a>
@@ -294,7 +365,7 @@
                 <span class="level-item">spinal</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li>
             </ul>
@@ -312,6 +383,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/spinal/spinal8.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/dirty2.jpg" alt="SpinalHDL(八):开发仿真测试一条龙">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-15T16:00:00.000Z">2020-05-16</time></div>
+                    <a href="/spinal/spinal8.html" class="has-link-black-ter is-size-6">SpinalHDL(八):开发仿真测试一条龙</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -389,25 +479,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/spinal/spinal-bootcamp.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/book1.jpg" alt="Spinal-Bootcamp 在线新手教程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-31T16:00:00.000Z">2020-01-01</time></div>
-                    <a href="/spinal/spinal-bootcamp.html" class="has-link-black-ter is-size-6">Spinal-Bootcamp 在线新手教程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -423,6 +494,17 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/02/">
@@ -608,7 +690,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/SpinalHDL/">
                         <span class="tag">SpinalHDL</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
