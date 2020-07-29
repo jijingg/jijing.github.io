@@ -18,7 +18,7 @@
 <meta property="og:description" content="鉴于被chisel的peek poke test愚弄以后，我一度对Scala上的仿真环境不是特别有信心，当看到spinal.sim的时候觉得可能只是一个能work的demo而已，并没有足够重视。 我用Spinal开发的前几个模块依然走的传统的验证流程，先生成Verilog，然后再用scala生成激励，最后打包丢到Linux服务器上, 用Verilog/SV编写tesbech， 搭建测试比对环境，仿">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://source.jijing.site/thumbnails/chisel1.jpg">
-<meta property="og:updated_time" content="2020-07-29T15:35:37.102Z">
+<meta property="og:updated_time" content="2020-07-29T15:49:11.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpinalHDL(八):开发仿真测试一条龙">
 <meta name="twitter:description" content="鉴于被chisel的peek poke test愚弄以后，我一度对Scala上的仿真环境不是特别有信心，当看到spinal.sim的时候觉得可能只是一个能work的demo而已，并没有足够重视。 我用Spinal开发的前几个模块依然走的传统的验证流程，先生成Verilog，然后再用scala生成激励，最后打包丢到Linux服务器上, 用Verilog/SV编写tesbech， 搭建测试比对环境，仿">
@@ -195,113 +195,114 @@
 </ul>
 <p>接下来我主要借助通信基带的两个模块来介绍一些如何使用SpinalHDL进行仿真测试，以及如何构建组织管理回归你的测试CASE。</p>
 <p>对于spinal.sim的基础操作和使用请浏览官方文档Spinal-sim，这里不再赘述。<br><a id="more"></a>    </p>
-<h3 id="一：简单的数字混频器"><a href="#一：简单的数字混频器" class="headerlink" title="一：简单的数字混频器"></a>一：简单的数字混频器</h3><p>数字下混频模块的顶层如下，有相位步长，相位初始值，输入输出数据<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class FreqMixer(cfg: FreqMixerConfig) extends Component&#123;</span><br><span class="line">  val io = new Bundle&#123;</span><br><span class="line">    val init      = in Bool()</span><br><span class="line">    val thetaStep = in SInt(cfg.thetaStepQ.width bits)</span><br><span class="line">    val thetaInit = in SInt(cfg.thetaAccQ.width bits)</span><br><span class="line">    val din       = slave Flow(IQ(cfg.diQ.width))</span><br><span class="line">    val dout      = master(Flow(IQ(cfg.doQ.width)))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>起初你可能像verilog一样一个一个配置参数和灌入激励<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">.compile(new FreqMixer(cfg, true))</span><br><span class="line">.doSimUntilVoid(&quot;freqmixSim&quot;)&#123; dut =&gt;</span><br><span class="line">    dut.clockDomain.forkStimulus(5) //添加时钟激励,时钟周期为5ns</span><br><span class="line">    dut.io.din.valid #= false</span><br><span class="line">    dut.io.thetaStep #= thetaStep.fixAsLong(cfg.thetaStepQ)//设置频偏步长</span><br><span class="line">    dut.io.thetaInit #= thetaInit.fixAsLong(cfg.thetaAccQ) //设置相位初始值</span><br><span class="line">    sleep(100)</span><br><span class="line">    dut.clockDomain.waitSampling()</span><br><span class="line"></span><br><span class="line">    fork &#123;//fork灌入进程</span><br><span class="line">      for(x &lt;- source)&#123;//将激励one by one灌入</span><br><span class="line">        dut.io.din.payload.I #= x.re.toLong</span><br><span class="line">        dut.io.din.payload.Q #= x.im.toLong</span><br><span class="line">        dut.io.din.valid     #= true</span><br><span class="line">        dut.clockDomain.waitSampling()</span><br><span class="line">      &#125;</span><br><span class="line">      sleep(100)</span><br><span class="line">      simSuccess() //仿真结束 </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fork &#123;//fork读取比对进程</span><br><span class="line">      while(true)&#123;</span><br><span class="line">        sleep(1)</span><br><span class="line">        if(dut.io.dout.valid.toBoolean)&#123;</span><br><span class="line">          val res = dut.io.dout.payload.toLong</span><br><span class="line">          val ref = refs.dequeue   //计分板实时取数</span><br><span class="line">          dut.clockDomain.waitSampling()</span><br><span class="line">          assert(res == ref.fixAsLong(cfg.doQ)) //实时数据比对</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="一：简单的数字混频器"><a href="#一：简单的数字混频器" class="headerlink" title="一：简单的数字混频器"></a>一：简单的数字混频器</h3><p>数字下混频模块的顶层如下，有相位步长，相位初始值，输入输出数据<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FreqMixer</span>(<span class="hljs-params">cfg: <span class="hljs-type">FreqMixerConfig</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> init      = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> thetaStep = in <span class="hljs-type">SInt</span>(cfg.thetaStepQ.width bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> thetaInit = in <span class="hljs-type">SInt</span>(cfg.thetaAccQ.width bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> din       = slave <span class="hljs-type">Flow</span>(<span class="hljs-type">IQ</span>(cfg.diQ.width))</span><br><span class="line">    <span class="hljs-keyword">val</span> dout      = master(<span class="hljs-type">Flow</span>(<span class="hljs-type">IQ</span>(cfg.doQ.width)))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>起初你可能像verilog一样一个一个配置参数和灌入激励<br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">.compile(<span class="hljs-keyword">new</span> <span class="hljs-type">FreqMixer</span>(cfg, <span class="hljs-literal">true</span>))</span><br><span class="line">.doSimUntilVoid(<span class="hljs-string">"freqmixSim"</span>)&#123; dut =&gt;</span><br><span class="line">    dut.clockDomain.forkStimulus(<span class="hljs-number">5</span>) <span class="hljs-comment">//添加时钟激励,时钟周期为5ns</span></span><br><span class="line">    dut.io.din.valid #= <span class="hljs-literal">false</span></span><br><span class="line">    dut.io.thetaStep #= thetaStep.fixAsLong(cfg.thetaStepQ)<span class="hljs-comment">//设置频偏步长</span></span><br><span class="line">    dut.io.thetaInit #= thetaInit.fixAsLong(cfg.thetaAccQ) <span class="hljs-comment">//设置相位初始值</span></span><br><span class="line">    sleep(<span class="hljs-number">100</span>)</span><br><span class="line">    dut.clockDomain.waitSampling()</span><br><span class="line"></span><br><span class="line">    fork &#123;<span class="hljs-comment">//fork灌入进程</span></span><br><span class="line">      <span class="hljs-keyword">for</span>(x &lt;- source)&#123;<span class="hljs-comment">//将激励one by one灌入</span></span><br><span class="line">        dut.io.din.payload.<span class="hljs-type">I</span> #= x.re.toLong</span><br><span class="line">        dut.io.din.payload.<span class="hljs-type">Q</span> #= x.im.toLong</span><br><span class="line">        dut.io.din.valid     #= <span class="hljs-literal">true</span></span><br><span class="line">        dut.clockDomain.waitSampling()</span><br><span class="line">      &#125;</span><br><span class="line">      sleep(<span class="hljs-number">100</span>)</span><br><span class="line">      simSuccess() <span class="hljs-comment">//仿真结束 </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fork &#123;<span class="hljs-comment">//fork读取比对进程</span></span><br><span class="line">      <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>)&#123;</span><br><span class="line">        sleep(<span class="hljs-number">1</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span>(dut.io.dout.valid.toBoolean)&#123;</span><br><span class="line">          <span class="hljs-keyword">val</span> res = dut.io.dout.payload.toLong</span><br><span class="line">          <span class="hljs-keyword">val</span> ref = refs.dequeue   <span class="hljs-comment">//计分板实时取数</span></span><br><span class="line">          dut.clockDomain.waitSampling()</span><br><span class="line">          assert(res == ref.fixAsLong(cfg.doQ)) <span class="hljs-comment">//实时数据比对</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>对于一个功能单一比较小的模块这样可能也能凑合应付，但是对于一个复杂的测试场景复杂的模块顶层，一个一个的去灌入激励，就会变的非常麻烦。我们完全可以将其抽象成4个独立的操作步骤，这些步骤可以串行，也可以通过fork join并行。</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.compile(new FreqMixer(cfg, true))</span><br><span class="line">.doSimUntilVoid(&quot;freqmixSim&quot;)&#123; dut =&gt;</span><br><span class="line">    dut.init() // 初始化 包括端口信号初始化，添加时钟激励</span><br><span class="line">    dut.forcePara(thetaStep, thetaInit) //配置参数</span><br><span class="line">    dut.forkData(source)</span><br><span class="line">    dut.forkCompare()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.compile(<span class="hljs-keyword">new</span> <span class="hljs-type">FreqMixer</span>(cfg, <span class="hljs-literal">true</span>))</span><br><span class="line">.doSimUntilVoid(<span class="hljs-string">"freqmixSim"</span>)&#123; dut =&gt;</span><br><span class="line">    dut.init() <span class="hljs-comment">// 初始化 包括端口信号初始化，添加时钟激励</span></span><br><span class="line">    dut.forcePara(thetaStep, thetaInit) <span class="hljs-comment">//配置参数</span></span><br><span class="line">    dut.forkData(source)</span><br><span class="line">    dut.forkCompare()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>新的tb看上去就简洁多了，不光简洁，这些独立出来的函数可以更方便的复用和组合成测试激励。有人可能好奇，这些组合的函数放到哪儿去了？实际你可以把它放到top模块下面，它并不产生电路，所以不用担心。</p>
-<pre><code class="{.scala}"> class FreqMixer(cfg: FreqMixerConfig) extends Component{
-  val io = new Bundle{
+<pre><code class="scala"><span class="class"><span class="keyword">class</span> <span class="title">FreqMixer</span>(<span class="params">cfg: <span class="type">FreqMixerConfig</span></span>) <span class="keyword">extends</span> <span class="title">Component</span></span>{
+  <span class="keyword">val</span> io = <span class="keyword">new</span> <span class="type">Bundle</span>{
     ....
   }
-  def init() ....
-  def forcePara(thetaStep： Long, thetaInit: Long) ....
-  def forckData(source) ....
-  def frokCompare().....
+  <span class="function"><span class="keyword">def</span> <span class="title">init</span></span>() ....
+  <span class="function"><span class="keyword">def</span> <span class="title">forcePara</span></span>(thetaStep： <span class="type">Long</span>, thetaInit: <span class="type">Long</span>) ....
+  <span class="function"><span class="keyword">def</span> <span class="title">forckData</span></span>(source) ....
+  <span class="function"><span class="keyword">def</span> <span class="title">frokCompare</span></span>().....
 }
 </code></pre>
 <p>对于习惯了verilog开发的人，喜欢保持顶层干净，不希望将HDL代码中加入其它非逻辑代码，那么你也可以为FreqMixer专门继承出一个TB类型，将测试相关的代码放入TB，这样在保证能够访问顶层的所有变量方法以外完全不影响顶层模块的代码。</p>
-<pre><code class="{.scala}">class FreqMixer(cfg: FreqMixerConfig) extends Component{
-  val io = new Bundle{
+<pre><code class="scala"><span class="class"><span class="keyword">class</span> <span class="title">FreqMixer</span>(<span class="params">cfg: <span class="type">FreqMixerConfig</span></span>) <span class="keyword">extends</span> <span class="title">Component</span></span>{
+  <span class="keyword">val</span> io = <span class="keyword">new</span> <span class="type">Bundle</span>{
     ....
   }
    ....
 }
 
-class FreqMixerTB(cfg: FreqMixerConfig) extends FreqMixer(cfg){//简单继承即可
-  //这样FreqMixer内的接口和变量完全可见
-  def init(){
-     clockDomain.forkStimulus(5) //clockDomain可见
-     io.din.valid #= false       //io 可见    
+<span class="class"><span class="keyword">class</span> <span class="title">FreqMixerTB</span>(<span class="params">cfg: <span class="type">FreqMixerConfig</span></span>) <span class="keyword">extends</span> <span class="title">FreqMixer</span>(<span class="params">cfg</span>)</span>{<span class="comment">//简单继承即可</span>
+  <span class="comment">//这样FreqMixer内的接口和变量完全可见</span>
+  <span class="function"><span class="keyword">def</span> <span class="title">init</span></span>(){
+     clockDomain.forkStimulus(<span class="number">5</span>) <span class="comment">//clockDomain可见</span>
+     io.din.valid #= <span class="literal">false</span>       <span class="comment">//io 可见    </span>
   }
-  def forcePara(thetaStep： Long, thetaInit: Long){
-     io.thetaStep  #= thetaStep  //配置相位步长
-     io.thetaInit  #= thetaInit  //配置相位初始值
+  <span class="function"><span class="keyword">def</span> <span class="title">forcePara</span></span>(thetaStep： <span class="type">Long</span>, thetaInit: <span class="type">Long</span>){
+     io.thetaStep  #= thetaStep  <span class="comment">//配置相位步长</span>
+     io.thetaInit  #= thetaInit  <span class="comment">//配置相位初始值</span>
   }
-  def forkData(source) ....
-  def forkCompare().....
+  <span class="function"><span class="keyword">def</span> <span class="title">forkData</span></span>(source) ....
+  <span class="function"><span class="keyword">def</span> <span class="title">forkCompare</span></span>().....
 }
 </code></pre>
 <p>我们知道对于一个直流信号，添加一个频偏相当于就添加了一个正弦波分量。我们试试以下代码。</p>
-<pre><code class="{.scala}">dut.forcePara((2*Pi/40).fixAsLong(SQ(32,28), 0)//设置2Pi/40的,相当于一个正玄波周期40个样点
-dut.forkData(List.fill(1000)(0.5+0*j).fixAsLong(SQ(8,7)))  //灌入直流，SQ(8,7)量化
+<pre><code class="scala">dut.forcePara((<span class="number">2</span>*<span class="type">Pi</span>/<span class="number">40</span>).fixAsLong(<span class="type">SQ</span>(<span class="number">32</span>,<span class="number">28</span>), <span class="number">0</span>)<span class="comment">//设置2Pi/40的,相当于一个正玄波周期40个样点</span>
+dut.forkData(<span class="type">List</span>.fill(<span class="number">1000</span>)(<span class="number">0.5</span>+<span class="number">0</span>*j).fixAsLong(<span class="type">SQ</span>(<span class="number">8</span>,<span class="number">7</span>)))  <span class="comment">//灌入直流，SQ(8,7)量化</span>
 </code></pre>
 <p>当给dut灌入直流，输出出现完美的正弦波<br><img src="https://picb.zhimg.com/v2-d51c8e58e39d12425e775236022de174_b.jpg" alt="pic1"><br>我们再做点好玩的事情，给输入信号添加一些高斯白噪声。</p>
-<pre><code class="{.scala}">val source = List.fill(1000)(0.5+0*j)
-val sourceWithNoise = AWGN(source, snr = 3) //添加一组信噪比为3dB的高斯白噪声
+<pre><code class="scala"><span class="keyword">val</span> source = <span class="type">List</span>.fill(<span class="number">1000</span>)(<span class="number">0.5</span>+<span class="number">0</span>*j)
+<span class="keyword">val</span> sourceWithNoise = <span class="type">AWGN</span>(source, snr = <span class="number">3</span>) <span class="comment">//添加一组信噪比为3dB的高斯白噪声</span>
 dut.forkData(soureWithNoise.fixAsLong)
-dut.forcePara((2*Pi/200).fixAsLong(SQ(32,28), 0)//同时把周期设大一点
+dut.forcePara((<span class="number">2</span>*<span class="type">Pi</span>/<span class="number">200</span>).fixAsLong(<span class="type">SQ</span>(<span class="number">32</span>,<span class="number">28</span>), <span class="number">0</span>)<span class="comment">//同时把周期设大一点</span>
 </code></pre>
 <p><img src="https://pic1.zhimg.com/v2-fe1a501a8f8ebab3e6c4252a46d67b01_b.jpg" alt="pic2"></p>
 <p>当我们把snr设置到-3db是，2倍的噪声已经对信号造成严重的变形</p>
-<pre><code class="{.scala}">val sourceWithNoise = AWGN(source, snr = -3) //信噪比设为 -3dB
+<pre><code class="scala"><span class="keyword">val</span> sourceWithNoise = <span class="type">AWGN</span>(source, snr = <span class="number">-3</span>) <span class="comment">//信噪比设为 -3dB</span>
 </code></pre>
-<p><img src="https://pic1.zhimg.com/v2-b6ded83caf0d83202097ea266bea432b_b.jpg" alt="pic3"><br>当然我们还可以调整接受机输入的功率以便放到合适的AD范围内，一般蜂窝通信的AD功率增益会调整到-9 ~-12dB左右， 而像GPS接收机位宽比较低，可能只有2bit，会强制饱和30%，把它调到1.549db以便获得最佳效果</p>
-<pre><code class="{.scala}">val sourceWithNoise = GainTo(AWGN(source, snr = -3), -9) //信噪比-3dB，功率增益调到 -9dB
+<p><img src="https://pic1.zhimg.com/v2-b6ded83caf0d83202097ea266bea432b_b.jpg" alt="pic3"></p>
+<p>当然我们还可以调整接受机输入的功率以便放到合适的AD范围内，一般蜂窝通信的AD功率增益会调整到-9 ~-12dB左右， 而像GPS接收机位宽比较低，可能只有2bit，会强制饱和30%，把它调到1.549db以便获得最佳效果</p>
+<pre><code class="scala"><span class="keyword">val</span> sourceWithNoise = <span class="type">GainTo</span>(<span class="type">AWGN</span>(source, snr = <span class="number">-3</span>), <span class="number">-9</span>) <span class="comment">//信噪比-3dB，功率增益调到 -9dB</span>
 </code></pre>
 <p><img src="https://pic3.zhimg.com/v2-a895417e153416f1f8506c9af0fc14a0_b.jpg" alt="pic4"></p>
 <p>用2bit不太容易看出来，用一个8bit，把增益控制在1.549db,可以看出明显的饱和截断<br><img src="https://picb.zhimg.com/v2-328c65ab13543614ee9870442bdc0b51_b.jpg" alt="pic5"><br>给一个输入信号加点噪声用analog显示，本身并没有什么实际意义，但是通过这个演示我想说明的，通过简单的几行像伪代码一样的代码可以及时的反应到DUT上，这在以前是不可想象的，传统的IC开发流程里面，需要算法组帮你生成激励，硬件设计人员很难自己构造功能性的case。现在scala平台上你可以将复杂的参考设计和硬件设计完美结合，实时仿真，形成闭环。我最近在做BD/GPS双模基带开发，所有的硬件代码，Golden参考模型，测试向量全部都在Scala平台上完成，可以很方便的构造各种case，比如一次发多颗星，一次跟踪不同的卫星，每颗卫星的信噪比，频偏，码相位构造都能够方便配置。往常对于一些稍微特殊的需求或者case，你需要协调算法同事帮你产生，算法平台的侧重点可能更多的关注性能极限仿真，所以有些对算法平台来说并不是非常方便，同时组间的需求响应周期也比较大。这时候你有scala写的参考平台（这个会跟算法对齐），这些任务可以快速闭环的在自己的平台上完成。</p>
 <h4 id="添加总线读写函数"><a href="#添加总线读写函数" class="headerlink" title="添加总线读写函数"></a>添加总线读写函数</h4><p>我们开发的模块经常会有AHB, 或者APB总线接口作为寄存器配置接口，一般情况下自测的时候不会为了配置参数再去给他添加一个VIP，但是你直接操作dut上总线接口的信号，那显然非常的啰嗦，如果能在端口上直接 dut.write(0x02, 0x32322)操作那就方便多了</p>
-<pre><code class="{.scala}">class GPSTop extends Component{
-  val io = new Bundle{ 
+<pre><code class="scala"><span class="class"><span class="keyword">class</span> <span class="title">GPSTop</span> <span class="keyword">extends</span> <span class="title">Component</span></span>{
+  <span class="keyword">val</span> io = <span class="keyword">new</span> <span class="type">Bundle</span>{ 
     ...
-    val ahb = AHBLite3(AHBLite3Config(32,32))        
+    <span class="keyword">val</span> ahb = <span class="type">AHBLite3</span>(<span class="type">AHBLite3Config</span>(<span class="number">32</span>,<span class="number">32</span>))        
   } 
 }
 </code></pre>
 <p>不过我找了一下spinal.sim, 目前并没有这样的函数，如果你不想麻烦作者立马给你加上，或者自己暂时也不想动spinal的源码，你完全可以在本地通过隐式扩展，悄悄的给已有的class扩展方法。如果这些方法足够通用，并且在你本地经过充分的验证，你也可以给spinal提个PR merge 到合适的地方去。</p>
-<pre><code class="{.scala}">implicit class AhbLite3Extends(ahb: AhbLite3){ //给AHBlite3隐式扩展simWrite, simReda方法 
-    import spinal.core._
-    import spinal.core.sim._
+<pre><code class="scala"><span class="keyword">implicit</span> <span class="class"><span class="keyword">class</span> <span class="title">AhbLite3Extends</span>(<span class="params">ahb: <span class="type">AhbLite3</span></span>)</span>{ <span class="comment">//给AHBlite3隐式扩展simWrite, simReda方法 </span>
+    <span class="keyword">import</span> spinal.core._
+    <span class="keyword">import</span> spinal.core.sim._
 
-    def simWrite(addr: Long, data: BigInt)(cd: ClockDomain) = {
-      cd.waitSampling()// 等待时钟沿
-      ahb.HSEL   #= true
-      ahb.HWRITE #= true
-      ahb.HREADY #= true
-      ahb.HADDR  #= addr
-      ahb.HTRANS #= 2
-      cd.waitSampling()// 等待时钟沿
-      ahb.HWDATA #= data
-      while(!ahb.HREADYOUT.toBoolean){cd.waitSampling()}  //握手等待
+    <span class="function"><span class="keyword">def</span> <span class="title">simWrite</span></span>(addr: <span class="type">Long</span>, data: <span class="type">BigInt</span>)(cd: <span class="type">ClockDomain</span>) = {
+      cd.waitSampling()<span class="comment">// 等待时钟沿</span>
+      ahb.<span class="type">HSEL</span>   #= <span class="literal">true</span>
+      ahb.<span class="type">HWRITE</span> #= <span class="literal">true</span>
+      ahb.<span class="type">HREADY</span> #= <span class="literal">true</span>
+      ahb.<span class="type">HADDR</span>  #= addr
+      ahb.<span class="type">HTRANS</span> #= <span class="number">2</span>
+      cd.waitSampling()<span class="comment">// 等待时钟沿</span>
+      ahb.<span class="type">HWDATA</span> #= data
+      <span class="keyword">while</span>(!ahb.<span class="type">HREADYOUT</span>.toBoolean){cd.waitSampling()}  <span class="comment">//握手等待</span>
     }
 
-    def simRead(addr: Long)(cd: ClockDomain): BigInt = {
-      cd.waitSampling() // 等待时钟沿
-      ahb.HSEL   #= true
-      ahb.HWRITE #= false
-      ahb.HREADY #= true
-      ahb.HADDR  #= addr
-      ahb.HTRANS #= 2
-      cd.waitSampling()// 等待时钟沿
-      while(!ahb.HREADYOUT.toBoolean){cd.waitSampling()}// 握手等待
-      sleep(0)
-      ahb.HRDATA.toLong
+    <span class="function"><span class="keyword">def</span> <span class="title">simRead</span></span>(addr: <span class="type">Long</span>)(cd: <span class="type">ClockDomain</span>): <span class="type">BigInt</span> = {
+      cd.waitSampling() <span class="comment">// 等待时钟沿</span>
+      ahb.<span class="type">HSEL</span>   #= <span class="literal">true</span>
+      ahb.<span class="type">HWRITE</span> #= <span class="literal">false</span>
+      ahb.<span class="type">HREADY</span> #= <span class="literal">true</span>
+      ahb.<span class="type">HADDR</span>  #= addr
+      ahb.<span class="type">HTRANS</span> #= <span class="number">2</span>
+      cd.waitSampling()<span class="comment">// 等待时钟沿</span>
+      <span class="keyword">while</span>(!ahb.<span class="type">HREADYOUT</span>.toBoolean){cd.waitSampling()}<span class="comment">// 握手等待</span>
+      sleep(<span class="number">0</span>)
+      ahb.<span class="type">HRDATA</span>.toLong
     }
 }
 </code></pre>
 <p>然后在顶层模块集成来的TB里添加write， read 方法，还可以进一步的包装，此时你可以像写C语言一样对你的模块进行配置。</p>
-<pre><code class="{.scala}">class GPSTopTB extends GPSTOP{
-  def write(addr: BigInt, data: BigInt) = io.ahb.simWrite(addr, data)(this.clockDomain)
-  def read(addr: BigInt): BigInt = io.ahb.simRead(addr)(this.clockDomain)
+<pre><code class="scala"><span class="class"><span class="keyword">class</span> <span class="title">GPSTopTB</span> <span class="keyword">extends</span> <span class="title">GPSTOP</span></span>{
+  <span class="function"><span class="keyword">def</span> <span class="title">write</span></span>(addr: <span class="type">BigInt</span>, data: <span class="type">BigInt</span>) = io.ahb.simWrite(addr, data)(<span class="keyword">this</span>.clockDomain)
+  <span class="function"><span class="keyword">def</span> <span class="title">read</span></span>(addr: <span class="type">BigInt</span>): <span class="type">BigInt</span> = io.ahb.simRead(addr)(<span class="keyword">this</span>.clockDomain)
 
-  def forceGPSPara(cs: GPSCase) = { //可以进一步封装寄存器配置函数
-    write(0x00,  cs.para.modes)
-    write(0x04,  cs.para.parameter0)
-    write(0x08,  cs.para.parameter0)
-    write(0x0c,  cs.para.intEnables)
+  <span class="function"><span class="keyword">def</span> <span class="title">forceGPSPara</span></span>(cs: <span class="type">GPSCase</span>) = { <span class="comment">//可以进一步封装寄存器配置函数</span>
+    write(<span class="number">0x00</span>,  cs.para.modes)
+    write(<span class="number">0x04</span>,  cs.para.parameter0)
+    write(<span class="number">0x08</span>,  cs.para.parameter0)
+    write(<span class="number">0x0c</span>,  cs.para.intEnables)
     .......
-    write(0x40,  cs.para.....)
+    write(<span class="number">0x40</span>,  cs.para.....)
   }
 }
 </code></pre>
@@ -316,49 +317,49 @@ dut.forcePara((2*Pi/200).fixAsLong(SQ(32,28), 0)//同时把周期设大一点
 <p>但是功能性的case，验证人员对你的功能case的构造并不一定特别清楚，我们再指定验证规划的时候这类case往往由设计和算法来一起出，所以这类case设计人员更为清楚，让设计评估测试更为合适, 如果我们在前期经过充分的功能性测试，在交付软件的时候比较稳定收敛，这也会直接加速验证的总体收敛进度，进而加快项目进度。</p>
 <p>下面我会展示第二类的case.</p>
 <p>当我们开发完HDL代码以后，需要造一些常规case，和边界case, 不同于传统的ICflow，这些case 代码会跟HDL放到一个project下面, 它并不会生成数据，非常清晰简洁。即便很长时间过去以后你依然能够方便的再把它们跑起来。</p>
-<pre><code class="{.scala}">//GPS发送case， 卫星编号， 信噪比，位置偏移， 频偏一目了然， 实现细节全部封装在对应的类里面
-object GPSTxCases {
-  val case00: List[SatCase] = List(
-    SatCase(Sat(GPS,  1), ChannelCase(snr = 100, chipOffset = 0, Fdoppler = 0 Hz)))
+<pre><code class="scala"><span class="comment">//GPS发送case， 卫星编号， 信噪比，位置偏移， 频偏一目了然， 实现细节全部封装在对应的类里面</span>
+<span class="class"><span class="keyword">object</span> <span class="title">GPSTxCases</span> </span>{
+  <span class="keyword">val</span> case00: <span class="type">List</span>[<span class="type">SatCase</span>] = <span class="type">List</span>(
+    <span class="type">SatCase</span>(<span class="type">Sat</span>(<span class="type">GPS</span>,  <span class="number">1</span>), <span class="type">ChannelCase</span>(snr = <span class="number">100</span>, chipOffset = <span class="number">0</span>, <span class="type">Fdoppler</span> = <span class="number">0</span> <span class="type">Hz</span>)))
 
     ....
-  val case04 : List[SatCase] = List(
-    SatCase(Sat(GPS,  1 ), ChannelCase(snr =  0, chipOffset = 399 , Fdoppler = 10   Hz)),
-    SatCase(Sat(GPS,  31), ChannelCase(snr =  0, chipOffset = 100 , Fdoppler = 500 kHz)),
-    SatCase(Sat(GPS,  7),  ChannelCase(snr =  0, chipOffset = 100 , Fdoppler = 500 kHz)),
-    SatCase(Sat(GPS,  15), ChannelCase(snr = -2, chipOffset = 2047, Fdoppler = 27   Hz)))
+  <span class="keyword">val</span> case04 : <span class="type">List</span>[<span class="type">SatCase</span>] = <span class="type">List</span>(
+    <span class="type">SatCase</span>(<span class="type">Sat</span>(<span class="type">GPS</span>,  <span class="number">1</span> ), <span class="type">ChannelCase</span>(snr =  <span class="number">0</span>, chipOffset = <span class="number">399</span> , <span class="type">Fdoppler</span> = <span class="number">10</span>   <span class="type">Hz</span>)),
+    <span class="type">SatCase</span>(<span class="type">Sat</span>(<span class="type">GPS</span>,  <span class="number">31</span>), <span class="type">ChannelCase</span>(snr =  <span class="number">0</span>, chipOffset = <span class="number">100</span> , <span class="type">Fdoppler</span> = <span class="number">500</span> kHz)),
+    <span class="type">SatCase</span>(<span class="type">Sat</span>(<span class="type">GPS</span>,  <span class="number">7</span>),  <span class="type">ChannelCase</span>(snr =  <span class="number">0</span>, chipOffset = <span class="number">100</span> , <span class="type">Fdoppler</span> = <span class="number">500</span> kHz)),
+    <span class="type">SatCase</span>(<span class="type">Sat</span>(<span class="type">GPS</span>,  <span class="number">15</span>), <span class="type">ChannelCase</span>(snr = <span class="number">-2</span>, chipOffset = <span class="number">2047</span>, <span class="type">Fdoppler</span> = <span class="number">27</span>   <span class="type">Hz</span>)))
     ...
 }
 </code></pre>
 <p>跟踪测试case, 可以有发送数据 和 跟踪jobs组合而成，除了构造典型case以外，构造随机Case也是不是任何难题。</p>
-<pre><code class="{.scala}">object GPSTECases {
-  val case00 = TECase(GPS,
-    sendcase = GPSTxCases.case00,
-    jobs     = GPSTEJobs.case00,
-    maxMs    = 32
+<pre><code class="scala"><span class="class"><span class="keyword">object</span> <span class="title">GPSTECases</span> </span>{
+  <span class="keyword">val</span> case00 = <span class="type">TECase</span>(<span class="type">GPS</span>,
+    sendcase = <span class="type">GPSTxCases</span>.case00,
+    jobs     = <span class="type">GPSTEJobs</span>.case00,
+    maxMs    = <span class="number">32</span>
   )
 
-  val case01 = TECase(GPS,
-    sendcase = GPSTxCases.case01,
-    jobs     = GPSTEJobs.case01,
-    maxMs    = 32
+  <span class="keyword">val</span> case01 = <span class="type">TECase</span>(<span class="type">GPS</span>,
+    sendcase = <span class="type">GPSTxCases</span>.case01,
+    jobs     = <span class="type">GPSTEJobs</span>.case01,
+    maxMs    = <span class="number">32</span>
   )
 </code></pre>
 <p>回归集通过层层包装最后寥寥几行，干干净净，再也看不到在dut上force一大堆的信号让你迷惑, 配合IDEA的变量函数追踪功能，你也很容易看明白该case具体进行哪些测试，有些人看到上面的Sat， GPSTEjobs 可能不清楚这些具体是干什么的，不明觉厉，这时候你别忘了IDEA的 <strong>Ctrl+B</strong>跳转大法 ，scala 只要你看不懂的函数或者各种类似于 :=,&lt;-&lt; 的符号，尽管大胆<strong>Ctrl+B</strong>进入，维多利亚不再有秘密。</p>
 <p>最后，这些case能直接很方便的添加到持续集成CI集（CI持续集成在传统的IC开发流程中使用并不是很广泛，但是scala 开发HDL的时候CI还是非常有必要，原因后面会单独出一篇介绍）</p>
-<pre><code class="{.scala}">class TESimRegression extends  FunSuite {
-  test(&quot;tesim_case00&quot;){
-    val s = new TESim(GnssConfig(),
-      GPSTECases.case00,//force GPS信号以及跟踪job
-      BDTECases.case00, //force BD信号以及跟踪job 
-      withWave = false,
-      dumpNode = false)
-    s.sim(ms = 30)
+<pre><code class="scala"><span class="class"><span class="keyword">class</span> <span class="title">TESimRegression</span> <span class="keyword">extends</span>  <span class="title">FunSuite</span> </span>{
+  test(<span class="string">"tesim_case00"</span>){
+    <span class="keyword">val</span> s = <span class="keyword">new</span> <span class="type">TESim</span>(<span class="type">GnssConfig</span>(),
+      <span class="type">GPSTECases</span>.case00,<span class="comment">//force GPS信号以及跟踪job</span>
+      <span class="type">BDTECases</span>.case00, <span class="comment">//force BD信号以及跟踪job </span>
+      withWave = <span class="literal">false</span>,
+      dumpNode = <span class="literal">false</span>)
+    s.sim(ms = <span class="number">30</span>)
   }
 
   ...
 
-  test(&quot;tesim_caseN&quot;){
+  test(<span class="string">"tesim_caseN"</span>){
   ...
   }
 }

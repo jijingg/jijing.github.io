@@ -346,66 +346,6 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/chisel/20190320_verilog_case_ifelse.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/electric1.jpg" alt="Chisel-Verilog查找表优先级问题讨论">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    11 分钟 读完 (大约 1627 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/chisel/20190320_verilog_case_ifelse.html">Chisel-Verilog查找表优先级问题讨论</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="Chisel-查找表电路优先级问题"><a href="#Chisel-查找表电路优先级问题" class="headerlink" title="Chisel 查找表电路优先级问题"></a>Chisel 查找表电路优先级问题</h3><h4 id="verilog-ROM的两种写法及区别"><a href="#verilog-ROM的两种写法及区别" class="headerlink" title="verilog ROM的两种写法及区别"></a>verilog ROM的两种写法及区别</h4><figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">    <span class="hljs-keyword">case</span>(addr0)  </span><br><span class="line">        <span class="hljs-number">6'd0</span> :  data0 &lt;= <span class="hljs-number">8'd214</span>;</span><br><span class="line">        <span class="hljs-number">6'd1</span> :  data0 &lt;= <span class="hljs-number">8'd213</span>;</span><br><span class="line">        <span class="hljs-number">6'd2</span> :  data0 &lt;= <span class="hljs-number">8'd212</span>;</span><br><span class="line">        <span class="hljs-number">6'd3</span> :  data0 &lt;= <span class="hljs-number">8'd211</span>;</span><br><span class="line">        <span class="hljs-number">6'd4</span> :  data0 &lt;= <span class="hljs-number">8'd210</span>;</span><br><span class="line">        <span class="hljs-number">6'd5</span> :  data0 &lt;= <span class="hljs-number">8'd209</span>;</span><br><span class="line">        <span class="hljs-number">6'd6</span> :  data0 &lt;= <span class="hljs-number">8'd208</span>;</span><br><span class="line">        <span class="hljs-number">6'd7</span> :  data0 &lt;= <span class="hljs-number">8'd207</span>;   </span><br><span class="line">方法<span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd2</span> )  data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd5</span> )  data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br></pre></td></tr></table></figure>
-<p>方法2是不是带优先级？ 实际上是不带优先级<br>逻辑上if取的条件都是addr1的值，一定是互斥的，综合工具也能自动识别出这种if else<br>它有别于以下这种情况，这种情况下是真实带有优先级的电路，其中<code>another_cond_A,another_cond_B</code><br>是独立的两个输入条件，和addr1的取值可能同时发生，所以不能被综合器当做查找表来对待。<br></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/chisel/20190320_verilog_case_ifelse.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
         <a href="/chisel/20181205_chisel_learning.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/book4.jpg" alt="Chisel 实例问题汇总">
         </a>
@@ -447,6 +387,66 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/chisel/20181205_chisel_learning.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/chisel/20190320_verilog_case_ifelse.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/electric1.jpg" alt="Chisel-Verilog查找表优先级问题讨论">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-04T16:00:00.000Z">2018-12-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/chisel/">chisel</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1627 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/chisel/20190320_verilog_case_ifelse.html">Chisel-Verilog查找表优先级问题讨论</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="Chisel-查找表电路优先级问题"><a href="#Chisel-查找表电路优先级问题" class="headerlink" title="Chisel 查找表电路优先级问题"></a>Chisel 查找表电路优先级问题</h3><h4 id="verilog-ROM的两种写法及区别"><a href="#verilog-ROM的两种写法及区别" class="headerlink" title="verilog ROM的两种写法及区别"></a>verilog ROM的两种写法及区别</h4><figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">    <span class="hljs-keyword">case</span>(addr0)  </span><br><span class="line">        <span class="hljs-number">6'd0</span> :  data0 &lt;= <span class="hljs-number">8'd214</span>;</span><br><span class="line">        <span class="hljs-number">6'd1</span> :  data0 &lt;= <span class="hljs-number">8'd213</span>;</span><br><span class="line">        <span class="hljs-number">6'd2</span> :  data0 &lt;= <span class="hljs-number">8'd212</span>;</span><br><span class="line">        <span class="hljs-number">6'd3</span> :  data0 &lt;= <span class="hljs-number">8'd211</span>;</span><br><span class="line">        <span class="hljs-number">6'd4</span> :  data0 &lt;= <span class="hljs-number">8'd210</span>;</span><br><span class="line">        <span class="hljs-number">6'd5</span> :  data0 &lt;= <span class="hljs-number">8'd209</span>;</span><br><span class="line">        <span class="hljs-number">6'd6</span> :  data0 &lt;= <span class="hljs-number">8'd208</span>;</span><br><span class="line">        <span class="hljs-number">6'd7</span> :  data0 &lt;= <span class="hljs-number">8'd207</span>;   </span><br><span class="line">方法<span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk )</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">         <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd0</span> )  data1 &lt;= <span class="hljs-number">8'd150</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd1</span> )  data1 &lt;= <span class="hljs-number">8'd149</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd2</span> )  data1 &lt;= <span class="hljs-number">8'd148</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd3</span> )  data1 &lt;= <span class="hljs-number">8'd147</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd4</span> )  data1 &lt;= <span class="hljs-number">8'd146</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd5</span> )  data1 &lt;= <span class="hljs-number">8'd145</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd6</span> )  data1 &lt;= <span class="hljs-number">8'd144</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr1 == <span class="hljs-number">6'd7</span> )  data1 &lt;= <span class="hljs-number">8'd143</span>;</span><br></pre></td></tr></table></figure>
+<p>方法2是不是带优先级？ 实际上是不带优先级<br>逻辑上if取的条件都是addr1的值，一定是互斥的，综合工具也能自动识别出这种if else<br>它有别于以下这种情况，这种情况下是真实带有优先级的电路，其中<code>another_cond_A,another_cond_B</code><br>是独立的两个输入条件，和addr1的取值可能同时发生，所以不能被综合器当做查找表来对待。<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/chisel/20190320_verilog_case_ifelse.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -519,91 +519,6 @@
                 </div>
             </div>
         </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/eda/20181130_sy_QA.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/wb2.jpg" alt="SBT 版本问题">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 487 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/eda/20181130_sy_QA.html">SBT 版本问题</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h2><ul>
-<li><ol>
-<li>sbt 指向 “java -Dsbt.ivy.home=/nishome/jijing/ivy2 -jar  /DATA/jijing/rocket-chip/sbt-launch.jar” </li>
-</ol>
-</li>
-</ul>
-<p><strong>现象</strong><br>ivy2 也是最新的，包含 <code>org.scala-lang#scala-library;2.11.12</code> 正确的版本号  </p>
-<p>依然会报错！！</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	::          UNRESOLVED DEPENDENCIES         ::</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	:: org.scala-lang#scala-library;2.11.12: public: unable to get resource for org/scala-lang#scala-library;2.11.12: res=https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.12/scala-library-2.11.12.pom: java.net.UnknownHostException: repo1.maven.org: Temporary failure in name resolution</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br></pre></td></tr></table></figure>
-<p><strong>原因</strong></p>
-<p>~/.sbt 目录可能存在旧的版本，导致问题， </p>
-<p><strong>解决</strong></p>
-<p>删除 ~/.sbt 目录，如果联网，直接重新sbt run ，会自动下载更新，否则copy 别的机子上正确的 .sbt 到home 目录下。</p>
-<ul>
-<li><ol start="2">
-<li>IDEA，rochi-chip:sync failed ，但在terminal下正常编译 ，也是~/.sbt导致的</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>C 程序编译好的.out文件不能再 rocket-chip/emulator 目录下运行，而 run-asm-isa-test 则会没有问题</li>
-</ol>
-</li>
-</ul>
-<p>这是由于直接用rvgcc 编译的文件，并没有按照处理器的格式做link，因此想要正确的在处理器上运行，需要正确的link</p>
-<p>可以参见 bootrom/link.lds 文件 ：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 1 SECTIONS </span><br><span class="line"> 2 &#123;</span><br><span class="line"> 3     ROM_BASE = 0x10000; /* ... but actually position independent */</span><br><span class="line"> 4 </span><br><span class="line"> 5     . = ROM_BASE;</span><br><span class="line"> 6     .text.start : &#123; *(.text.start) &#125;</span><br><span class="line"> 7     . = ROM_BASE + 0x40;</span><br><span class="line"> 8     .text.hang : &#123; *(.text.hang) &#125;</span><br><span class="line"> 9     . = ROM_BASE + 0x80;</span><br><span class="line">10     .rodata.dtb : &#123; *(.rodata.dtb) &#125;</span><br><span class="line">11 &#125;</span><br></pre></td></tr></table></figure>
-<p><code>rvgcc -T link.ld bootrom.S -nostdlib -static -wl,--no-gc-section -o bootrom.img</code></p>
-<p>同理C代码编译的时候也需要使用正确的linkfile 文件 。</p>
-<h2 id="如何编译指定CPU的可执行文件"><a href="#如何编译指定CPU的可执行文件" class="headerlink" title="如何编译指定CPU的可执行文件"></a>如何编译指定CPU的可执行文件</h2><p>必要信息：</p>
-<ul>
-<li>$(CC) 需要默认的target (例如intel x86,  AMD64, MIPS 等等， 如果RISCV， 需要支持的指定指令集 (例如 rv32imc rv64g,rv32imdfc 等等)</li>
-<li>link 脚本，如果不指定，会有导入默认的脚本，否则需要显示指定，尤其是自己设计的处理器，需要显式的指定堆栈起始地址，程序默认存放地址，这些信息响应的也会体现在CPU硬件设计当中。需要正确match</li>
-</ul>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-        </div>
-        
         
         
     </div>
@@ -730,6 +645,91 @@
 </ol>
 </li>
 </ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/eda/20181130_sy_QA.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/wb2.jpg" alt="SBT 版本问题">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-04T16:00:00.000Z">2018-11-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 487 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/eda/20181130_sy_QA.html">SBT 版本问题</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h2><ul>
+<li><ol>
+<li>sbt 指向 “java -Dsbt.ivy.home=/nishome/jijing/ivy2 -jar  /DATA/jijing/rocket-chip/sbt-launch.jar” </li>
+</ol>
+</li>
+</ul>
+<p><strong>现象</strong><br>ivy2 也是最新的，包含 <code>org.scala-lang#scala-library;2.11.12</code> 正确的版本号  </p>
+<p>依然会报错！！</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	::          UNRESOLVED DEPENDENCIES         ::</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br><span class="line">[warn] 	:: org.scala-lang#scala-library;2.11.12: public: unable to get resource for org/scala-lang#scala-library;2.11.12: res=https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.12/scala-library-2.11.12.pom: java.net.UnknownHostException: repo1.maven.org: Temporary failure in name resolution</span><br><span class="line">[warn] 	::::::::::::::::::::::::::::::::::::::::::::::</span><br></pre></td></tr></table></figure>
+<p><strong>原因</strong></p>
+<p>~/.sbt 目录可能存在旧的版本，导致问题， </p>
+<p><strong>解决</strong></p>
+<p>删除 ~/.sbt 目录，如果联网，直接重新sbt run ，会自动下载更新，否则copy 别的机子上正确的 .sbt 到home 目录下。</p>
+<ul>
+<li><ol start="2">
+<li>IDEA，rochi-chip:sync failed ，但在terminal下正常编译 ，也是~/.sbt导致的</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>C 程序编译好的.out文件不能再 rocket-chip/emulator 目录下运行，而 run-asm-isa-test 则会没有问题</li>
+</ol>
+</li>
+</ul>
+<p>这是由于直接用rvgcc 编译的文件，并没有按照处理器的格式做link，因此想要正确的在处理器上运行，需要正确的link</p>
+<p>可以参见 bootrom/link.lds 文件 ：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 1 SECTIONS </span><br><span class="line"> 2 &#123;</span><br><span class="line"> 3     ROM_BASE = 0x10000; /* ... but actually position independent */</span><br><span class="line"> 4 </span><br><span class="line"> 5     . = ROM_BASE;</span><br><span class="line"> 6     .text.start : &#123; *(.text.start) &#125;</span><br><span class="line"> 7     . = ROM_BASE + 0x40;</span><br><span class="line"> 8     .text.hang : &#123; *(.text.hang) &#125;</span><br><span class="line"> 9     . = ROM_BASE + 0x80;</span><br><span class="line">10     .rodata.dtb : &#123; *(.rodata.dtb) &#125;</span><br><span class="line">11 &#125;</span><br></pre></td></tr></table></figure>
+<p><code>rvgcc -T link.ld bootrom.S -nostdlib -static -wl,--no-gc-section -o bootrom.img</code></p>
+<p>同理C代码编译的时候也需要使用正确的linkfile 文件 。</p>
+<h2 id="如何编译指定CPU的可执行文件"><a href="#如何编译指定CPU的可执行文件" class="headerlink" title="如何编译指定CPU的可执行文件"></a>如何编译指定CPU的可执行文件</h2><p>必要信息：</p>
+<ul>
+<li>$(CC) 需要默认的target (例如intel x86,  AMD64, MIPS 等等， 如果RISCV， 需要支持的指定指令集 (例如 rv32imc rv64g,rv32imdfc 等等)</li>
+<li>link 脚本，如果不指定，会有导入默认的脚本，否则需要显示指定，尤其是自己设计的处理器，需要显式的指定堆栈起始地址，程序默认存放地址，这些信息响应的也会体现在CPU硬件设计当中。需要正确match</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
         </div>
         
