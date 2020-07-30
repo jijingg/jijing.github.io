@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta name="baidu-site-verification" content="5NJSOR3owM">
+    <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6">
+    <meta charset="utf-8">
+<title>SpinalHDL(九):不变应万变-MemWrap适配 - 马車同学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="对于IC开发工程师我们可能都有这样的痛苦经历，经常需要手动为不同工艺库替换Mem。有些团队的MemWrapper可能是有专门的脚本来生成，内部会用宏来区分不同工艺，相对来说还比较省事一点，即便这样MemWrpper的集成也是需要你手动连线。但是如果你是IP提供商，不同的团队或者公司的MemWrapper的信号命名也各不相同。同样替换Mem是一件极其无聊并且容易出错的事情。  另外我发现Spinal">
+<meta name="keywords" content="SpinalHDL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpinalHDL(九):不变应万变-MemWrap适配">
+<meta property="og:url" content="https://jijingg.github.io/spinal/spinal9.html">
+<meta property="og:site_name" content="马車同学">
+<meta property="og:description" content="对于IC开发工程师我们可能都有这样的痛苦经历，经常需要手动为不同工艺库替换Mem。有些团队的MemWrapper可能是有专门的脚本来生成，内部会用宏来区分不同工艺，相对来说还比较省事一点，即便这样MemWrpper的集成也是需要你手动连线。但是如果你是IP提供商，不同的团队或者公司的MemWrapper的信号命名也各不相同。同样替换Mem是一件极其无聊并且容易出错的事情。  另外我发现Spinal">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://source.jijing.site/thumbnails/busy4.jpg">
+<meta property="og:updated_time" content="2020-07-30T09:40:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpinalHDL(九):不变应万变-MemWrap适配">
+<meta name="twitter:description" content="对于IC开发工程师我们可能都有这样的痛苦经历，经常需要手动为不同工艺库替换Mem。有些团队的MemWrapper可能是有专门的脚本来生成，内部会用宏来区分不同工艺，相对来说还比较省事一点，即便这样MemWrpper的集成也是需要你手动连线。但是如果你是IP提供商，不同的团队或者公司的MemWrapper的信号命名也各不相同。同样替换Mem是一件极其无聊并且容易出错的事情。  另外我发现Spinal">
+<meta name="twitter:image" content="http://source.jijing.site/thumbnails/busy4.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="SpinalHDL(九):不变应万变-MemWrap适配" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">文章</a>
+                
+                <a class="navbar-item" href="/main/">目录</a>
+                
+                <a class="navbar-item" href="/spinalhdl/">SpinalHDL</a>
+                
+                <a class="navbar-item" href="/topic/">主题</a>
+                
+                <a class="navbar-item" href="/categories/">分类</a>
+                
+                <a class="navbar-item" href="/tags/">标签</a>
+                
+                <a class="navbar-item" href="/archives/">时间轴</a>
+                
+                <a class="navbar-item" href="/about/">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-9 has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/busy4.jpg" alt="SpinalHDL(九):不变应万变-MemWrap适配">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-07-29T16:00:00.000Z">2020-07-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 分钟 读完 (大约 2084 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                SpinalHDL(九):不变应万变-MemWrap适配
+            
+        </h1>
+        <div class="content">
+            <p>对于IC开发工程师我们可能都有这样的痛苦经历，经常需要手动为不同工艺库替换Mem。有些团队的MemWrapper可能是有专门的脚本来生成，内部会用宏来区分不同工艺，相对来说还比较省事一点，即便这样MemWrpper的集成也是需要你手动连线。但是如果你是IP提供商，不同的团队或者公司的MemWrapper的信号命名也各不相同。同样替换Mem是一件极其无聊并且容易出错的事情。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-7442a8cd6e06ef578fcdaa73d9806254_720w.jpg" alt="1"></p>
+<p>另外我发现SpinalHDL自带的mem类型并不适合直接拿来做例化，所以需要为此创建一个新的解决方案来满足IC设计中这种常见的需求。spinal的mem模型我会放到Blackbox内部做为行为模型，这样在仿真的时候你可以clearBox来使用mem参考模型来仿真，不需要真正的去包含一个memwrap.v文件，这样在前期设计中非常方便。</p>
+<p>因此对于设计者来讲，我本来只需要关心这地方例化的Mem类型（双口，真双口，单口），数据位宽，mem深度即可。除此之外工艺相关的事情对设计者应该是透明的。</p>
+<p>可以总结为两点诉求</p>
+<ul>
+<li><strong>MemWrap替换不应修改HDL代码， 对开发者透明</strong></li>
+<li><strong>添加新的Vendor memWrap不应修改Spinal源码，保持前向兼容</strong></li>
+</ul>
+<p><img src="https://picb.zhimg.com/80/v2-e13bfaaac29a1ff083355331cda982fa_720w.jpg" alt="2"></p>
+<p>因此，对于开发者来讲，只需要知道统一的RAM例化接口，为此为Spinal设计常见的3种MEM类型.<br><a id="more"></a><br><figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ram1rw</span>(<span class="hljs-params">mc: <span class="hljs-type">MemConfig</span>, memName: <span class="hljs-type">String</span> = ""</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> <span class="hljs-keyword">with</span> <span class="hljs-title">MemWrap</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> cs, wr = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> bwe    = mc.genBWE()</span><br><span class="line">    <span class="hljs-keyword">val</span> addr   = in <span class="hljs-type">UInt</span>(mc.aw bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> wdata  = in <span class="hljs-type">Bits</span>(mc.dw bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> rdata  = out <span class="hljs-type">Bits</span>(mc.dw bits)</span><br><span class="line">  &#125;</span><br><span class="line">   noIoPrefix()</span><br><span class="line">  <span class="hljs-keyword">val</span> ram = mc.vendor.build(<span class="hljs-keyword">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ram1rw</span>(<span class="hljs-params">mc: <span class="hljs-type">MemConfig</span>, memName: <span class="hljs-type">String</span> = ""</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> <span class="hljs-keyword">with</span> <span class="hljs-title">MemWrap</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> cs, wr = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> bwe    = mc.genBWE()</span><br><span class="line">    <span class="hljs-keyword">val</span> addr   = in <span class="hljs-type">UInt</span>(mc.aw bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> wdata  = in <span class="hljs-type">Bits</span>(mc.dw bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> rdata  = out <span class="hljs-type">Bits</span>(mc.dw bits)</span><br><span class="line">  &#125;</span><br><span class="line">   noIoPrefix()</span><br><span class="line">  <span class="hljs-keyword">val</span> ram = mc.vendor.build(<span class="hljs-keyword">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ram2rw</span>(<span class="hljs-params">mc: <span class="hljs-type">MemConfig</span>, memName: <span class="hljs-type">String</span> = ""</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> <span class="hljs-keyword">with</span> <span class="hljs-title">MemWrap</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Aclk</span>  = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Awr</span>, <span class="hljs-type">Acs</span>  = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Abwe</span>  = mc.genBWE</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Aaddr</span> = in <span class="hljs-type">UInt</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Awdata</span> = in <span class="hljs-type">Bits</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Ardata</span> = out <span class="hljs-type">Bits</span>()</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Bclk</span>  = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Bwr</span>, <span class="hljs-type">Bcs</span> = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Bbwe</span>  = mc.genBWE</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Baddr</span> = in <span class="hljs-type">UInt</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Bwdata</span> = in <span class="hljs-type">Bits</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Brdata</span> = out <span class="hljs-type">Bits</span>()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  noIoPrefix()</span><br><span class="line">  <span class="hljs-keyword">val</span> ram = mc.vendor.build(<span class="hljs-keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>开发者仅需要关心Ram1rw、Ram1r1w、Ram2rw的例化和集成即可。而它们和Vendor生成的MemWrapper的库的例化连接则应当自动完成。仔细看上面的代码不难发现其中<code>mc.vendor.build(this)</code> 实际上就是通过类似于回调函数的方式来执行vendor的build函数，build函数则完成当前wrap和MemWrapper的连接。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">Vendor</span> </span>&#123;</span><br><span class="line"><span class="hljs-comment">//默认使用umc的wrapper</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Ram1rw</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> umc.mbb1rw(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Ram1r1w</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> umc.mbb1r1w(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Ram2rw</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> umc.mbb2rw(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Rom</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> umc.mbbrom(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Intel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Ram1rw</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> intel.mbb1rw(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Ram1r1w</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> intel.mbb1r1w(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Ram2rw</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> intel.mbb2rw(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build</span></span>(mw: <span class="hljs-type">Rom</span>): <span class="hljs-type">MemBlackBox</span> = <span class="hljs-keyword">new</span> intel.mbbrom(mw).<span class="hljs-type">Build</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">//对于不同的公司不同的工艺可以定义不同的Wrapper，前提extends Vendor</span></span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">SPRD</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;...&#125;</span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">FishSemi</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;...&#125;</span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">AMD</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;...&#125;</span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">HuaWei</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;...&#125;</span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">HuaWei10nm</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;...&#125;</span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">ZTE</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;...&#125;</span><br><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Invida</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Vendor</span></span>&#123;...&#125;</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+<p>其中build接受不同的参数，这是一个典型设计模式之生成器模式（The builder design pattern），对于Scala来说是非常简单自然，无需额外操作。不同的参数调用不同的vendor.memblackbox实现，比如我们来看下UMC 单口mem wrap的具体实现，我们需要将公共的wrap作为参数传递给厂商的wrapper，厂商的wrapper将自己的信号跟公共的wrap通过创建Build()函数来明确指出连接关系。这点非常重要，只有这样才能保持向后的扩展性，因为spinal不会也不可能把所有厂家的wrapper给你创建好, 也办不到，自己厂家的wrapper也有可能不断的在变化，唯一不变的是公共wrap的信号命名，所以只需要创建Build（）函数高速连接关系，设计者在例化RAM对象的时候只需要高速Vendor的名称即可。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> memlib.vendors.umc</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">mbb1rw</span>(<span class="hljs-params">wrap: <span class="hljs-type">Ram1rw</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">MemBlackBox</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.setDefinitionName(<span class="hljs-string">s"Mwrapper_rfsp<span class="hljs-subst">$&#123;mc.depth&#125;</span>x<span class="hljs-subst">$&#123;mc.dw&#125;</span>m2b1w1"</span>)</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span> &#123; iobd =&gt;</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">CLK</span>    = in <span class="hljs-type">Bool</span></span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">A</span>      = in <span class="hljs-type">UInt</span>(mc.aw bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">D</span>      = in <span class="hljs-type">Bits</span>(mc.dw bits)</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">CEN</span>    = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">WEN</span>    = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">BWEN</span>   = mc.genBWE</span><br><span class="line">    <span class="hljs-keyword">val</span> <span class="hljs-type">Q</span>      = out <span class="hljs-type">Bits</span>(mc.dw bits)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">val</span> cd  = <span class="hljs-type">ClockDomain</span>(io.<span class="hljs-type">CLK</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Build</span></span>(): <span class="hljs-type">MemBlackBox</span> = &#123;</span><br><span class="line">    wrap.clockDomain.setSyncWith(cd)</span><br><span class="line">    <span class="hljs-keyword">this</span>.io.<span class="hljs-type">CLK</span>  := wrap.clockDomain.readClockWire</span><br><span class="line">    <span class="hljs-keyword">this</span>.io.<span class="hljs-type">A</span>    := wrap.io.addr</span><br><span class="line">    <span class="hljs-keyword">this</span>.io.<span class="hljs-type">CEN</span>  := ~wrap.io.cs</span><br><span class="line">    <span class="hljs-keyword">this</span>.io.<span class="hljs-type">WEN</span>  := ~wrap.io.wr</span><br><span class="line">    <span class="hljs-keyword">if</span>(mc.needBWE)&#123;</span><br><span class="line">      <span class="hljs-keyword">this</span>.io.<span class="hljs-type">BWEN</span>  := ~wrap.io.bwe</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">this</span>.io.<span class="hljs-type">D</span>  := wrap.io.wdata</span><br><span class="line">    wrap.io.rdata  := <span class="hljs-keyword">this</span>.io.<span class="hljs-type">Q</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">if</span>(mc.withBist) &#123;wrap.io.bist &gt;&gt; io.bist&#125;</span><br><span class="line">    <span class="hljs-keyword">if</span>(mc.withScan) &#123;wrap.io.scan &gt;&gt; io.scan&#125;</span><br><span class="line">    <span class="hljs-keyword">this</span></span><br><span class="line">  &#125;</span><br><span class="line">  noIoPrefix()</span><br><span class="line">  ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际例化 传入Vendor信息， Vendor也可以放到全局配置，这样当我们的IP更换不同的vendor是只需要修改配置，不需要修改HDL代码</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CacheCell</span>(<span class="hljs-params">c: <span class="hljs-type">GnssConfig</span>, name: <span class="hljs-type">String</span> = ""</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> rp = slave(rdPort(c.caw, <span class="hljs-type">IQ</span>(c.dw)))</span><br><span class="line">    <span class="hljs-keyword">val</span> wp = slave(wrPort(c.caw, <span class="hljs-type">IQ</span>(c.dw)))</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">val</span> ram = <span class="hljs-type">Ram1rw</span>(<span class="hljs-type">MemConfig</span>(dw = <span class="hljs-number">32</span>, depth =<span class="hljs-number">512</span>, vendor = <span class="hljs-type">HuaWei10nm</span>)</span><br><span class="line">ram  &lt;&lt; (io.rp merge io.wp)</span><br></pre></td></tr></table></figure>
+<p>除了Mem之外，还有一些公共的cell，比如clkgate, clkmux, asyncCell, clkdiv 等等，RTL代码中会显示的例化， 不同的公司或者团队使用的wrapper名称也各不相同，当项目切换时，使用不同的工艺或者lib时，通常在cell-wrapper中通过宏来选择不同的lib。对于IP提供商来说，cell-wrapper的耦合例化，不同公司集成时，可能需要专门的的按照原来的wrapper Name来创建一套wrapper库。总之都是不够优雅。</p>
+<figure class="highlight verilog hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gate_cell u_deR_cg_cell(<span class="hljs-variable">.CLK</span>(clk), <span class="hljs-variable">.TSE</span>(test_mode), <span class="hljs-variable">.E</span>(deR_gate_en), <span class="hljs-variable">.ECK</span>(deR_clk));</span><br><span class="line">gate_cell u_deC_cg_cell(<span class="hljs-variable">.CLK</span>(clk), <span class="hljs-variable">.TSE</span>(test_mode), <span class="hljs-variable">.E</span>(deC_gate_en), <span class="hljs-variable">.ECK</span>(deC_clk));</span><br><span class="line">gate_cell u_deI_cg_cell(<span class="hljs-variable">.CLK</span>(clk), <span class="hljs-variable">.TSE</span>(test_mode), <span class="hljs-variable">.E</span>(deI_gate_en), <span class="hljs-variable">.ECK</span>(deI_clk));</span><br></pre></td></tr></table></figure>
+<p>优雅的解决方案是同上面的mem_wrapper 思路一致，HDL代码接受不同的Vendor作为参数来例化不同的wrapper。不管是项目切换还是工艺切换，只需要修改顶层配置的Vendor对象即可。不用修改任何HDL代码。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">clkGate</span>(<span class="hljs-params">vendor: <span class="hljs-type">Vendor</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123; <span class="hljs-comment">//创建接口模块</span></span><br><span class="line">  <span class="hljs-keyword">val</span> io = <span class="hljs-keyword">new</span> <span class="hljs-type">Bundle</span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> clk  = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> tse  = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> cgen  = in <span class="hljs-type">Bool</span>()</span><br><span class="line">    <span class="hljs-keyword">val</span> cgclk = out <span class="hljs-type">Bool</span>()</span><br><span class="line">  &#125;</span><br><span class="line">  vendor.<span class="hljs-type">Build</span>(<span class="hljs-keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SpinalHDL来写HDL时，对于clockgate这种cell的例化并不会像Verilog那样去做，那样会显得非常啰嗦，一个简单的方式就是val newcd = this.clockDomian.gateBy(io.clken) 因此我们需要位clockDomian隐式扩展添加方法 <code>gateBy</code> ，具体的例化在函数内部完成。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">implicit</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClockGateExtend</span>(<span class="hljs-params">cd: <span class="hljs-type">ClockDomain</span></span>)</span>&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gateBy</span></span>(en: <span class="hljs-type">Bool</span>, tse: <span class="hljs-type">Bool</span>): <span class="hljs-type">ClockDomain</span> = &#123;</span><br><span class="line">      <span class="hljs-keyword">val</span> cg = <span class="hljs-keyword">new</span> gate_cell(globalData.getVendor)</span><br><span class="line">      cg.io.clk:= cd.readClockWire</span><br><span class="line">      cg.io.tse:= tse</span><br><span class="line">      cg.io.cgen := en</span><br><span class="line">      <span class="hljs-keyword">val</span> cde = <span class="hljs-type">ClockDomain</span>(clock = cg.io.cgclk,</span><br><span class="line">        reset = cd.readResetWire</span><br><span class="line">      )</span><br><span class="line">      cde.setSynchronousWith(cd) <span class="hljs-comment">//gate后的时钟和原时钟应该是同步关系</span></span><br><span class="line">      cde</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>分频cell, 异步cell都可以用以上方式来实现，对于RTL工程师不需要关心具体例化，只需要在全局定义Vendor对象，或者在IP顶层的配置中定义Vendor对象，例如对于模块Gnss的配置参数，仅仅修改vendor的对象就可以替换所有的底层lib或者mem-lib。</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GnssConfig</span>(<span class="hljs-params">diQ: <span class="hljs-type">QFormat</span> = <span class="hljs-type">SQ</span>(2, 1</span>),</span></span><br><span class="line"><span class="hljs-class">                      <span class="hljs-title">ddc_diQ</span></span>: <span class="hljs-type">QFormat</span> = <span class="hljs-type">SQ</span>(<span class="hljs-number">3</span>,<span class="hljs-number">2</span>),</span><br><span class="line">                      ddc_doQ: <span class="hljs-type">QFormat</span> = <span class="hljs-type">SQ</span>(<span class="hljs-number">5</span>,<span class="hljs-number">4</span>),</span><br><span class="line">                      corr_dow: <span class="hljs-type">Int</span> = <span class="hljs-number">16</span>,</span><br><span class="line">                      coh_dow: <span class="hljs-type">Int</span> = <span class="hljs-number">10</span>,</span><br><span class="line">                      noncoh_dow: <span class="hljs-type">Int</span> = <span class="hljs-number">16</span>,</span><br><span class="line">                      baseAddress: <span class="hljs-type">Long</span> = <span class="hljs-number">0x00000</span>,</span><br><span class="line">                      vendor: <span class="hljs-type">Vendor</span> = <span class="hljs-type">FishSemi</span>, <span class="hljs-comment">//定义Vendor</span></span><br><span class="line">                      withScan: <span class="hljs-type">Boolean</span> = <span class="hljs-literal">false</span>,</span><br><span class="line">                      withBist: <span class="hljs-type">Boolean</span> = <span class="hljs-literal">false</span></span><br><span class="line">                     )&#123;</span><br><span class="line">....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>vendor对象应该考虑将其放置到SpinalConfig中去，这样的好处是一些commonCell的例化时vendor参数可以通过globalData获取，避免手工例化。</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpinalHDL/">SpinalHDL</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/spinal/spinal8.html">
+                <span class="level-item">SpinalHDL(八):开发仿真测试一条龙</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '093159b2b9ec0c354aea',
+        clientSecret: '257f4905823748d3751c5c482f18442986a5a5ae',
+        id: 'ce4f84945366075cf068fe0894b55d9e',
+        repo: 'jijingg.github.io',
+        owner: 'jijingg',
+        admin: ["jijingg"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+                    
+
+                    
+
+
+
+
+<div class="column is-3-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+            
+            
+        
+    
+        
+            
+                
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            
+        </div>
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/chisel/">
+            <span class="level-start">
+                <span class="level-item">chisel</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/eda/">
+            <span class="level-start">
+                <span class="level-item">eda</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/others/">
+            <span class="level-start">
+                <span class="level-item">others</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/riscv/">
+            <span class="level-start">
+                <span class="level-item">riscv</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/scala/">
+            <span class="level-start">
+                <span class="level-item">scala</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/sicp/">
+            <span class="level-start">
+                <span class="level-item">sicp</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/spinal/">
+            <span class="level-start">
+                <span class="level-item">spinal</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">9</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/spinal/spinal9.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/busy4.jpg" alt="SpinalHDL(九):不变应万变-MemWrap适配">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-29T16:00:00.000Z">2020-07-30</time></div>
+                    <a href="/spinal/spinal9.html" class="has-link-black-ter is-size-6">SpinalHDL(九):不变应万变-MemWrap适配</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/spinal/spinal8.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/chisel1.jpg" alt="SpinalHDL(八):开发仿真测试一条龙">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-15T16:00:00.000Z">2020-05-16</time></div>
+                    <a href="/spinal/spinal8.html" class="has-link-black-ter is-size-6">SpinalHDL(八):开发仿真测试一条龙</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/scala/20200221_maven_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/led2.jpg" alt="Maven Windows 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-19T16:00:00.000Z">2020-02-20</time></div>
+                    <a href="/scala/20200221_maven_windows.html" class="has-link-black-ter is-size-6">Maven Windows 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/scala/20200119_scala_single_object.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/toy3.jpg" alt="Scala 单例对象的三个应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-18T16:00:00.000Z">2020-01-19</time></div>
+                    <a href="/scala/20200119_scala_single_object.html" class="has-link-black-ter is-size-6">Scala 单例对象的三个应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/scala/">scala</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/eda/install_verilator_on_windows.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/tools6.jpg" alt="Spinal-sim Verilator install on Windows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T16:00:00.000Z">2020-01-10</time></div>
+                    <a href="/eda/install_verilator_on_windows.html" class="has-link-black-ter is-size-6">Spinal-sim Verilator install on Windows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/eda/">eda</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">17</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2014/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2014</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Chisel/">
+                        <span class="tag">Chisel</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/IDEA/">
+                        <span class="tag">IDEA</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Macro/">
+                        <span class="tag">Macro</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SpinalHDL/">
+                        <span class="tag">SpinalHDL</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SpinalHDL-Scala/">
+                        <span class="tag">SpinalHDL  Scala</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/firrtl/">
+                        <span class="tag">firrtl</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/make/">
+                        <span class="tag">make</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/riscv/">
+                        <span class="tag">riscv</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/scala/">
+                        <span class="tag">scala</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verctor/">
+                        <span class="tag">verctor</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/verilog/">
+                        <span class="tag">verilog</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数式编程/">
+                        <span class="tag">函数式编程</span>
+                        <span class="tag is-grey">16</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/分型/">
+                        <span class="tag">分型</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/开发环境/">
+                        <span class="tag">开发环境</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机/">
+                        <span class="tag">计算机</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/递归/">
+                        <span class="tag">递归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+                
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            推荐链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="http://www.sharetechnote.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">通信笔记</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.sharetechnote.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.lihaoyi.com/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Scala大神Lihaoyi</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.lihaoyi.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://bellard.org/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">FabriceBellard你懂得</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">bellard.org</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://kalasearch.cn" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">卡拉搜索</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">kalasearch.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+            
+        
+    
+    
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="SpinalHDL(九):不变应万变-MemWrap适配" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 jijing&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                沪ICP备19035362号
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/jijingg">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

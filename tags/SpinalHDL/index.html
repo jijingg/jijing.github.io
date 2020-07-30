@@ -152,6 +152,75 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/spinal/spinal9.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/busy4.jpg" alt="SpinalHDL(九):不变应万变-MemWrap适配">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-07-29T16:00:00.000Z">2020-07-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 分钟 读完 (大约 2084 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/spinal/spinal9.html">SpinalHDL(九):不变应万变-MemWrap适配</a>
+            
+        </h1>
+        <div class="content">
+            <p>对于IC开发工程师我们可能都有这样的痛苦经历，经常需要手动为不同工艺库替换Mem。有些团队的MemWrapper可能是有专门的脚本来生成，内部会用宏来区分不同工艺，相对来说还比较省事一点，即便这样MemWrpper的集成也是需要你手动连线。但是如果你是IP提供商，不同的团队或者公司的MemWrapper的信号命名也各不相同。同样替换Mem是一件极其无聊并且容易出错的事情。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-7442a8cd6e06ef578fcdaa73d9806254_720w.jpg" alt="1"></p>
+<p>另外我发现SpinalHDL自带的mem类型并不适合直接拿来做例化，所以需要为此创建一个新的解决方案来满足IC设计中这种常见的需求。spinal的mem模型我会放到Blackbox内部做为行为模型，这样在仿真的时候你可以clearBox来使用mem参考模型来仿真，不需要真正的去包含一个memwrap.v文件，这样在前期设计中非常方便。</p>
+<p>因此对于设计者来讲，我本来只需要关心这地方例化的Mem类型（双口，真双口，单口），数据位宽，mem深度即可。除此之外工艺相关的事情对设计者应该是透明的。</p>
+<p>可以总结为两点诉求</p>
+<ul>
+<li><strong>MemWrap替换不应修改HDL代码， 对开发者透明</strong></li>
+<li><strong>添加新的Vendor memWrap不应修改Spinal源码，保持前向兼容</strong></li>
+</ul>
+<p><img src="https://picb.zhimg.com/80/v2-e13bfaaac29a1ff083355331cda982fa_720w.jpg" alt="2"></p>
+<p>因此，对于开发者来讲，只需要知道统一的RAM例化接口，为此为Spinal设计常见的3种MEM类型.<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/spinal/spinal9.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/spinal/spinal8.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/chisel1.jpg" alt="SpinalHDL(八):开发仿真测试一条龙">
         </a>
@@ -365,7 +434,7 @@
                 <span class="level-item">spinal</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">8</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li>
             </ul>
@@ -383,6 +452,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/spinal/spinal9.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/busy4.jpg" alt="SpinalHDL(九):不变应万变-MemWrap适配">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-29T16:00:00.000Z">2020-07-30</time></div>
+                    <a href="/spinal/spinal9.html" class="has-link-black-ter is-size-6">SpinalHDL(九):不变应万变-MemWrap适配</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -460,25 +548,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/others/float_trap.html" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://source.jijing.site/thumbnails/fail1.jpg" alt="浮点避坑">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-02T16:00:00.000Z">2020-01-03</time></div>
-                    <a href="/others/float_trap.html" class="has-link-black-ter is-size-6">浮点避坑</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/others/">others</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -494,6 +563,17 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/05/">
@@ -690,7 +770,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/SpinalHDL/">
                         <span class="tag">SpinalHDL</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
