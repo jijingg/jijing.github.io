@@ -9,19 +9,19 @@
 
 
 
-    <meta name="description" content="如何生成一个Soc系统在Spinal生成一个Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的SOC系统，其中一个RISCV的处理器VexRiscv, 和AXI总线路由以及APB桥。pinsec-soc 没了，就这么屌 trump-no-more 如果需要定制，那么继续往">
+    <meta name="description" content="如何生成一个Soc系统(注：Soc系统本身是一个比较笼统的概念，有各种各样不同复杂程度的SOC系统，我们这里指的Soc是一个最小系统，带处理器，片上Mem，一些基本外设以及总线拓扑的基础框架) 在Spinal生成一个最小Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的S">
 <meta name="keywords" content="SpinalHDL  Scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpinalHDL(三) 一行代码生成Soc系统">
 <meta property="og:url" content="https://jijingg.github.io/spinal/spinal3.html">
 <meta property="og:site_name" content="马車同学">
-<meta property="og:description" content="如何生成一个Soc系统在Spinal生成一个Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的SOC系统，其中一个RISCV的处理器VexRiscv, 和AXI总线路由以及APB桥。pinsec-soc 没了，就这么屌 trump-no-more 如果需要定制，那么继续往">
+<meta property="og:description" content="如何生成一个Soc系统(注：Soc系统本身是一个比较笼统的概念，有各种各样不同复杂程度的SOC系统，我们这里指的Soc是一个最小系统，带处理器，片上Mem，一些基本外设以及总线拓扑的基础框架) 在Spinal生成一个最小Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的S">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://source.jijing.site/thumbnails/busy3.jpg">
-<meta property="og:updated_time" content="2020-07-29T15:58:59.716Z">
+<meta property="og:updated_time" content="2020-08-02T12:57:18.845Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpinalHDL(三) 一行代码生成Soc系统">
-<meta name="twitter:description" content="如何生成一个Soc系统在Spinal生成一个Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的SOC系统，其中一个RISCV的处理器VexRiscv, 和AXI总线路由以及APB桥。pinsec-soc 没了，就这么屌 trump-no-more 如果需要定制，那么继续往">
+<meta name="twitter:description" content="如何生成一个Soc系统(注：Soc系统本身是一个比较笼统的概念，有各种各样不同复杂程度的SOC系统，我们这里指的Soc是一个最小系统，带处理器，片上Mem，一些基本外设以及总线拓扑的基础框架) 在Spinal生成一个最小Soc系统只需要一行代码 12import spinal.lib.soc.pinsec._SpinalVerilog(new Pinsec(500 MHz)) 即可生成一个完整的S">
 <meta name="twitter:image" content="http://source.jijing.site/thumbnails/busy3.jpg">
 
 
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 485 个字)
+                    5 分钟 读完 (大约 745 个字)
                 </span>
                 
                 
@@ -182,7 +182,8 @@
             
         </h1>
         <div class="content">
-            <h3 id="如何生成一个Soc系统"><a href="#如何生成一个Soc系统" class="headerlink" title="如何生成一个Soc系统"></a>如何生成一个Soc系统</h3><p>在Spinal生成一个Soc系统只需要一行代码</p>
+            <h3 id="如何生成一个Soc系统"><a href="#如何生成一个Soc系统" class="headerlink" title="如何生成一个Soc系统"></a>如何生成一个Soc系统</h3><p>(注：Soc系统本身是一个比较笼统的概念，有各种各样不同复杂程度的SOC系统，我们这里指的Soc是一个最小系统，带处理器，片上Mem，一些基本外设以及总线拓扑的基础框架)</p>
+<p>在Spinal生成一个最小Soc系统只需要一行代码</p>
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> spinal.lib.soc.pinsec._</span><br><span class="line"><span class="hljs-type">SpinalVerilog</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">Pinsec</span>(<span class="hljs-number">500</span> <span class="hljs-type">MHz</span>))</span><br></pre></td></tr></table></figure>
 <p>即可生成一个完整的SOC系统，其中一个RISCV的处理器VexRiscv, 和AXI总线路由<br>以及APB桥。<br><a href="https:/pic1.zhimg.com/80/v2-f6d33cb611b58eae43cfb6aea4138f14_hd.png" target="_blank" rel="noopener">pinsec-soc</a></p>
 <p>没了，就这么屌</p>
@@ -201,6 +202,7 @@
 <figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">SpinalVerilog</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">Pinsec</span>(mySocConfig))</span><br></pre></td></tr></table></figure>
 <p>这个一个完整的例子，可以看得出SpinalHDL的参数设计非常合理，层层设计，每一个功能模块有自己的参数伴侣，<br>所有的配置，模块的扩展，全部放在参数里。</p>
 <p>RocketChip隐式参数p恐怕要把你绕晕，这也是Chisel常备被吐槽的问题之一。<br>Spinal完全不存在这样的问题，即便是你第一次接触，也基本上不存在什么阅读障碍，<br>完整的Pinsec源码只有300行，能够完整的描述Soc顶层的互联信息，表达能力实属强大，源码参见<a href="https://github.com/SpinalHDL/SpinalHDL/blob/dev/lib/src/main/scala/spinal/lib/soc/pinsec/Pinsec.scala" target="_blank" rel="noopener">Pinsec.scala</a></p>
+<p>当然实际工程上的Soc系统不会这么简单，但是这个框架也不失一般性，即便是一个复杂的Soc系统完全可以以这种方式去管理。往往一个公司会有多个系列的芯片，一个系列的基本架构是有延续性，一个系列可以维护一个Soc-Top，利用参数化来管理。不同系列之间也有共性，比如像总线路由这种基础框架SpinalHDL都有现漂亮的实现。相比原来的Verilog代码，集成工作量几乎忽略不计，而且可以设置各种检查规则，更不容易犯错。</p>
 
         </div>
         
