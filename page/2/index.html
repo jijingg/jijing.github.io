@@ -4,19 +4,19 @@
     <meta name="baidu-site-verification" content="5NJSOR3owM" />
     <meta name="msvalidate.01" content="151864C0926CAD18FEA3D03EA31DCEB6" />
     <meta charset="utf-8">
-<title>专门弄斧</title>
+<title>马車同学</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
     <meta property="og:type" content="website">
-<meta property="og:title" content="专门弄斧">
+<meta property="og:title" content="马車同学">
 <meta property="og:url" content="https://jijingg.github.io/page/2/index.html">
-<meta property="og:site_name" content="专门弄斧">
+<meta property="og:site_name" content="马車同学">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://jijingg.github.io/images/og_image.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="专门弄斧">
+<meta name="twitter:title" content="马車同学">
 <meta name="twitter:image" content="https://jijingg.github.io/images/og_image.png">
 
 
@@ -87,7 +87,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="专门弄斧" height="28">
+                <img src="/images/logo.svg" alt="马車同学" height="28">
             
             </a>
         </div>
@@ -396,6 +396,74 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/spinal/spinal4.html" class="image is-7by1">
+            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building1.jpg" alt="SpinalHDL(四) 一窥总线四两拨千斤">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-21T16:00:00.000Z">2019-10-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1055 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/spinal/spinal4.html">SpinalHDL(四) 一窥总线四两拨千斤</a>
+            
+        </h1>
+        <div class="content">
+            <p>Spinal的lib.bus除了AMBA总线，并且还支持AvalonMM，当然你也很容易扩展自定义的总线。</p>
+<h3 id="Apb3总线例化"><a href="#Apb3总线例化" class="headerlink" title="Apb3总线例化"></a>Apb3总线例化</h3><p>一个简单的Apb3总线接口例化示例</p>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> spinal.lib.bus.amba3.apb._</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T2</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> busin  = slave(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">12</span>,<span class="hljs-number">32</span>)))    </span><br><span class="line">    <span class="hljs-keyword">val</span> busout = master(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">12</span>,<span class="hljs-number">32</span>)))</span><br><span class="line">    busout &lt;&gt; busin</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-type">SpinalVerilog</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">T2</span>)</span><br></pre></td></tr></table></figure>
+<p>总线的例化也非方便简单，`Apb3`<br>传入Apb3Config(addrWidth=12,dataWidth=32)即可生成一个总线，关键字slave，master设计非常漂亮，可以瞬间<br>指定总线内部的接口方向，除此之外，`\&lt;>`<br>操作符为SpinalHDL定义的总线自动互联函数，不用你手动一个一个连。像这类操作符SpinalHDL有很多，像\”>>\”<br>\”>-/->\”, \”\&lt;/\&lt;\”<br>等等，不用害怕，这些只不过是定义的一个恰巧叫这个符号的函数而已，本质上跟你定义的autoConnect名字的函数并无二致，但是它要比文字函数要形象的多，并且假装操作符也是那么的自然。除了spinalHDL定义的操作符以外，你自己也可以定义各种各样简便的符号帮助你完成复杂琐碎的事情。<br><a href="https://pic1.zhimg.com/80/v2-a7d40b2e009eb85a0683edf2bfbbfa96_hd.png" target="_blank" rel="noopener">41</a><br>可以看到生成的Verilog总线已经完全连上了。</p>
+<h3 id="Apb3总线译码"><a href="#Apb3总线译码" class="headerlink" title="Apb3总线译码"></a>Apb3总线译码</h3><p>Apb3Decoder是一个工厂函数，它支持多种参数的传入</p>
+<ul>
+<li>一：传入总线配置，和地址Mapping</li>
+</ul>
+<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">Apb3Decoder</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">16</span>,<span class="hljs-number">32</span>),</span><br><span class="line">            <span class="hljs-type">List</span>((<span class="hljs-number">0x0000</span>,<span class="hljs-number">2</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                 (<span class="hljs-number">0x1000</span>,<span class="hljs-number">1</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                 (<span class="hljs-number">0x5000</span>,<span class="hljs-number">3</span> <span class="hljs-type">KiB</span>))))</span><br></pre></td></tr></table></figure>
+<p>可以得到<br><a href="https://pic4.zhimg.com/80/v2-12a1cf7fc1b40dfba16cded076f1eaaa_hd.png" target="_blank" rel="noopener">42</a></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/spinal/spinal4.html#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/spinal/spinal3.html" class="image is-7by1">
             <img class="thumbnail" src="http://source.jijing.site/thumbnails/busy3.jpg" alt="SpinalHDL(三) 一行代码生成Soc系统">
         </a>
@@ -446,74 +514,6 @@
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/spinal/spinal3.html#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/spinal/spinal4.html" class="image is-7by1">
-            <img class="thumbnail" src="http://source.jijing.site/thumbnails/building1.jpg" alt="SpinalHDL(四) 一窥总线四两拨千斤">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-10-21T16:00:00.000Z">2019-10-22</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/spinal/">spinal</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 1055 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-4 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/spinal/spinal4.html">SpinalHDL(四) 一窥总线四两拨千斤</a>
-            
-        </h1>
-        <div class="content">
-            <p>Spinal的lib.bus除了AMBA总线，并且还支持AvalonMM，当然你也很容易扩展自定义的总线。</p>
-<h3 id="Apb3总线例化"><a href="#Apb3总线例化" class="headerlink" title="Apb3总线例化"></a>Apb3总线例化</h3><p>一个简单的Apb3总线接口例化示例</p>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> spinal.lib.bus.amba3.apb._</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T2</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">val</span> busin  = slave(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">12</span>,<span class="hljs-number">32</span>)))    </span><br><span class="line">    <span class="hljs-keyword">val</span> busout = master(<span class="hljs-type">Apb3</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">12</span>,<span class="hljs-number">32</span>)))</span><br><span class="line">    busout &lt;&gt; busin</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-type">SpinalVerilog</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">T2</span>)</span><br></pre></td></tr></table></figure>
-<p>总线的例化也非方便简单，`Apb3`<br>传入Apb3Config(addrWidth=12,dataWidth=32)即可生成一个总线，关键字slave，master设计非常漂亮，可以瞬间<br>指定总线内部的接口方向，除此之外，`\&lt;>`<br>操作符为SpinalHDL定义的总线自动互联函数，不用你手动一个一个连。像这类操作符SpinalHDL有很多，像\”>>\”<br>\”>-/->\”, \”\&lt;/\&lt;\”<br>等等，不用害怕，这些只不过是定义的一个恰巧叫这个符号的函数而已，本质上跟你定义的autoConnect名字的函数并无二致，但是它要比文字函数要形象的多，并且假装操作符也是那么的自然。除了spinalHDL定义的操作符以外，你自己也可以定义各种各样简便的符号帮助你完成复杂琐碎的事情。<br><a href="https://pic1.zhimg.com/80/v2-a7d40b2e009eb85a0683edf2bfbbfa96_hd.png" target="_blank" rel="noopener">41</a><br>可以看到生成的Verilog总线已经完全连上了。</p>
-<h3 id="Apb3总线译码"><a href="#Apb3总线译码" class="headerlink" title="Apb3总线译码"></a>Apb3总线译码</h3><p>Apb3Decoder是一个工厂函数，它支持多种参数的传入</p>
-<ul>
-<li>一：传入总线配置，和地址Mapping</li>
-</ul>
-<figure class="highlight scala hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">Apb3Decoder</span>(<span class="hljs-type">Apb3Config</span>(<span class="hljs-number">16</span>,<span class="hljs-number">32</span>),</span><br><span class="line">            <span class="hljs-type">List</span>((<span class="hljs-number">0x0000</span>,<span class="hljs-number">2</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                 (<span class="hljs-number">0x1000</span>,<span class="hljs-number">1</span> <span class="hljs-type">KiB</span>),</span><br><span class="line">                 (<span class="hljs-number">0x5000</span>,<span class="hljs-number">3</span> <span class="hljs-type">KiB</span>))))</span><br></pre></td></tr></table></figure>
-<p>可以得到<br><a href="https://pic4.zhimg.com/80/v2-12a1cf7fc1b40dfba16cded076f1eaaa_hd.png" target="_blank" rel="noopener">42</a></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/spinal/spinal4.html#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -1431,7 +1431,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="专门弄斧" height="28">
+                    <img src="/images/logo.svg" alt="马車同学" height="28">
                 
                 </a>
                 <p class="is-size-7">
